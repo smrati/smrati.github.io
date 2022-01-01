@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta name="generator" content="Pelican" />
+        <title>MobX state management (My Notes)</title>
+        <link rel="stylesheet" href="/theme/css/main.css" />
+        <meta name="description" content="add dependency in pubspec.yaml dependencies: mobx: ^2.0.6+1 flutter_mobx: ^2.0.3+2 dev_dependencies: build_runner: ^2.1.7 mobx_codegen: ^2.0.5+2..." />
+</head>
+
+<body id="index" class="home">
+        <header id="banner" class="body">
+                <h1><a href="/">Smrati's Tech Blog</a></h1>
+                <nav><ul>
+                    <li><a href="/category/deep-learning.html">Deep Learning</a></li>
+                    <li><a href="/category/devops.html">Devops</a></li>
+                    <li><a href="/category/firebase.html">firebase</a></li>
+                    <li><a href="/category/general.html">general</a></li>
+                    <li><a href="/category/iot.html">IoT</a></li>
+                    <li class="active"><a href="/category/mobile-development.html">Mobile Development</a></li>
+                    <li><a href="/category/pytorch.html">pytorch</a></li>
+                </ul></nav>
+        </header><!-- /#banner -->
+<section id="content" class="body">
+  <article>
+    <header>
+      <h1 class="entry-title">
+        <a href="/mobx-state-management-my-notes.html" rel="bookmark"
+           title="Permalink to MobX state management (My Notes)">MobX state management (My Notes)</a></h1>
+    </header>
+
+    <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2022-01-01T13:24:00+05:30">
+                Published: Sat 01 January 2022
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/smrati-kumar-katiyar.html">Smrati Kumar Katiyar</a>
+        </address>
+<p>In <a href="/category/mobile-development.html">Mobile Development</a>.</p>
+<p>tags: <a href="/tag/flutter.html">Flutter</a> <a href="/tag/mobx.html">MobX</a> </p>
+</footer><!-- /.post-info -->      <p>add dependency in pubspec.yaml</p>
+<div class="highlight"><pre><span></span><code><span class="nt">dependencies</span><span class="p">:</span>
+  <span class="nt">mobx</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">^2.0.6+1</span>
+  <span class="nt">flutter_mobx</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">^2.0.3+2</span>
+
+<span class="nt">dev_dependencies</span><span class="p">:</span>
+  <span class="nt">build_runner</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">^2.1.7</span>
+  <span class="nt">mobx_codegen</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">^2.0.5+2</span>
+</code></pre></div>
+
+<h1>what is MobX store ?</h1>
+<p><a href="https://mobx.netlify.app/getting-started">Reference</a>  </p>
+<p>basically mobX store is the place where you define Observables state. This is the place where you can use @observable @action annotations.</p>
+<p>Example code is given below:</p>
+<p>This is a counter example</p>
+<div class="highlight"><pre><span></span><code><span class="k">import</span> <span class="s1">&#39;package:mobx/mobx.dart&#39;</span><span class="p">;</span>
+
+<span class="c1">// Include generated file</span>
+<span class="k">part</span> <span class="s1">&#39;counter.g.dart&#39;</span><span class="p">;</span>
+
+<span class="c1">// This is the class used by rest of your codebase</span>
+<span class="kd">class</span> <span class="nc">Counter</span> <span class="o">=</span> <span class="n">_Counter</span> <span class="kd">with</span> <span class="n">_$Counter</span><span class="p">;</span>
+
+<span class="c1">// The store-class</span>
+<span class="kd">abstract</span> <span class="kd">class</span> <span class="nc">_Counter</span> <span class="kd">with</span> <span class="n">Store</span> <span class="p">{</span>
+  <span class="nd">@observable</span>
+  <span class="kt">int</span> <span class="n">value</span> <span class="o">=</span> <span class="m">0</span><span class="p">;</span>
+
+  <span class="nd">@action</span>
+  <span class="kt">void</span> <span class="n">increment</span><span class="p">()</span> <span class="p">{</span>
+    <span class="n">value</span><span class="o">++</span><span class="p">;</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+
+<h3>main.dart</h3>
+<div class="highlight"><pre><span></span><code><span class="k">import</span> <span class="s1">&#39;package:flutter/material.dart&#39;</span><span class="p">;</span>
+<span class="k">import</span> <span class="s1">&#39;package:flutter_mobx/flutter_mobx.dart&#39;</span><span class="p">;</span>
+
+<span class="k">import</span> <span class="s1">&#39;counter.dart&#39;</span><span class="p">;</span> <span class="c1">// Import the Counter</span>
+
+<span class="kd">final</span> <span class="n">counter</span> <span class="o">=</span> <span class="n">Counter</span><span class="p">();</span> <span class="c1">// Instantiate the store</span>
+
+<span class="kt">void</span> <span class="n">main</span><span class="p">()</span> <span class="o">=&gt;</span> <span class="n">runApp</span><span class="p">(</span><span class="n">MyApp</span><span class="p">());</span>
+
+<span class="kd">class</span> <span class="nc">MyApp</span> <span class="kd">extends</span> <span class="n">StatelessWidget</span> <span class="p">{</span>
+  <span class="c1">// This widget is the root of your application.</span>
+  <span class="nd">@override</span>
+  <span class="n">Widget</span> <span class="n">build</span><span class="p">(</span><span class="n">BuildContext</span> <span class="n">context</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="n">MaterialApp</span><span class="p">(</span>
+      <span class="nl">title:</span> <span class="s1">&#39;MobX&#39;</span><span class="p">,</span>
+      <span class="nl">theme:</span> <span class="n">ThemeData</span><span class="p">(</span>
+        <span class="nl">primarySwatch:</span> <span class="n">Colors</span><span class="p">.</span><span class="n">blue</span><span class="p">,</span>
+      <span class="p">),</span>
+      <span class="nl">home:</span> <span class="k">const</span> <span class="n">MyHomePage</span><span class="p">(),</span>
+    <span class="p">);</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="kd">class</span> <span class="nc">MyHomePage</span> <span class="kd">extends</span> <span class="n">StatelessWidget</span> <span class="p">{</span>
+  <span class="k">const</span> <span class="n">MyHomePage</span><span class="p">();</span>
+
+  <span class="nd">@override</span>
+  <span class="n">Widget</span> <span class="n">build</span><span class="p">(</span><span class="n">BuildContext</span> <span class="n">context</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="n">Scaffold</span><span class="p">(</span>
+      <span class="nl">appBar:</span> <span class="n">AppBar</span><span class="p">(</span>
+        <span class="nl">title:</span> <span class="n">Text</span><span class="p">(</span><span class="s1">&#39;MobX Counter&#39;</span><span class="p">),</span>
+      <span class="p">),</span>
+      <span class="nl">body:</span> <span class="n">Center</span><span class="p">(</span>
+        <span class="nl">child:</span> <span class="n">Column</span><span class="p">(</span>
+          <span class="nl">mainAxisAlignment:</span> <span class="n">MainAxisAlignment</span><span class="p">.</span><span class="n">center</span><span class="p">,</span>
+          <span class="nl">children:</span> <span class="o">&lt;</span><span class="n">Widget</span><span class="o">&gt;</span><span class="p">[</span>
+            <span class="n">Text</span><span class="p">(</span>
+              <span class="s1">&#39;You have pushed the button this many times:&#39;</span><span class="p">,</span>
+            <span class="p">),</span>
+            <span class="c1">// Wrapping in the Observer will automatically re-render on changes to counter.value</span>
+            <span class="n">Observer</span><span class="p">(</span>
+              <span class="nl">builder:</span> <span class="p">(</span><span class="n">_</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="n">Text</span><span class="p">(</span>
+                <span class="s1">&#39;</span><span class="si">${</span><span class="n">counter</span><span class="p">.</span><span class="n">value</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">,</span>
+                <span class="nl">style:</span> <span class="n">Theme</span><span class="p">.</span><span class="n">of</span><span class="p">(</span><span class="n">context</span><span class="p">).</span><span class="n">textTheme</span><span class="p">.</span><span class="n">headline4</span><span class="p">,</span>
+              <span class="p">),</span>
+            <span class="p">),</span>
+          <span class="p">],</span>
+        <span class="p">),</span>
+      <span class="p">),</span>
+      <span class="nl">floatingActionButton:</span> <span class="n">FloatingActionButton</span><span class="p">(</span>
+        <span class="nl">onPressed:</span> <span class="n">counter</span><span class="p">.</span><span class="n">increment</span><span class="p">,</span>
+        <span class="nl">tooltip:</span> <span class="s1">&#39;Increment&#39;</span><span class="p">,</span>
+        <span class="nl">child:</span> <span class="n">Icon</span><span class="p">(</span><span class="n">Icons</span><span class="p">.</span><span class="n">add</span><span class="p">),</span>
+      <span class="p">),</span>
+    <span class="p">);</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+
+<p>Now let's see the example with a new annotation <code>@computed</code> observable</p>
+<h3>Dice counter example</h3>
+<div class="highlight"><pre><span></span><code><span class="k">import</span> <span class="s1">&#39;dart:math&#39;</span><span class="p">;</span>
+<span class="k">import</span> <span class="s1">&#39;package:mobx/mobx.dart&#39;</span><span class="p">;</span>
+
+<span class="k">part</span> <span class="s1">&#39;dice_counter.g.dart&#39;</span><span class="p">;</span>
+
+<span class="kd">class</span> <span class="nc">DiceCounter</span> <span class="o">=</span> <span class="n">_DiceCounter</span> <span class="kd">with</span> <span class="n">_$DiceCounter</span><span class="p">;</span>
+
+<span class="kd">abstract</span> <span class="kd">class</span> <span class="nc">_DiceCounter</span> <span class="kd">with</span> <span class="n">Store</span> <span class="p">{</span>
+  <span class="nd">@observable</span>
+  <span class="kt">int</span> <span class="n">left</span> <span class="o">=</span> <span class="n">Random</span><span class="p">().</span><span class="n">nextInt</span><span class="p">(</span><span class="m">6</span><span class="p">)</span> <span class="o">+</span> <span class="m">1</span><span class="p">;</span>
+
+  <span class="nd">@observable</span>
+  <span class="kt">int</span> <span class="n">right</span> <span class="o">=</span> <span class="n">Random</span><span class="p">().</span><span class="n">nextInt</span><span class="p">(</span><span class="m">6</span><span class="p">)</span> <span class="o">+</span> <span class="m">1</span><span class="p">;</span>
+
+  <span class="nd">@computed</span>
+  <span class="kt">int</span> <span class="kd">get</span> <span class="n">total</span> <span class="o">=&gt;</span> <span class="n">left</span> <span class="o">+</span> <span class="n">right</span><span class="p">;</span>
+
+  <span class="nd">@action</span>
+  <span class="kt">void</span> <span class="n">roll</span><span class="p">()</span> <span class="p">{</span>
+    <span class="n">left</span> <span class="o">=</span> <span class="n">Random</span><span class="p">().</span><span class="n">nextInt</span><span class="p">(</span><span class="m">6</span><span class="p">)</span> <span class="o">+</span> <span class="m">1</span><span class="p">;</span>
+    <span class="n">right</span> <span class="o">=</span> <span class="n">Random</span><span class="p">().</span><span class="n">nextInt</span><span class="p">(</span><span class="m">6</span><span class="p">)</span> <span class="o">+</span> <span class="m">1</span><span class="p">;</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+
+<p>Run following command on terminal to generate part file</p>
+<div class="highlight"><pre><span></span><code>flutter packages pub run build_runner build
+</code></pre></div>
+
+<h3>main file</h3>
+<div class="highlight"><pre><span></span><code><span class="k">import</span> <span class="s1">&#39;package:flutter/material.dart&#39;</span><span class="p">;</span>
+<span class="k">import</span> <span class="s1">&#39;package:flutter_mobx/flutter_mobx.dart&#39;</span><span class="p">;</span>
+
+<span class="k">import</span> <span class="s1">&#39;dice_counter.dart&#39;</span><span class="p">;</span>
+
+<span class="kd">final</span> <span class="n">diceCounter</span> <span class="o">=</span> <span class="n">DiceCounter</span><span class="p">();</span>
+
+
+<span class="kd">class</span> <span class="nc">DiceView</span> <span class="kd">extends</span> <span class="n">StatelessWidget</span> <span class="p">{</span>
+  <span class="nd">@override</span>
+  <span class="n">Widget</span> <span class="n">build</span><span class="p">(</span><span class="n">BuildContext</span> <span class="n">context</span><span class="p">)</span> <span class="p">{</span>
+    <span class="kd">final</span> <span class="n">diceCounter</span> <span class="o">=</span> <span class="n">Provider</span><span class="p">.</span><span class="n">of</span><span class="o">&lt;</span><span class="n">DiceCounter</span><span class="o">&gt;</span><span class="p">(</span><span class="n">context</span><span class="p">);</span>
+
+    <span class="k">return</span> <span class="n">Center</span><span class="p">(</span>
+      <span class="nl">child:</span> <span class="n">Column</span><span class="p">(</span>
+        <span class="nl">mainAxisAlignment:</span> <span class="n">MainAxisAlignment</span><span class="p">.</span><span class="n">center</span><span class="p">,</span>
+        <span class="nl">children:</span> <span class="o">&lt;</span><span class="n">Widget</span><span class="o">&gt;</span><span class="p">[</span>
+          <span class="n">Row</span><span class="p">(</span>
+            <span class="nl">children:</span> <span class="o">&lt;</span><span class="n">Widget</span><span class="o">&gt;</span><span class="p">[</span>
+              <span class="n">Expanded</span><span class="p">(</span>
+                <span class="nl">child:</span> <span class="n">TextButton</span><span class="p">(</span>
+                  <span class="nl">child:</span> <span class="n">Observer</span><span class="p">(</span>
+                    <span class="nl">builder:</span> <span class="p">(</span><span class="n">_</span><span class="p">)</span> <span class="o">=&gt;</span>
+                        <span class="n">Image</span><span class="p">.</span><span class="n">asset</span><span class="p">(</span><span class="s1">&#39;images/dice</span><span class="si">${</span><span class="n">diceCounter</span><span class="p">.</span><span class="n">left</span><span class="si">}</span><span class="s1">.png&#39;</span><span class="p">),</span>
+                  <span class="p">),</span>
+                  <span class="nl">onPressed:</span> <span class="n">diceCounter</span><span class="p">.</span><span class="n">roll</span><span class="p">,</span>
+                <span class="p">),</span>
+              <span class="p">),</span>
+              <span class="n">Expanded</span><span class="p">(</span>
+                <span class="nl">child:</span> <span class="n">TextButton</span><span class="p">(</span>
+                  <span class="nl">child:</span> <span class="n">Observer</span><span class="p">(</span>
+                    <span class="nl">builder:</span> <span class="p">(</span><span class="n">_</span><span class="p">)</span> <span class="o">=&gt;</span>
+                        <span class="n">Image</span><span class="p">.</span><span class="n">asset</span><span class="p">(</span><span class="s1">&#39;images/dice</span><span class="si">${</span><span class="n">diceCounter</span><span class="p">.</span><span class="n">right</span><span class="si">}</span><span class="s1">.png&#39;</span><span class="p">),</span>
+                  <span class="p">),</span>
+                  <span class="nl">onPressed:</span> <span class="n">diceCounter</span><span class="p">.</span><span class="n">roll</span><span class="p">,</span>
+                <span class="p">),</span>
+              <span class="p">),</span>
+            <span class="p">],</span>
+          <span class="p">),</span>
+          <span class="n">Padding</span><span class="p">(</span>
+            <span class="nl">padding:</span> <span class="k">const</span> <span class="n">EdgeInsets</span><span class="p">.</span><span class="n">all</span><span class="p">(</span><span class="m">16</span><span class="p">),</span>
+            <span class="nl">child:</span> <span class="n">Observer</span><span class="p">(</span>
+              <span class="nl">builder:</span> <span class="p">(</span><span class="n">_</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="n">Text</span><span class="p">(</span>
+                <span class="s1">&#39;Total </span><span class="si">${</span><span class="n">diceCounter</span><span class="p">.</span><span class="n">total</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">,</span>
+                <span class="nl">style:</span> <span class="k">const</span> <span class="n">TextStyle</span><span class="p">(</span>
+                    <span class="nl">fontWeight:</span> <span class="n">FontWeight</span><span class="p">.</span><span class="n">bold</span><span class="p">,</span>
+                    <span class="nl">color:</span> <span class="n">Colors</span><span class="p">.</span><span class="n">black87</span><span class="p">,</span>
+                    <span class="nl">fontSize:</span> <span class="m">16</span><span class="p">,</span>
+                    <span class="nl">fontFamily:</span> <span class="s1">&#39;Verdana&#39;</span><span class="p">),</span>
+              <span class="p">),</span>
+            <span class="p">),</span>
+          <span class="p">),</span>
+        <span class="p">],</span>
+      <span class="p">),</span>
+    <span class="p">);</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+
+<p>Useful Links:<br>
+<a href="https://www.youtube.com/watch?v=p-MUBLOEkCs">https://www.youtube.com/watch?v=p-MUBLOEkCs</a></p>
+<p>If you want to learn ablut observer pattern, i am documenting some resources i have used to learn them<br>
+<a href="https://www.youtube.com/watch?v=_BpmfnqjgzQ">https://www.youtube.com/watch?v=_BpmfnqjgzQ</a>  </p>
+<p><a href="https://flutterbyexample.com/lesson/mixins">mixins</a></p>
+    </div><!-- /.entry-content -->
+
+  </article>
+</section>
+        <section id="extras" class="body">
+                <div class="blogroll">
+                        <h2>links</h2>
+                        <ul>
+                            <li><a href="https://getpelican.com/">Pelican</a></li>
+                            <li><a href="https://www.python.org/">Python.org</a></li>
+                            <li><a href="https://palletsprojects.com/p/jinja/">Jinja2</a></li>
+                            <li><a href="#">You can modify those links in your config file</a></li>
+                        </ul>
+                </div><!-- /.blogroll -->
+                <div class="social">
+                        <h2>social</h2>
+                        <ul>
+
+                            <li><a href="https://twitter.com/SmratiKatiyar">Twitter</a></li>
+                            <li><a href="https://www.linkedin.com/in/smrati/">Linkedin</a></li>
+                        </ul>
+                </div><!-- /.social -->
+        </section><!-- /#extras -->
+
+        <footer id="contentinfo" class="body">
+                <address id="about" class="vcard body">
+                Proudly powered by <a href="https://getpelican.com/">Pelican</a>, which takes great advantage of <a href="https://www.python.org/">Python</a>.
+                </address><!-- /#about -->
+
+                <p>The theme is by <a href="https://www.smashingmagazine.com/2009/08/designing-a-html-5-layout-from-scratch/">Smashing Magazine</a>, thanks!</p>
+        </footer><!-- /#contentinfo -->
+
+</body>
+</html>
