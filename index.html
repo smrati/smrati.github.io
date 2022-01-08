@@ -13,18 +13,14 @@
                 <h1><a href="/">Smrati's Tech Blog</a></h1>
                 <nav><ul>
                     <li><a href="/category/deep-learning.html">Deep Learning</a></li>
-                    <li><a href="/category/devops.html">Devops</a></li>
-                    <li><a href="/category/firebase.html">firebase</a></li>
-                    <li><a href="/category/general.html">general</a></li>
-                    <li><a href="/category/iot.html">IoT</a></li>
+                    <li><a href="/category/general.html">General</a></li>
                     <li><a href="/category/mobile-development.html">Mobile Development</a></li>
-                    <li><a href="/category/pytorch.html">pytorch</a></li>
                 </ul></nav>
         </header><!-- /#banner -->
 
             <aside id="featured" class="body">
                 <article>
-                    <h1 class="entry-title"><a href="/bluetooth-basics.html">bluetooth basics</a></h1>
+                    <h1 class="entry-title"><a href="/3-different-ways-to-declare-variables-in-dart.html">3 different ways to declare variables in dart</a></h1>
 <footer class="post-info">
         <abbr class="published" title="2022-01-01T13:24:00+05:30">
                 Published: Sat 01 January 2022
@@ -33,37 +29,90 @@
         <address class="vcard author">
                 By                         <a class="url fn" href="/author/smrati-kumar-katiyar.html">Smrati Kumar Katiyar</a>
         </address>
-<p>In <a href="/category/iot.html">IoT</a>.</p>
-<p>tags: <a href="/tag/bluetooth.html">Bluetooth</a> </p>
-</footer><!-- /.post-info --><p><a href="https://punchthrough.com/android-ble-guide/">Bluetooth Basics Tutorial :  Android</a></p>                </article>
+<p>In <a href="/category/mobile-development.html">Mobile Development</a>.</p>
+<p>tags: <a href="/tag/flutter.html">Flutter</a> <a href="/tag/dart.html">dart</a> </p>
+</footer><!-- /.post-info --><ol>
+<li>var</li>
+<li>final</li>
+<li>const</li>
+</ol>
+<p>we will learn about difference in these 3 types </p>
+<p>mutable, static type</p>
+<div class="highlight"><pre><span></span><code>main() {
+  mutableBasicType();
+}
+
+void mutableBasicType(){
+  int a = 5;
+  double b = 12.7;
+  bool c = true;
+
+
+  print(a);
+  print(b);
+  print(c);
+
+}
+</code></pre></div>
+
+<p>A variable once assigned as int can't be reassigned as double</p>
+<div class="highlight"><pre><span></span><code>main() {
+  mutableBasicType();
+}
+
+void mutableBasicType(){
+  int a = 5;
+  double b = 12.7;
+  bool c = true;
+
+  a = 45.6;
+
+
+  print(a);
+  print(b);
+  print(c);
+
+}
+</code></pre></div>
+
+<p>values of different type assigned to same variable as it was declared as dynamic</p>
+<div class="highlight"><pre><span></span><code>main() {
+  mutableDynamic();
+}
+
+void mutableDynamic(){
+  dynamic a = 14.6;
+  print(a);
+  a = false;
+  print(a);
+}
+</code></pre></div>
+
+<p>How to identify runtimetype</p>
+<div class="highlight"><pre><span></span><code>main() {
+  mutableDynamic();
+}
+
+void mutableDynamic(){
+  dynamic a = 14.6;
+  print(a);
+  print(a.runtimeType);
+  a = false;
+  print(a);
+  print(a.runtimeType);
+}
+</code></pre></div>
+
+<p>next we are going to understand what is var variable type
+once we declare a variable with var type it means when we assign some value to this varibale dart will set the type based on that value and once the type is infered based on the value supplied , that point onwards it can't be changed.
+so let's understand it with an example.</p>
+<div class="highlight"><pre><span></span><code>
+</code></pre></div>                </article>
             </aside><!-- /#featured -->
                 <section id="content" class="body">
                     <h1>Other articles</h1>
                     <hr />
                     <ol id="posts-list" class="hfeed">
-
-            <li><article class="hentry">
-                <header>
-                    <h1><a href="/bluetooth-basics-introduction.html" rel="bookmark"
-                           title="Permalink to Bluetooth Basics - Introduction">Bluetooth Basics - Introduction</a></h1>
-                </header>
-
-                <div class="entry-content">
-<footer class="post-info">
-        <abbr class="published" title="2022-01-01T13:24:00+05:30">
-                Published: Sat 01 January 2022
-        </abbr>
-
-        <address class="vcard author">
-                By                         <a class="url fn" href="/author/smrati-kumar-katiyar.html">Smrati Kumar Katiyar</a>
-        </address>
-<p>In <a href="/category/iot.html">IoT</a>.</p>
-<p>tags: <a href="/tag/bluetooth.html">Bluetooth</a> </p>
-</footer><!-- /.post-info -->                <h1>What is a bluetooth profile ?</h1>
-<p>Bluetooth Profiles are a set of rules that allow the technology to complete a particular task. For example, to connect a pair of headphones to another device, a specific Bluetooth profile (or rules) is used. A different Bluetooth profile is needed to transfer files from …</p>
-                <a class="readmore" href="/bluetooth-basics-introduction.html">read more</a>
-                </div><!-- /.entry-content -->
-            </article></li>
 
             <li><article class="hentry">
                 <header>
@@ -84,6 +133,8 @@
 <p>tags: <a href="/tag/flutter.html">Flutter</a> <a href="/tag/shared-preference.html">shared preference</a> </p>
 </footer><!-- /.post-info -->                <p>It is used to store key value pairs in flutter
 Only int, String, double and bool can be stored using shared_preference</p>
+<p>Useful Resources:<br>
+<a href="https://www.youtube.com/watch?v=szOllHT1S7Y">https://www.youtube.com/watch?v=szOllHT1S7Y</a></p>
                 <a class="readmore" href="/how-to-use-shared-preference-in-flutter.html">read more</a>
                 </div><!-- /.entry-content -->
             </article></li>
@@ -150,128 +201,61 @@ Only int, String, double and bool can be stored using shared_preference</p>
 
             <li><article class="hentry">
                 <header>
-                    <h1><a href="/firebase-notes.html" rel="bookmark"
-                           title="Permalink to Firebase Notes">Firebase Notes</a></h1>
+                    <h1><a href="/pytorch-basics-1.html" rel="bookmark"
+                           title="Permalink to Pytorch Basics : 1">Pytorch Basics : 1</a></h1>
                 </header>
 
                 <div class="entry-content">
 <footer class="post-info">
-        <abbr class="published" title="2020-12-21T15:16:00+05:30">
-                Published: Mon 21 December 2020
+        <abbr class="published" title="2020-01-13T22:00:00+05:30">
+                Published: Mon 13 January 2020
         </abbr>
 
         <address class="vcard author">
                 By                         <a class="url fn" href="/author/smrati-kumar-katiyar.html">Smrati Kumar Katiyar</a>
         </address>
-<p>In <a href="/category/firebase.html">firebase</a>.</p>
-
-</footer><!-- /.post-info -->                <p>firebase has two plans <code>spark</code> and <code>blaze</code><br>
-spark is free plan , i am using this for learning flutter</p>
-                <a class="readmore" href="/firebase-notes.html">read more</a>
-                </div><!-- /.entry-content -->
-            </article></li>
-
-            <li><article class="hentry">
-                <header>
-                    <h1><a href="/highlevel-overall-workflow-to-develop-a-deep-learning-model-using-pytorch.html" rel="bookmark"
-                           title="Permalink to Highlevel Overall workflow to develop a deep learning model using PyTorch">Highlevel Overall workflow to develop a deep learning model using PyTorch</a></h1>
-                </header>
-
-                <div class="entry-content">
-<footer class="post-info">
-        <abbr class="published" title="2020-10-15T14:23:00+05:30">
-                Published: Thu 15 October 2020
-        </abbr>
-
-        <address class="vcard author">
-                By                         <a class="url fn" href="/author/smrati-kumar-katiyar.html">Smrati Kumar Katiyar</a>
-        </address>
-<p>In <a href="/category/pytorch.html">pytorch</a>.</p>
+<p>In <a href="/category/deep-learning.html">Deep Learning</a>.</p>
 <p>tags: <a href="/tag/pytorch.html">Pytorch</a> </p>
-</footer><!-- /.post-info -->                <h1>what is the usual flow of deep learning based model training</h1>
-<ol>
-<li>You preprocess the data</li>
-<li>Define the model</li>
-<li>train the model in loop</li>
-<li>test model performance</li>
-<li>tweak hyperparameters and repeat step 3 to 5</li>
-</ol>
-<p>If even after hyperparamter tuning we don't see improvement that mean you need to revisit your …</p>
-                <a class="readmore" href="/highlevel-overall-workflow-to-develop-a-deep-learning-model-using-pytorch.html">read more</a>
+</footer><!-- /.post-info -->                <h1>Check pytorch version installed on your machine and if it is using GPU</h1>
+<div class="highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">torch</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">__version__</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">cuda</span><span class="o">.</span><span class="n">is_available</span><span class="p">())</span>
+</code></pre></div>
+
+<h1>Preprocess image before passing it to PyTorch</h1>
+<div class="highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">from</span> <span class="nn">PIL</span> <span class="kn">import</span> <span class="n">Image</span>
+<span class="n">img</span> <span class="o">=</span> <span class="n">Image</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="s1">&#39;dogs_images.png&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">img</span><span class="p">)</span>
+
+
+<span class="kn">import</span> <span class="nn">torch …</span></code></pre></div>
+                <a class="readmore" href="/pytorch-basics-1.html">read more</a>
                 </div><!-- /.entry-content -->
             </article></li>
 
             <li><article class="hentry">
                 <header>
-                    <h1><a href="/open-image-dataset.html" rel="bookmark"
-                           title="Permalink to Open Image Dataset">Open Image Dataset</a></h1>
+                    <h1><a href="/software-engineering-and-ai-blogs-to-follow.html" rel="bookmark"
+                           title="Permalink to Software Engineering and AI blogs to follow">Software Engineering and AI blogs to follow</a></h1>
                 </header>
 
                 <div class="entry-content">
 <footer class="post-info">
-        <abbr class="published" title="2020-10-11T12:15:00+05:30">
-                Published: Sun 11 October 2020
+        <abbr class="published" title="2018-12-07T22:31:00+05:30">
+                Published: Fri 07 December 2018
         </abbr>
 
         <address class="vcard author">
                 By                         <a class="url fn" href="/author/smrati-kumar-katiyar.html">Smrati Kumar Katiyar</a>
         </address>
-<p>In <a href="/category/general.html">general</a>.</p>
-
-</footer><!-- /.post-info -->                <p><a href="https://storage.googleapis.com/openimages/web/download.html#download_manually">Open Images dataset</a></p>
-                <a class="readmore" href="/open-image-dataset.html">read more</a>
-                </div><!-- /.entry-content -->
-            </article></li>
-
-            <li><article class="hentry">
-                <header>
-                    <h1><a href="/doing-operations-on-tensors.html" rel="bookmark"
-                           title="Permalink to Doing Operations on tensors">Doing Operations on tensors</a></h1>
-                </header>
-
-                <div class="entry-content">
-<footer class="post-info">
-        <abbr class="published" title="2020-02-14T22:15:00+05:30">
-                Published: Fri 14 February 2020
-        </abbr>
-
-        <address class="vcard author">
-                By                         <a class="url fn" href="/author/smrati-kumar-katiyar.html">Smrati Kumar Katiyar</a>
-        </address>
-<p>In <a href="/category/pytorch.html">pytorch</a>.</p>
-
-</footer><!-- /.post-info -->                
-                <a class="readmore" href="/doing-operations-on-tensors.html">read more</a>
-                </div><!-- /.entry-content -->
-            </article></li>
-
-            <li><article class="hentry">
-                <header>
-                    <h1><a href="/generating-random-tensors.html" rel="bookmark"
-                           title="Permalink to Generating Random tensors">Generating Random tensors</a></h1>
-                </header>
-
-                <div class="entry-content">
-<footer class="post-info">
-        <abbr class="published" title="2020-02-14T22:15:00+05:30">
-                Published: Fri 14 February 2020
-        </abbr>
-
-        <address class="vcard author">
-                By                         <a class="url fn" href="/author/smrati-kumar-katiyar.html">Smrati Kumar Katiyar</a>
-        </address>
-<p>In <a href="/category/pytorch.html">pytorch</a>.</p>
-
-</footer><!-- /.post-info -->                
-                <a class="readmore" href="/generating-random-tensors.html">read more</a>
+<p>In <a href="/category/general.html">General</a>.</p>
+<p>tags: <a href="/tag/engineering.html">Engineering</a> <a href="/tag/artificial-intelligence.html">Artificial Intelligence</a> <a href="/tag/ai-in-industry.html">AI in Industry</a> </p>
+</footer><!-- /.post-info -->                <p>It is always good to keep a tap on what's going on in your professional world. New trends, technologies, tools will help you keep yourself more employable as compared to those peers who are not aware of latest trends. That is why on this page i'll keep on adding Links …</p>
+                <a class="readmore" href="/software-engineering-and-ai-blogs-to-follow.html">read more</a>
                 </div><!-- /.entry-content -->
             </article></li>
                 </ol><!-- /#posts-list -->
-<p class="paginator">
-    Page 1 / 2
-        <a href="/index2.html">&raquo;</a>
-        <a href="/index2.html">&#8649;</a>
-</p>
                 </section><!-- /#content -->
         <section id="extras" class="body">
                 <div class="blogroll">

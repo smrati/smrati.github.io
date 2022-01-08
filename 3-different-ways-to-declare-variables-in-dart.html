@@ -4,9 +4,9 @@
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <meta name="generator" content="Pelican" />
-        <title>What factors to consider before selecting AWS region?</title>
+        <title>3 different ways to declare variables in dart</title>
         <link rel="stylesheet" href="/theme/css/main.css" />
-        <meta name="description" content="local laws of country where you want to provide your services to (data retection policy etc.) network latency Specific aws service availbility in..." />
+        <meta name="description" content="var final const we will learn about difference in these 3 types mutable, static type main() { mutableBasicType(); } void mutableBasicType(){ int a..." />
 </head>
 
 <body id="index" class="home">
@@ -14,39 +14,106 @@
                 <h1><a href="/">Smrati's Tech Blog</a></h1>
                 <nav><ul>
                     <li><a href="/category/deep-learning.html">Deep Learning</a></li>
-                    <li class="active"><a href="/category/devops.html">Devops</a></li>
-                    <li><a href="/category/firebase.html">firebase</a></li>
-                    <li><a href="/category/general.html">general</a></li>
-                    <li><a href="/category/iot.html">IoT</a></li>
-                    <li><a href="/category/mobile-development.html">Mobile Development</a></li>
-                    <li><a href="/category/pytorch.html">pytorch</a></li>
+                    <li><a href="/category/general.html">General</a></li>
+                    <li class="active"><a href="/category/mobile-development.html">Mobile Development</a></li>
                 </ul></nav>
         </header><!-- /#banner -->
 <section id="content" class="body">
   <article>
     <header>
       <h1 class="entry-title">
-        <a href="/what-factors-to-consider-before-selecting-aws-region.html" rel="bookmark"
-           title="Permalink to What factors to consider before selecting AWS region?">What factors to consider before selecting AWS region?</a></h1>
+        <a href="/3-different-ways-to-declare-variables-in-dart.html" rel="bookmark"
+           title="Permalink to 3 different ways to declare variables in dart">3 different ways to declare variables in dart</a></h1>
     </header>
 
     <div class="entry-content">
 <footer class="post-info">
-        <abbr class="published" title="2018-12-06T22:31:00+05:30">
-                Published: Thu 06 December 2018
+        <abbr class="published" title="2022-01-01T13:24:00+05:30">
+                Published: Sat 01 January 2022
         </abbr>
 
         <address class="vcard author">
                 By                         <a class="url fn" href="/author/smrati-kumar-katiyar.html">Smrati Kumar Katiyar</a>
         </address>
-<p>In <a href="/category/devops.html">Devops</a>.</p>
-<p>tags: <a href="/tag/aws.html">AWS</a> </p>
+<p>In <a href="/category/mobile-development.html">Mobile Development</a>.</p>
+<p>tags: <a href="/tag/flutter.html">Flutter</a> <a href="/tag/dart.html">dart</a> </p>
 </footer><!-- /.post-info -->      <ol>
-<li>local laws of country where you want to provide your services to (data retection policy etc.)</li>
-<li>network latency </li>
-<li>Specific aws service availbility in that region</li>
-<li>Cost of services in different regions</li>
+<li>var</li>
+<li>final</li>
+<li>const</li>
 </ol>
+<p>we will learn about difference in these 3 types </p>
+<p>mutable, static type</p>
+<div class="highlight"><pre><span></span><code>main() {
+  mutableBasicType();
+}
+
+void mutableBasicType(){
+  int a = 5;
+  double b = 12.7;
+  bool c = true;
+
+
+  print(a);
+  print(b);
+  print(c);
+
+}
+</code></pre></div>
+
+<p>A variable once assigned as int can't be reassigned as double</p>
+<div class="highlight"><pre><span></span><code>main() {
+  mutableBasicType();
+}
+
+void mutableBasicType(){
+  int a = 5;
+  double b = 12.7;
+  bool c = true;
+
+  a = 45.6;
+
+
+  print(a);
+  print(b);
+  print(c);
+
+}
+</code></pre></div>
+
+<p>values of different type assigned to same variable as it was declared as dynamic</p>
+<div class="highlight"><pre><span></span><code>main() {
+  mutableDynamic();
+}
+
+void mutableDynamic(){
+  dynamic a = 14.6;
+  print(a);
+  a = false;
+  print(a);
+}
+</code></pre></div>
+
+<p>How to identify runtimetype</p>
+<div class="highlight"><pre><span></span><code>main() {
+  mutableDynamic();
+}
+
+void mutableDynamic(){
+  dynamic a = 14.6;
+  print(a);
+  print(a.runtimeType);
+  a = false;
+  print(a);
+  print(a.runtimeType);
+}
+</code></pre></div>
+
+<p>next we are going to understand what is var variable type
+once we declare a variable with var type it means when we assign some value to this varibale dart will set the type based on that value and once the type is infered based on the value supplied , that point onwards it can't be changed.
+so let's understand it with an example.</p>
+<div class="highlight"><pre><span></span><code>
+</code></pre></div>
     </div><!-- /.entry-content -->
 
   </article>
