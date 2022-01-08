@@ -20,7 +20,150 @@
 
             <aside id="featured" class="body">
                 <article>
-                    <h1 class="entry-title"><a href="/3-different-ways-to-declare-variables-in-dart.html">3 different ways to declare variables in dart</a></h1>
+                    <h1 class="entry-title"><a href="/passing-data-between-screens.html">Passing data between screens</a></h1>
+<footer class="post-info">
+        <abbr class="published" title="2022-01-08T21:25:00+05:30">
+                Published: Sat 08 January 2022
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/smrati-kumar-katiyar.html">Smrati Kumar Katiyar</a>
+        </address>
+<p>In <a href="/category/mobile-development.html">Mobile Development</a>.</p>
+<p>tags: <a href="/tag/flutter.html">Flutter</a> </p>
+</footer><!-- /.post-info --><p>Take example of an app where on one screen several products are listed and when you <code>tap</code> on one product you 
+reach to a new page where detail of this product is shown</p>
+<p>First create a new flutter project in android studio</p>
+<p>Have some dummy data in <code>lib/data/news_items.dart</code> file  </p>
+<div class="highlight"><pre><span></span><code><span class="n">List</span><span class="o">&lt;</span><span class="n">Map</span><span class="o">&gt;</span> <span class="n">listOfNews</span> <span class="o">=</span> <span class="p">[</span>
+  <span class="p">{</span>
+    <span class="s1">&#39;title&#39;</span><span class="o">:</span> <span class="s1">&#39;This is title 1&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;detail&#39;</span><span class="o">:</span> <span class="s1">&#39;this is detail 1. lorem ipsum&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;place&#39;</span><span class="o">:</span> <span class="s1">&#39;delhi&#39;</span>
+  <span class="p">},</span>
+  <span class="p">{</span>
+    <span class="s1">&#39;title&#39;</span><span class="o">:</span> <span class="s1">&#39;This is title 2&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;detail&#39;</span><span class="o">:</span> <span class="s1">&#39;this is detail 2. lorem ipsum&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;place&#39;</span><span class="o">:</span> <span class="s1">&#39;delhi&#39;</span>
+  <span class="p">},</span>
+  <span class="p">{</span>
+    <span class="s1">&#39;title&#39;</span><span class="o">:</span> <span class="s1">&#39;This is title 3&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;detail&#39;</span><span class="o">:</span> <span class="s1">&#39;this is detail 3. lorem ipsum&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;place&#39;</span><span class="o">:</span> <span class="s1">&#39;delhi&#39;</span>
+  <span class="p">},</span>
+  <span class="p">{</span>
+    <span class="s1">&#39;title&#39;</span><span class="o">:</span> <span class="s1">&#39;This is title 4&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;detail&#39;</span><span class="o">:</span> <span class="s1">&#39;this is detail 4. lorem ipsum&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;place&#39;</span><span class="o">:</span> <span class="s1">&#39;delhi&#39;</span>
+  <span class="p">},</span>
+  <span class="p">{</span>
+    <span class="s1">&#39;title&#39;</span><span class="o">:</span> <span class="s1">&#39;This is title 5&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;detail&#39;</span><span class="o">:</span> <span class="s1">&#39;this is detail 5. lorem ipsum&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;place&#39;</span><span class="o">:</span> <span class="s1">&#39;delhi&#39;</span>
+  <span class="p">},</span>
+  <span class="p">{</span>
+    <span class="s1">&#39;title&#39;</span><span class="o">:</span> <span class="s1">&#39;This is title 6&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;detail&#39;</span><span class="o">:</span> <span class="s1">&#39;this is detail 6. lorem ipsum&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;place&#39;</span><span class="o">:</span> <span class="s1">&#39;delhi&#39;</span>
+  <span class="p">},</span>
+  <span class="p">{</span>
+    <span class="s1">&#39;title&#39;</span><span class="o">:</span> <span class="s1">&#39;This is title 7&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;detail&#39;</span><span class="o">:</span> <span class="s1">&#39;this is detail 7. lorem ipsum&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;place&#39;</span><span class="o">:</span> <span class="s1">&#39;delhi&#39;</span>
+  <span class="p">},</span>
+  <span class="p">{</span>
+    <span class="s1">&#39;title&#39;</span><span class="o">:</span> <span class="s1">&#39;This is title 8&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;detail&#39;</span><span class="o">:</span> <span class="s1">&#39;this is detail 8. lorem ipsum&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;place&#39;</span><span class="o">:</span> <span class="s1">&#39;delhi&#39;</span>
+  <span class="p">},</span>
+  <span class="p">{</span>
+    <span class="s1">&#39;title&#39;</span><span class="o">:</span> <span class="s1">&#39;This is title 9&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;detail&#39;</span><span class="o">:</span> <span class="s1">&#39;this is detail 9. lorem ipsum&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;place&#39;</span><span class="o">:</span> <span class="s1">&#39;delhi&#39;</span>
+  <span class="p">},</span>
+  <span class="p">{</span>
+    <span class="s1">&#39;title&#39;</span><span class="o">:</span> <span class="s1">&#39;This is title 10&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;detail&#39;</span><span class="o">:</span> <span class="s1">&#39;this is detail 10. lorem ipsum&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;place&#39;</span><span class="o">:</span> <span class="s1">&#39;delhi&#39;</span>
+  <span class="p">},</span>
+<span class="p">];</span>
+</code></pre></div>
+
+<p>Create a news list screen page<br>
+file path <code>lib/screens/news_list.dart</code></p>
+<div class="highlight"><pre><span></span><code><span class="k">import</span> <span class="s1">&#39;package:flutter/material.dart&#39;</span><span class="p">;</span>
+<span class="k">import</span> <span class="s1">&#39;package:route_navigation_learn/data/news_items.dart&#39;</span><span class="p">;</span>
+<span class="k">import</span> <span class="s1">&#39;package:route_navigation_learn/screens/news_detail.dart&#39;</span><span class="p">;</span>
+
+<span class="kd">class</span> <span class="nc">NewList</span> <span class="kd">extends</span> <span class="n">StatefulWidget</span> <span class="p">{</span>
+  <span class="k">const</span> <span class="n">NewList</span><span class="p">({</span><span class="n">Key</span><span class="o">?</span> <span class="n">key</span><span class="p">})</span> <span class="o">:</span> <span class="k">super</span><span class="p">(</span><span class="nl">key:</span> <span class="n">key</span><span class="p">);</span>
+
+  <span class="nd">@override</span>
+  <span class="n">_NewListState</span> <span class="n">createState</span><span class="p">()</span> <span class="o">=&gt;</span> <span class="n">_NewListState</span><span class="p">();</span>
+<span class="p">}</span>
+
+<span class="kd">class</span> <span class="nc">_NewListState</span> <span class="kd">extends</span> <span class="n">State</span><span class="o">&lt;</span><span class="n">NewList</span><span class="o">&gt;</span> <span class="p">{</span>
+  <span class="nd">@override</span>
+  <span class="n">Widget</span> <span class="n">build</span><span class="p">(</span><span class="n">BuildContext</span> <span class="n">context</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="n">Scaffold</span><span class="p">(</span>
+      <span class="nl">appBar:</span> <span class="n">AppBar</span><span class="p">(</span>
+        <span class="nl">title:</span> <span class="n">Text</span><span class="p">(</span><span class="s1">&#39;NewsList&#39;</span><span class="p">),</span>
+      <span class="p">),</span>
+      <span class="nl">body:</span> <span class="n">ListView</span><span class="p">.</span><span class="n">builder</span><span class="p">(</span>
+          <span class="nl">itemCount:</span> <span class="n">listOfNews</span><span class="p">.</span><span class="n">length</span><span class="p">,</span>
+          <span class="nl">itemBuilder:</span> <span class="p">(</span><span class="n">context</span><span class="p">,</span> <span class="n">index</span><span class="p">)</span> <span class="p">{</span>
+            <span class="kd">final</span> <span class="n">item</span> <span class="o">=</span> <span class="n">listOfNews</span><span class="p">[</span><span class="n">index</span><span class="p">];</span>
+
+            <span class="k">return</span> <span class="n">ListTile</span><span class="p">(</span>
+              <span class="nl">title:</span> <span class="n">Text</span><span class="p">(</span><span class="n">item</span><span class="p">[</span><span class="s1">&#39;title&#39;</span><span class="p">]),</span>
+              <span class="nl">subtitle:</span> <span class="n">Text</span><span class="p">(</span><span class="n">item</span><span class="p">[</span><span class="s1">&#39;place&#39;</span><span class="p">]),</span>
+              <span class="nl">trailing:</span> <span class="n">IconButton</span><span class="p">(</span>
+                <span class="nl">icon:</span> <span class="n">Icon</span><span class="p">(</span><span class="n">Icons</span><span class="p">.</span><span class="n">arrow_forward</span><span class="p">),</span>
+                <span class="nl">onPressed:</span> <span class="p">()</span> <span class="p">{</span>
+                  <span class="n">Navigator</span><span class="p">.</span><span class="n">of</span><span class="p">(</span><span class="n">context</span><span class="p">).</span><span class="n">push</span><span class="p">(</span><span class="n">MaterialPageRoute</span><span class="p">(</span>
+                      <span class="nl">builder:</span> <span class="p">(</span><span class="n">context</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="n">NewsDetail</span><span class="p">(</span><span class="nl">data:</span> <span class="n">item</span><span class="p">)));</span>
+                <span class="p">},</span>
+              <span class="p">),</span>
+            <span class="p">);</span>
+          <span class="p">}),</span>
+    <span class="p">);</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+
+<p><code>lib/main.dart</code>  </p>
+<div class="highlight"><pre><span></span><code><span class="k">import</span> <span class="s1">&#39;package:flutter/material.dart&#39;</span><span class="p">;</span>
+<span class="k">import</span> <span class="s1">&#39;package:route_navigation_learn/screens/news_list.dart&#39;</span><span class="p">;</span>
+
+<span class="kt">void</span> <span class="n">main</span><span class="p">()</span> <span class="o">=&gt;</span> <span class="n">runApp</span><span class="p">(</span><span class="n">NavigationExampleApp</span><span class="p">());</span>
+
+<span class="kd">class</span> <span class="nc">NavigationExampleApp</span> <span class="kd">extends</span> <span class="n">StatelessWidget</span> <span class="p">{</span>
+  <span class="k">const</span> <span class="n">NavigationExampleApp</span><span class="p">({</span><span class="n">Key</span><span class="o">?</span> <span class="n">key</span><span class="p">})</span> <span class="o">:</span> <span class="k">super</span><span class="p">(</span><span class="nl">key:</span> <span class="n">key</span><span class="p">);</span>
+
+  <span class="nd">@override</span>
+  <span class="n">Widget</span> <span class="n">build</span><span class="p">(</span><span class="n">BuildContext</span> <span class="n">context</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="n">MaterialApp</span><span class="p">(</span>
+      <span class="nl">initialRoute:</span> <span class="s1">&#39;/&#39;</span><span class="p">,</span>
+      <span class="nl">routes:</span> <span class="p">{</span>
+        <span class="s1">&#39;/&#39;</span><span class="o">:</span> <span class="p">(</span><span class="n">context</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="n">NewList</span><span class="p">(),</span>
+      <span class="p">},</span>
+    <span class="p">);</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>                </article>
+            </aside><!-- /#featured -->
+                <section id="content" class="body">
+                    <h1>Other articles</h1>
+                    <hr />
+                    <ol id="posts-list" class="hfeed">
+
+            <li><article class="hentry">
+                <header>
+                    <h1><a href="/3-different-ways-to-declare-variables-in-dart.html" rel="bookmark"
+                           title="Permalink to 3 different ways to declare variables in dart">3 different ways to declare variables in dart</a></h1>
+                </header>
+
+                <div class="entry-content">
 <footer class="post-info">
         <abbr class="published" title="2022-01-01T13:24:00+05:30">
                 Published: Sat 01 January 2022
@@ -31,7 +174,7 @@
         </address>
 <p>In <a href="/category/mobile-development.html">Mobile Development</a>.</p>
 <p>tags: <a href="/tag/flutter.html">Flutter</a> <a href="/tag/dart.html">dart</a> </p>
-</footer><!-- /.post-info --><ol>
+</footer><!-- /.post-info -->                <ol>
 <li>var</li>
 <li>final</li>
 <li>const</li>
@@ -60,59 +203,10 @@ void mutableBasicType(){
   mutableBasicType();
 }
 
-void mutableBasicType(){
-  int a = 5;
-  double b = 12.7;
-  bool c = true;
-
-  a = 45.6;
-
-
-  print(a);
-  print(b);
-  print(c);
-
-}
-</code></pre></div>
-
-<p>values of different type assigned to same variable as it was declared as dynamic</p>
-<div class="highlight"><pre><span></span><code>main() {
-  mutableDynamic();
-}
-
-void mutableDynamic(){
-  dynamic a = 14.6;
-  print(a);
-  a = false;
-  print(a);
-}
-</code></pre></div>
-
-<p>How to identify runtimetype</p>
-<div class="highlight"><pre><span></span><code>main() {
-  mutableDynamic();
-}
-
-void mutableDynamic(){
-  dynamic a = 14.6;
-  print(a);
-  print(a.runtimeType);
-  a = false;
-  print(a);
-  print(a.runtimeType);
-}
-</code></pre></div>
-
-<p>next we are going to understand what is var variable type
-once we declare a variable with var type it means when we assign some value to this varibale dart will set the type based on that value and once the type is infered based on the value supplied , that point onwards it can't be changed.
-so let's understand it with an example.</p>
-<div class="highlight"><pre><span></span><code>
-</code></pre></div>                </article>
-            </aside><!-- /#featured -->
-                <section id="content" class="body">
-                    <h1>Other articles</h1>
-                    <hr />
-                    <ol id="posts-list" class="hfeed">
+void mutableBasicType …</code></pre></div>
+                <a class="readmore" href="/3-different-ways-to-declare-variables-in-dart.html">read more</a>
+                </div><!-- /.entry-content -->
+            </article></li>
 
             <li><article class="hentry">
                 <header>
