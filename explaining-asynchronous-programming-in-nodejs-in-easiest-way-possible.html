@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta name="generator" content="Pelican" />
+        <title>Explaining asynchronous programming in Node.js in easiest way possible</title>
+        <link rel="stylesheet" href="/theme/css/main.css" />
+        <meta name="description" content="Look at the synchrous code below console.log('First Line'); console.log('Second Line'); Its output is: First Line Second Line Now look at the..." />
+</head>
+
+<body id="index" class="home">
+        <header id="banner" class="body">
+                <h1><a href="/">Smrati's Tech Blog</a></h1>
+                <nav><ul>
+                    <li><a href="/category/deep-learning.html">Deep Learning</a></li>
+                    <li><a href="/category/general.html">General</a></li>
+                    <li><a href="/category/mobile-development.html">Mobile Development</a></li>
+                    <li class="active"><a href="/category/web-development.html">Web Development</a></li>
+                </ul></nav>
+        </header><!-- /#banner -->
+<section id="content" class="body">
+  <article>
+    <header>
+      <h1 class="entry-title">
+        <a href="/explaining-asynchronous-programming-in-nodejs-in-easiest-way-possible.html" rel="bookmark"
+           title="Permalink to Explaining asynchronous programming in Node.js in easiest way possible">Explaining asynchronous programming in Node.js in easiest way possible</a></h1>
+    </header>
+
+    <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2022-01-09T13:40:00+05:30">
+                Published: Sun 09 January 2022
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/smrati-kumar-katiyar.html">Smrati Kumar Katiyar</a>
+        </address>
+<p>In <a href="/category/web-development.html">Web Development</a>.</p>
+<p>tags: <a href="/tag/nodejs.html">node.js</a> </p>
+</footer><!-- /.post-info -->      <p>Look at the synchrous code below</p>
+<div class="highlight"><pre><span></span><code><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;First Line&#39;</span><span class="p">);</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;Second Line&#39;</span><span class="p">);</span>
+</code></pre></div>
+
+<p>Its output is:  </p>
+<div class="highlight"><pre><span></span><code>First Line
+Second Line
+</code></pre></div>
+
+<p>Now look at the asynchronous code below  </p>
+<div class="highlight"><pre><span></span><code><span class="nx">setTimeout</span><span class="p">(()</span> <span class="p">=&gt;</span> <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;First Line&#39;</span><span class="p">),</span> <span class="mf">1000</span><span class="p">);</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;Second Line&#39;</span><span class="p">);</span>
+</code></pre></div>
+
+<p>Its output is:  </p>
+<div class="highlight"><pre><span></span><code>Second Line
+First Line
+</code></pre></div>
+
+<p>Now if you compare both the codes you can identify in second block of code node gets and asynchronous function to execute
+<code>setTimeout(() =&gt; console.log('First Line'), 1000);</code> what this function mean is wait for 1000 milli seconds before executing code the anonymous function <code>() =&gt; console.log('First Line')</code><br>
+So this anonymous function is the callback which will be executed after 1000 milliseconds.<br>
+But <code>node</code> being an asynchronous runtime don't wait for 1000 milli seconds instead it immediately move to second line for execution after sending first line to event loop. </p>
+    </div><!-- /.entry-content -->
+
+  </article>
+</section>
+        <section id="extras" class="body">
+                <div class="blogroll">
+                        <h2>links</h2>
+                        <ul>
+                            <li><a href="https://flutter.dev/">Flutter</a></li>
+                            <li><a href="https://www.python.org/">Python.org</a></li>
+                        </ul>
+                </div><!-- /.blogroll -->
+                <div class="social">
+                        <h2>social</h2>
+                        <ul>
+
+                            <li><a href="https://twitter.com/SmratiKatiyar">Twitter</a></li>
+                            <li><a href="https://www.linkedin.com/in/smrati/">Linkedin</a></li>
+                        </ul>
+                </div><!-- /.social -->
+        </section><!-- /#extras -->
+
+        <footer id="contentinfo" class="body">
+                <address id="about" class="vcard body">
+                Proudly powered by <a href="https://getpelican.com/">Pelican</a>, which takes great advantage of <a href="https://www.python.org/">Python</a>.
+                </address><!-- /#about -->
+
+                <p>The theme is by <a href="https://www.smashingmagazine.com/2009/08/designing-a-html-5-layout-from-scratch/">Smashing Magazine</a>, thanks!</p>
+        </footer><!-- /#contentinfo -->
+
+</body>
+</html>

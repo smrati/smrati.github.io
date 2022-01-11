@@ -4,7 +4,7 @@
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <meta name="generator" content="Pelican" />
-        <title>Smrati's Tech Blog - dart</title>
+        <title>Smrati's Tech Blog - node.js</title>
         <link rel="stylesheet" href="/theme/css/main.css" />
 </head>
 
@@ -21,94 +21,41 @@
 
             <aside id="featured" class="body">
                 <article>
-                    <h1 class="entry-title"><a href="/3-different-ways-to-declare-variables-in-dart.html">3 different ways to declare variables in dart</a></h1>
+                    <h1 class="entry-title"><a href="/explaining-asynchronous-programming-in-nodejs-in-easiest-way-possible.html">Explaining asynchronous programming in Node.js in easiest way possible</a></h1>
 <footer class="post-info">
-        <abbr class="published" title="2022-01-01T13:24:00+05:30">
-                Published: Sat 01 January 2022
+        <abbr class="published" title="2022-01-09T13:40:00+05:30">
+                Published: Sun 09 January 2022
         </abbr>
 
         <address class="vcard author">
                 By                         <a class="url fn" href="/author/smrati-kumar-katiyar.html">Smrati Kumar Katiyar</a>
         </address>
-<p>In <a href="/category/mobile-development.html">Mobile Development</a>.</p>
-<p>tags: <a href="/tag/flutter.html">Flutter</a> <a href="/tag/dart.html">dart</a> </p>
-</footer><!-- /.post-info --><ol>
-<li>var</li>
-<li>final</li>
-<li>const</li>
-</ol>
-<p>we will learn about difference in these 3 types </p>
-<p>mutable, static type</p>
-<div class="highlight"><pre><span></span><code>main() {
-  mutableBasicType();
-}
-
-void mutableBasicType(){
-  int a = 5;
-  double b = 12.7;
-  bool c = true;
-
-
-  print(a);
-  print(b);
-  print(c);
-
-}
+<p>In <a href="/category/web-development.html">Web Development</a>.</p>
+<p>tags: <a href="/tag/nodejs.html">node.js</a> </p>
+</footer><!-- /.post-info --><p>Look at the synchrous code below</p>
+<div class="highlight"><pre><span></span><code><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;First Line&#39;</span><span class="p">);</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;Second Line&#39;</span><span class="p">);</span>
 </code></pre></div>
 
-<p>A variable once assigned as int can't be reassigned as double</p>
-<div class="highlight"><pre><span></span><code>main() {
-  mutableBasicType();
-}
-
-void mutableBasicType(){
-  int a = 5;
-  double b = 12.7;
-  bool c = true;
-
-  a = 45.6;
-
-
-  print(a);
-  print(b);
-  print(c);
-
-}
+<p>Its output is:  </p>
+<div class="highlight"><pre><span></span><code>First Line
+Second Line
 </code></pre></div>
 
-<p>values of different type assigned to same variable as it was declared as dynamic</p>
-<div class="highlight"><pre><span></span><code>main() {
-  mutableDynamic();
-}
-
-void mutableDynamic(){
-  dynamic a = 14.6;
-  print(a);
-  a = false;
-  print(a);
-}
+<p>Now look at the asynchronous code below  </p>
+<div class="highlight"><pre><span></span><code><span class="nx">setTimeout</span><span class="p">(()</span> <span class="p">=&gt;</span> <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;First Line&#39;</span><span class="p">),</span> <span class="mf">1000</span><span class="p">);</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;Second Line&#39;</span><span class="p">);</span>
 </code></pre></div>
 
-<p>How to identify runtimetype</p>
-<div class="highlight"><pre><span></span><code>main() {
-  mutableDynamic();
-}
-
-void mutableDynamic(){
-  dynamic a = 14.6;
-  print(a);
-  print(a.runtimeType);
-  a = false;
-  print(a);
-  print(a.runtimeType);
-}
+<p>Its output is:  </p>
+<div class="highlight"><pre><span></span><code>Second Line
+First Line
 </code></pre></div>
 
-<p>next we are going to understand what is var variable type
-once we declare a variable with var type it means when we assign some value to this varibale dart will set the type based on that value and once the type is infered based on the value supplied , that point onwards it can't be changed.
-so let's understand it with an example.</p>
-<div class="highlight"><pre><span></span><code>
-</code></pre></div>                </article>
+<p>Now if you compare both the codes you can identify in second block of code node gets and asynchronous function to execute
+<code>setTimeout(() =&gt; console.log('First Line'), 1000);</code> what this function mean is wait for 1000 milli seconds before executing code the anonymous function <code>() =&gt; console.log('First Line')</code><br>
+So this anonymous function is the callback which will be executed after 1000 milliseconds.<br>
+But <code>node</code> being an asynchronous runtime don't wait for 1000 milli seconds instead it immediately move to second line for execution after sending first line to event loop. </p>                </article>
             </aside><!-- /#featured -->
         <section id="extras" class="body">
                 <div class="blogroll">

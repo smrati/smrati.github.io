@@ -15,12 +15,87 @@
                     <li><a href="/category/deep-learning.html">Deep Learning</a></li>
                     <li><a href="/category/general.html">General</a></li>
                     <li><a href="/category/mobile-development.html">Mobile Development</a></li>
+                    <li><a href="/category/web-development.html">Web Development</a></li>
                 </ul></nav>
         </header><!-- /#banner -->
 
             <aside id="featured" class="body">
                 <article>
-                    <h1 class="entry-title"><a href="/passing-data-between-screens.html">Passing data between screens</a></h1>
+                    <h1 class="entry-title"><a href="/explaining-asynchronous-programming-in-nodejs-in-easiest-way-possible.html">Explaining asynchronous programming in Node.js in easiest way possible</a></h1>
+<footer class="post-info">
+        <abbr class="published" title="2022-01-09T13:40:00+05:30">
+                Published: Sun 09 January 2022
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/smrati-kumar-katiyar.html">Smrati Kumar Katiyar</a>
+        </address>
+<p>In <a href="/category/web-development.html">Web Development</a>.</p>
+<p>tags: <a href="/tag/nodejs.html">node.js</a> </p>
+</footer><!-- /.post-info --><p>Look at the synchrous code below</p>
+<div class="highlight"><pre><span></span><code><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;First Line&#39;</span><span class="p">);</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;Second Line&#39;</span><span class="p">);</span>
+</code></pre></div>
+
+<p>Its output is:  </p>
+<div class="highlight"><pre><span></span><code>First Line
+Second Line
+</code></pre></div>
+
+<p>Now look at the asynchronous code below  </p>
+<div class="highlight"><pre><span></span><code><span class="nx">setTimeout</span><span class="p">(()</span> <span class="p">=&gt;</span> <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;First Line&#39;</span><span class="p">),</span> <span class="mf">1000</span><span class="p">);</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;Second Line&#39;</span><span class="p">);</span>
+</code></pre></div>
+
+<p>Its output is:  </p>
+<div class="highlight"><pre><span></span><code>Second Line
+First Line
+</code></pre></div>
+
+<p>Now if you compare both the codes you can identify in second block of code node gets and asynchronous function to execute
+<code>setTimeout(() =&gt; console.log('First Line'), 1000);</code> what this function mean is wait for 1000 milli seconds before executing code the anonymous function <code>() =&gt; console.log('First Line')</code><br>
+So this anonymous function is the callback which will be executed after 1000 milliseconds.<br>
+But <code>node</code> being an asynchronous runtime don't wait for 1000 milli seconds instead it immediately move to second line for execution after sending first line to event loop. </p>                </article>
+            </aside><!-- /#featured -->
+                <section id="content" class="body">
+                    <h1>Other articles</h1>
+                    <hr />
+                    <ol id="posts-list" class="hfeed">
+
+            <li><article class="hentry">
+                <header>
+                    <h1><a href="/flutter-crud-using-sqlite.html" rel="bookmark"
+                           title="Permalink to Flutter CRUD using SQLite">Flutter CRUD using SQLite</a></h1>
+                </header>
+
+                <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2022-01-08T22:51:00+05:30">
+                Published: Sat 08 January 2022
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/smrati-kumar-katiyar.html">Smrati Kumar Katiyar</a>
+        </address>
+<p>In <a href="/category/mobile-development.html">Mobile Development</a>.</p>
+<p>tags: <a href="/tag/flutter.html">Flutter</a> <a href="/tag/sqlite.html">SQLite</a> </p>
+</footer><!-- /.post-info -->                <p>Plugin used in this tutorial <code>sqflite</code><br>
+The tutorials i am following to create these notes are given below <br>
+1. <a href="https://docs.flutter.dev/cookbook/persistence/sqlite">https://docs.flutter.dev/cookbook/persistence/sqlite</a><br>
+2. <a href="https://www.fluttercampus.com/guide/103/how-to-use-sqlite-sqflite-crud-operation-on-flutter-android-ios/">https://www.fluttercampus.com/guide/103/how-to-use-sqlite-sqflite-crud-operation-on-flutter-android-ios/</a></p>
+<p>In this tutorial we will create a CRUD application for News items. 
+1. Create a News …</p>
+                <a class="readmore" href="/flutter-crud-using-sqlite.html">read more</a>
+                </div><!-- /.entry-content -->
+            </article></li>
+
+            <li><article class="hentry">
+                <header>
+                    <h1><a href="/passing-data-between-screens.html" rel="bookmark"
+                           title="Permalink to Passing data between screens">Passing data between screens</a></h1>
+                </header>
+
+                <div class="entry-content">
 <footer class="post-info">
         <abbr class="published" title="2022-01-08T21:25:00+05:30">
                 Published: Sat 08 January 2022
@@ -31,187 +106,13 @@
         </address>
 <p>In <a href="/category/mobile-development.html">Mobile Development</a>.</p>
 <p>tags: <a href="/tag/flutter.html">Flutter</a> </p>
-</footer><!-- /.post-info --><p>Take example of an app where on one screen several news items are listed and when you <code>tap</code> on one news item you 
+</footer><!-- /.post-info -->                <p>I have learned this concept following tutorial given <a href="https://docs.flutter.dev/cookbook/navigation/passing-data">here</a></p>
+<p>Take example of an app where on one screen several news items are listed and when you <code>tap</code> on one news item you 
 reach to a new page where detail of this news is shown</p>
-<p>First create a new flutter project in android studio</p>
-<p>Have some dummy data in <code>lib/data/news_items.dart</code> file  </p>
-<div class="highlight"><pre><span></span><code><span class="k">import</span> <span class="s1">&#39;package:route_navigation_learn/models/news.dart&#39;</span><span class="p">;</span>
-
-<span class="kd">final</span> <span class="n">news_items</span> <span class="o">=</span> <span class="n">List</span><span class="p">.</span><span class="n">generate</span><span class="p">(</span>
-  <span class="m">100</span><span class="p">,</span>
-  <span class="p">(</span><span class="n">index</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="n">News</span><span class="p">(</span>
-    <span class="s1">&#39;Title </span><span class="si">$</span><span class="n">index</span><span class="s1">&#39;</span><span class="p">,</span>
-    <span class="s1">&#39;Detail </span><span class="si">$</span><span class="n">index</span><span class="s1">&#39;</span><span class="p">,</span>
-    <span class="s1">&#39;Place </span><span class="si">$</span><span class="n">index</span><span class="s1">&#39;</span><span class="p">,</span>
-  <span class="p">),</span>
-<span class="p">);</span>
-</code></pre></div>
-
-<p>Create a news list screen page<br>
-file path <code>lib/screens/news_list.dart</code></p>
-<div class="highlight"><pre><span></span><code><span class="k">import</span> <span class="s1">&#39;package:flutter/material.dart&#39;</span><span class="p">;</span>
-<span class="k">import</span> <span class="s1">&#39;package:route_navigation_learn/data/news_items.dart&#39;</span><span class="p">;</span>
-<span class="k">import</span> <span class="s1">&#39;package:route_navigation_learn/screens/news_detail.dart&#39;</span><span class="p">;</span>
-
-<span class="kd">class</span> <span class="nc">NewList</span> <span class="kd">extends</span> <span class="n">StatefulWidget</span> <span class="p">{</span>
-  <span class="k">const</span> <span class="n">NewList</span><span class="p">({</span><span class="n">Key</span><span class="o">?</span> <span class="n">key</span><span class="p">})</span> <span class="o">:</span> <span class="k">super</span><span class="p">(</span><span class="nl">key:</span> <span class="n">key</span><span class="p">);</span>
-
-  <span class="nd">@override</span>
-  <span class="n">_NewListState</span> <span class="n">createState</span><span class="p">()</span> <span class="o">=&gt;</span> <span class="n">_NewListState</span><span class="p">();</span>
-<span class="p">}</span>
-
-<span class="kd">class</span> <span class="nc">_NewListState</span> <span class="kd">extends</span> <span class="n">State</span><span class="o">&lt;</span><span class="n">NewList</span><span class="o">&gt;</span> <span class="p">{</span>
-  <span class="nd">@override</span>
-  <span class="n">Widget</span> <span class="n">build</span><span class="p">(</span><span class="n">BuildContext</span> <span class="n">context</span><span class="p">)</span> <span class="p">{</span>
-    <span class="k">return</span> <span class="n">Scaffold</span><span class="p">(</span>
-      <span class="nl">appBar:</span> <span class="n">AppBar</span><span class="p">(</span>
-        <span class="nl">title:</span> <span class="n">Text</span><span class="p">(</span><span class="s1">&#39;NewsList&#39;</span><span class="p">),</span>
-      <span class="p">),</span>
-      <span class="nl">body:</span> <span class="n">ListView</span><span class="p">.</span><span class="n">builder</span><span class="p">(</span>
-          <span class="nl">itemCount:</span> <span class="n">news_items</span><span class="p">.</span><span class="n">length</span><span class="p">,</span>
-          <span class="nl">itemBuilder:</span> <span class="p">(</span><span class="n">context</span><span class="p">,</span> <span class="n">index</span><span class="p">)</span> <span class="p">{</span>
-            <span class="kd">final</span> <span class="n">item</span> <span class="o">=</span> <span class="n">news_items</span><span class="p">[</span><span class="n">index</span><span class="p">];</span>
-
-            <span class="k">return</span> <span class="n">ListTile</span><span class="p">(</span>
-              <span class="nl">title:</span> <span class="n">Text</span><span class="p">(</span><span class="n">item</span><span class="p">.</span><span class="n">title</span><span class="p">),</span>
-              <span class="nl">subtitle:</span> <span class="n">Text</span><span class="p">(</span><span class="n">item</span><span class="p">.</span><span class="n">place</span><span class="p">),</span>
-              <span class="nl">trailing:</span> <span class="n">IconButton</span><span class="p">(</span>
-                <span class="nl">icon:</span> <span class="n">Icon</span><span class="p">(</span><span class="n">Icons</span><span class="p">.</span><span class="n">arrow_forward</span><span class="p">),</span>
-                <span class="nl">onPressed:</span> <span class="p">()</span> <span class="p">{</span>
-                  <span class="n">Navigator</span><span class="p">.</span><span class="n">of</span><span class="p">(</span><span class="n">context</span><span class="p">).</span><span class="n">push</span><span class="p">(</span><span class="n">MaterialPageRoute</span><span class="p">(</span>
-                      <span class="nl">builder:</span> <span class="p">(</span><span class="n">context</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="n">NewsDetail</span><span class="p">(</span>
-                            <span class="nl">news:</span> <span class="n">news_items</span><span class="p">[</span><span class="n">index</span><span class="p">],</span>
-                          <span class="p">)));</span>
-                <span class="p">},</span>
-              <span class="p">),</span>
-            <span class="p">);</span>
-          <span class="p">}),</span>
-    <span class="p">);</span>
-  <span class="p">}</span>
-<span class="p">}</span>
-</code></pre></div>
-
-<p><code>news_detail.dart</code></p>
-<div class="highlight"><pre><span></span><code><span class="k">import</span> <span class="s1">&#39;package:flutter/material.dart&#39;</span><span class="p">;</span>
-<span class="k">import</span> <span class="s1">&#39;package:route_navigation_learn/models/news.dart&#39;</span><span class="p">;</span>
-
-<span class="kd">class</span> <span class="nc">NewsDetail</span> <span class="kd">extends</span> <span class="n">StatelessWidget</span> <span class="p">{</span>
-  <span class="k">const</span> <span class="n">NewsDetail</span><span class="p">({</span><span class="n">Key</span><span class="o">?</span> <span class="n">key</span><span class="p">,</span> <span class="kd">required</span> <span class="k">this</span><span class="p">.</span><span class="n">news</span><span class="p">})</span> <span class="o">:</span> <span class="k">super</span><span class="p">(</span><span class="nl">key:</span> <span class="n">key</span><span class="p">);</span>
-  <span class="kd">final</span> <span class="n">News</span> <span class="n">news</span><span class="p">;</span>
-
-  <span class="nd">@override</span>
-  <span class="n">Widget</span> <span class="n">build</span><span class="p">(</span><span class="n">BuildContext</span> <span class="n">context</span><span class="p">)</span> <span class="p">{</span>
-    <span class="k">return</span> <span class="n">Scaffold</span><span class="p">(</span>
-      <span class="nl">appBar:</span> <span class="n">AppBar</span><span class="p">(</span>
-        <span class="nl">title:</span> <span class="n">Text</span><span class="p">(</span><span class="n">news</span><span class="p">.</span><span class="n">title</span><span class="p">),</span>
-      <span class="p">),</span>
-      <span class="nl">body:</span> <span class="n">Center</span><span class="p">(</span>
-          <span class="nl">child:</span> <span class="n">Column</span><span class="p">(</span>
-        <span class="c1">// mainAxisAlignment: MainAxisAlignment.center,</span>
-        <span class="nl">crossAxisAlignment:</span> <span class="n">CrossAxisAlignment</span><span class="p">.</span><span class="n">center</span><span class="p">,</span>
-        <span class="nl">children:</span> <span class="p">[</span><span class="n">Text</span><span class="p">(</span><span class="n">news</span><span class="p">.</span><span class="n">detail</span><span class="p">),</span> <span class="n">Text</span><span class="p">(</span><span class="n">news</span><span class="p">.</span><span class="n">place</span><span class="p">)],</span>
-      <span class="p">)),</span>
-    <span class="p">);</span>
-  <span class="p">}</span>
-<span class="p">}</span>
-</code></pre></div>
-
-<p><code>lib/main.dart</code>  </p>
-<div class="highlight"><pre><span></span><code><span class="k">import</span> <span class="s1">&#39;package:flutter/material.dart&#39;</span><span class="p">;</span>
-<span class="k">import</span> <span class="s1">&#39;package:route_navigation_learn/screens/news_list.dart&#39;</span><span class="p">;</span>
-
-<span class="kt">void</span> <span class="n">main</span><span class="p">()</span> <span class="o">=&gt;</span> <span class="n">runApp</span><span class="p">(</span><span class="n">NavigationExampleApp</span><span class="p">());</span>
-
-<span class="kd">class</span> <span class="nc">NavigationExampleApp</span> <span class="kd">extends</span> <span class="n">StatelessWidget</span> <span class="p">{</span>
-  <span class="k">const</span> <span class="n">NavigationExampleApp</span><span class="p">({</span><span class="n">Key</span><span class="o">?</span> <span class="n">key</span><span class="p">})</span> <span class="o">:</span> <span class="k">super</span><span class="p">(</span><span class="nl">key:</span> <span class="n">key</span><span class="p">);</span>
-
-  <span class="nd">@override</span>
-  <span class="n">Widget</span> <span class="n">build</span><span class="p">(</span><span class="n">BuildContext</span> <span class="n">context</span><span class="p">)</span> <span class="p">{</span>
-    <span class="k">return</span> <span class="n">MaterialApp</span><span class="p">(</span>
-      <span class="nl">initialRoute:</span> <span class="s1">&#39;/&#39;</span><span class="p">,</span>
-      <span class="nl">routes:</span> <span class="p">{</span>
-        <span class="s1">&#39;/&#39;</span><span class="o">:</span> <span class="p">(</span><span class="n">context</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="n">NewList</span><span class="p">(),</span>
-      <span class="p">},</span>
-    <span class="p">);</span>
-  <span class="p">}</span>
-<span class="p">}</span>
-</code></pre></div>
-
-<p>There is another way to pass data between screens it is called <code>RouteSettings</code>
-Change <code>lib/screens/news_list.dart</code><br>
-pass the arguments inside onPressed function  </p>
-<div class="highlight"><pre><span></span><code><span class="k">import</span> <span class="s1">&#39;package:flutter/material.dart&#39;</span><span class="p">;</span>
-<span class="k">import</span> <span class="s1">&#39;package:route_navigation_learn/data/news_items.dart&#39;</span><span class="p">;</span>
-<span class="k">import</span> <span class="s1">&#39;package:route_navigation_learn/screens/news_detail.dart&#39;</span><span class="p">;</span>
-
-<span class="kd">class</span> <span class="nc">NewList</span> <span class="kd">extends</span> <span class="n">StatefulWidget</span> <span class="p">{</span>
-  <span class="k">const</span> <span class="n">NewList</span><span class="p">({</span><span class="n">Key</span><span class="o">?</span> <span class="n">key</span><span class="p">})</span> <span class="o">:</span> <span class="k">super</span><span class="p">(</span><span class="nl">key:</span> <span class="n">key</span><span class="p">);</span>
-
-  <span class="nd">@override</span>
-  <span class="n">_NewListState</span> <span class="n">createState</span><span class="p">()</span> <span class="o">=&gt;</span> <span class="n">_NewListState</span><span class="p">();</span>
-<span class="p">}</span>
-
-<span class="kd">class</span> <span class="nc">_NewListState</span> <span class="kd">extends</span> <span class="n">State</span><span class="o">&lt;</span><span class="n">NewList</span><span class="o">&gt;</span> <span class="p">{</span>
-  <span class="nd">@override</span>
-  <span class="n">Widget</span> <span class="n">build</span><span class="p">(</span><span class="n">BuildContext</span> <span class="n">context</span><span class="p">)</span> <span class="p">{</span>
-    <span class="k">return</span> <span class="n">Scaffold</span><span class="p">(</span>
-      <span class="nl">appBar:</span> <span class="n">AppBar</span><span class="p">(</span>
-        <span class="nl">title:</span> <span class="n">Text</span><span class="p">(</span><span class="s1">&#39;NewsList&#39;</span><span class="p">),</span>
-      <span class="p">),</span>
-      <span class="nl">body:</span> <span class="n">ListView</span><span class="p">.</span><span class="n">builder</span><span class="p">(</span>
-          <span class="nl">itemCount:</span> <span class="n">news_items</span><span class="p">.</span><span class="n">length</span><span class="p">,</span>
-          <span class="nl">itemBuilder:</span> <span class="p">(</span><span class="n">context</span><span class="p">,</span> <span class="n">index</span><span class="p">)</span> <span class="p">{</span>
-            <span class="kd">final</span> <span class="n">item</span> <span class="o">=</span> <span class="n">news_items</span><span class="p">[</span><span class="n">index</span><span class="p">];</span>
-
-            <span class="k">return</span> <span class="n">ListTile</span><span class="p">(</span>
-              <span class="nl">title:</span> <span class="n">Text</span><span class="p">(</span><span class="n">item</span><span class="p">.</span><span class="n">title</span><span class="p">),</span>
-              <span class="nl">subtitle:</span> <span class="n">Text</span><span class="p">(</span><span class="n">item</span><span class="p">.</span><span class="n">place</span><span class="p">),</span>
-              <span class="nl">trailing:</span> <span class="n">IconButton</span><span class="p">(</span>
-                <span class="nl">icon:</span> <span class="n">Icon</span><span class="p">(</span><span class="n">Icons</span><span class="p">.</span><span class="n">arrow_forward</span><span class="p">),</span>
-                <span class="nl">onPressed:</span> <span class="p">()</span> <span class="p">{</span>
-                  <span class="n">Navigator</span><span class="p">.</span><span class="n">of</span><span class="p">(</span><span class="n">context</span><span class="p">).</span><span class="n">push</span><span class="p">(</span><span class="n">MaterialPageRoute</span><span class="p">(</span>
-                      <span class="nl">builder:</span> <span class="p">(</span><span class="n">context</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="n">NewsDetail</span><span class="p">(),</span>
-                      <span class="nl">settings:</span> <span class="n">RouteSettings</span><span class="p">(</span>
-                        <span class="nl">arguments:</span> <span class="n">news_items</span><span class="p">[</span><span class="n">index</span><span class="p">],</span>
-                      <span class="p">)));</span>
-                <span class="p">},</span>
-              <span class="p">),</span>
-            <span class="p">);</span>
-          <span class="p">}),</span>
-    <span class="p">);</span>
-  <span class="p">}</span>
-<span class="p">}</span>
-</code></pre></div>
-
-<p>change the <code>lib/screens/news_detail.dart</code>  </p>
-<div class="highlight"><pre><span></span><code><span class="k">import</span> <span class="s1">&#39;package:flutter/material.dart&#39;</span><span class="p">;</span>
-<span class="k">import</span> <span class="s1">&#39;package:route_navigation_learn/models/news.dart&#39;</span><span class="p">;</span>
-
-<span class="kd">class</span> <span class="nc">NewsDetail</span> <span class="kd">extends</span> <span class="n">StatelessWidget</span> <span class="p">{</span>
-  <span class="k">const</span> <span class="n">NewsDetail</span><span class="p">({</span><span class="n">Key</span><span class="o">?</span> <span class="n">key</span><span class="p">})</span> <span class="o">:</span> <span class="k">super</span><span class="p">(</span><span class="nl">key:</span> <span class="n">key</span><span class="p">);</span>
-
-  <span class="nd">@override</span>
-  <span class="n">Widget</span> <span class="n">build</span><span class="p">(</span><span class="n">BuildContext</span> <span class="n">context</span><span class="p">)</span> <span class="p">{</span>
-    <span class="kd">final</span> <span class="n">News</span> <span class="n">news</span> <span class="o">=</span> <span class="n">ModalRoute</span><span class="p">.</span><span class="n">of</span><span class="p">(</span><span class="n">context</span><span class="p">)</span><span class="o">!</span><span class="p">.</span><span class="n">settings</span><span class="p">.</span><span class="n">arguments</span> <span class="k">as</span> <span class="n">News</span><span class="p">;</span>
-    <span class="k">return</span> <span class="n">Scaffold</span><span class="p">(</span>
-      <span class="nl">appBar:</span> <span class="n">AppBar</span><span class="p">(</span>
-        <span class="nl">title:</span> <span class="n">Text</span><span class="p">(</span><span class="n">news</span><span class="p">.</span><span class="n">title</span><span class="p">),</span>
-      <span class="p">),</span>
-      <span class="nl">body:</span> <span class="n">Center</span><span class="p">(</span>
-          <span class="nl">child:</span> <span class="n">Column</span><span class="p">(</span>
-        <span class="c1">// mainAxisAlignment: MainAxisAlignment.center,</span>
-        <span class="nl">crossAxisAlignment:</span> <span class="n">CrossAxisAlignment</span><span class="p">.</span><span class="n">center</span><span class="p">,</span>
-        <span class="nl">children:</span> <span class="p">[</span><span class="n">Text</span><span class="p">(</span><span class="n">news</span><span class="p">.</span><span class="n">detail</span><span class="p">),</span> <span class="n">Text</span><span class="p">(</span><span class="n">news</span><span class="p">.</span><span class="n">place</span><span class="p">)],</span>
-      <span class="p">)),</span>
-    <span class="p">);</span>
-  <span class="p">}</span>
-<span class="p">}</span>
-</code></pre></div>                </article>
-            </aside><!-- /#featured -->
-                <section id="content" class="body">
-                    <h1>Other articles</h1>
-                    <hr />
-                    <ol id="posts-list" class="hfeed">
+<p>First create a new flutter project …</p>
+                <a class="readmore" href="/passing-data-between-screens.html">read more</a>
+                </div><!-- /.entry-content -->
+            </article></li>
 
             <li><article class="hentry">
                 <header>
