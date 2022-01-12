@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta name="generator" content="Pelican" />
+        <title>Smrati's Tech Blog - Provider</title>
+        <link rel="stylesheet" href="/theme/css/main.css" />
+</head>
+
+<body id="index" class="home">
+        <header id="banner" class="body">
+                <h1><a href="/">Smrati's Tech Blog</a></h1>
+                <nav><ul>
+                    <li><a href="/category/deep-learning.html">Deep Learning</a></li>
+                    <li><a href="/category/general.html">General</a></li>
+                    <li><a href="/category/mobile-development.html">Mobile Development</a></li>
+                    <li><a href="/category/web-development.html">Web Development</a></li>
+                </ul></nav>
+        </header><!-- /#banner -->
+
+            <aside id="featured" class="body">
+                <article>
+                    <h1 class="entry-title"><a href="/flutter-provider-example-codes.html">Flutter Provider example codes</a></h1>
+<footer class="post-info">
+        <abbr class="published" title="2022-01-08T22:51:00+05:30">
+                Published: Sat 08 January 2022
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/smrati-kumar-katiyar.html">Smrati Kumar Katiyar</a>
+        </address>
+<p>In <a href="/category/mobile-development.html">Mobile Development</a>.</p>
+<p>tags: <a href="/tag/flutter.html">Flutter</a> <a href="/tag/provider.html">Provider</a> </p>
+</footer><!-- /.post-info --><p>Example 1:<br>
+<a href="https://protocoderspoint.com/flutter-provider-for-beginners-tutorial-with-example/#Step_1_Creating_a_new_Flutter_Project">Code below is copied from here</a></p>
+<p><code>main.dart</code></p>
+<div class="highlight"><pre><span></span><code><span class="k">import</span> <span class="s1">&#39;package:flutter/material.dart&#39;</span><span class="p">;</span>
+<span class="k">import</span> <span class="s1">&#39;package:provider_example/Homepage.dart&#39;</span><span class="p">;</span>
+<span class="k">import</span> <span class="s1">&#39;package:provider_example/Timer_Data.dart&#39;</span><span class="p">;</span>
+<span class="k">import</span> <span class="s1">&#39;package:provider/provider.dart&#39;</span><span class="p">;</span>
+
+<span class="kt">void</span> <span class="n">main</span><span class="p">()</span> <span class="p">{</span>
+  <span class="n">runApp</span><span class="p">(</span><span class="n">MyApp</span><span class="p">());</span>
+<span class="p">}</span>
+
+<span class="kd">class</span> <span class="nc">MyApp</span> <span class="kd">extends</span> <span class="n">StatelessWidget</span> <span class="p">{</span>
+  <span class="c1">// This widget is the root of your application.</span>
+  <span class="nd">@override</span>
+  <span class="n">Widget</span> <span class="n">build</span><span class="p">(</span><span class="n">BuildContext</span> <span class="n">context</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="n">MaterialApp</span><span class="p">(</span>
+      <span class="nl">title:</span> <span class="s1">&#39;Flutter Demo&#39;</span><span class="p">,</span>
+      <span class="nl">debugShowCheckedModeBanner:</span> <span class="kc">false</span><span class="p">,</span>
+      <span class="nl">theme:</span> <span class="n">ThemeData</span><span class="p">(</span>
+        <span class="nl">primarySwatch:</span> <span class="n">Colors</span><span class="p">.</span><span class="n">blue</span><span class="p">,</span>
+        <span class="nl">visualDensity:</span> <span class="n">VisualDensity</span><span class="p">.</span><span class="n">adaptivePlatformDensity</span><span class="p">,</span>
+      <span class="p">),</span>
+      <span class="nl">home:</span> <span class="n">ChangeNotifierProvider</span><span class="p">(</span>
+          <span class="nl">create:</span> <span class="p">(</span><span class="n">BuildContext</span> <span class="n">context</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="n">Timer_Data</span><span class="p">(),</span> <span class="nl">child:</span> <span class="n">Homepage</span><span class="p">()),</span>
+    <span class="p">);</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+
+<p><code>Timer_Data.dart</code>  </p>
+<div class="highlight"><pre><span></span><code><span class="k">import</span> <span class="s1">&#39;package:flutter/cupertino.dart&#39;</span><span class="p">;</span>
+<span class="k">import</span> <span class="s1">&#39;package:flutter/foundation.dart&#39;</span><span class="p">;</span>
+
+<span class="kd">class</span> <span class="nc">Timer_Data</span> <span class="kd">extends</span> <span class="n">ChangeNotifier</span> <span class="p">{</span>
+  <span class="kt">int</span> <span class="n">_time_remain_provider</span> <span class="o">=</span> <span class="m">11</span><span class="p">;</span>
+  <span class="kt">int</span> <span class="n">gettime_remain_provider</span><span class="p">()</span> <span class="o">=&gt;</span> <span class="n">_time_remain_provider</span><span class="p">;</span>
+  <span class="n">updateRemainingTime</span><span class="p">()</span> <span class="p">{</span>
+    <span class="n">_time_remain_provider</span><span class="o">--</span><span class="p">;</span>
+    <span class="n">notifyListeners</span><span class="p">();</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+
+<p><code>Homepage.dart</code></p>
+<div class="highlight"><pre><span></span><code><span class="k">import</span> <span class="s1">&#39;dart:async&#39;</span><span class="p">;</span>
+<span class="k">import</span> <span class="s1">&#39;package:flutter/material.dart&#39;</span><span class="p">;</span>
+<span class="k">import</span> <span class="s1">&#39;package:provider_example/Timer_Data.dart&#39;</span><span class="p">;</span>
+<span class="k">import</span> <span class="s1">&#39;package:provider/provider.dart&#39;</span><span class="p">;</span>
+
+<span class="kd">class</span> <span class="nc">Homepage</span> <span class="kd">extends</span> <span class="n">StatefulWidget</span> <span class="p">{</span>
+  <span class="k">const</span> <span class="n">Homepage</span><span class="p">({</span><span class="n">Key</span><span class="o">?</span> <span class="n">key</span><span class="p">})</span> <span class="o">:</span> <span class="k">super</span><span class="p">(</span><span class="nl">key:</span> <span class="n">key</span><span class="p">);</span>
+
+  <span class="nd">@override</span>
+  <span class="n">_HomepageState</span> <span class="n">createState</span><span class="p">()</span> <span class="o">=&gt;</span> <span class="n">_HomepageState</span><span class="p">();</span>
+<span class="p">}</span>
+
+<span class="kd">class</span> <span class="nc">_HomepageState</span> <span class="kd">extends</span> <span class="n">State</span><span class="o">&lt;</span><span class="n">Homepage</span><span class="o">&gt;</span> <span class="p">{</span>
+  <span class="kd">var</span> <span class="n">remaining</span> <span class="o">=</span> <span class="m">10</span><span class="p">;</span>
+
+  <span class="nd">@override</span>
+  <span class="kt">void</span> <span class="n">initState</span><span class="p">()</span> <span class="p">{</span>
+    <span class="n">Timer</span><span class="p">.</span><span class="n">periodic</span><span class="p">(</span><span class="n">Duration</span><span class="p">(</span><span class="nl">seconds:</span> <span class="m">1</span><span class="p">),</span> <span class="p">(</span><span class="n">j</span><span class="p">)</span> <span class="p">{</span>
+      <span class="n">setState</span><span class="p">(()</span> <span class="p">{</span>
+        <span class="n">remaining</span><span class="o">--</span><span class="p">;</span>
+      <span class="p">});</span>
+      <span class="k">if</span> <span class="p">(</span><span class="n">remaining</span> <span class="o">==</span> <span class="m">0</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">j</span><span class="p">.</span><span class="n">cancel</span><span class="p">();</span>
+      <span class="p">}</span>
+    <span class="p">});</span>
+    <span class="n">Timer</span><span class="p">.</span><span class="n">periodic</span><span class="p">(</span><span class="n">Duration</span><span class="p">(</span><span class="nl">seconds:</span> <span class="m">1</span><span class="p">),</span> <span class="p">(</span><span class="n">t</span><span class="p">)</span> <span class="p">{</span>
+      <span class="kd">var</span> <span class="n">timeinfo</span> <span class="o">=</span> <span class="n">Provider</span><span class="p">.</span><span class="n">of</span><span class="o">&lt;</span><span class="n">Timer_Data</span><span class="o">&gt;</span><span class="p">(</span><span class="n">context</span><span class="p">,</span> <span class="nl">listen:</span> <span class="kc">false</span><span class="p">);</span>
+      <span class="n">timeinfo</span><span class="p">.</span><span class="n">updateRemainingTime</span><span class="p">();</span>
+      <span class="n">print</span><span class="p">(</span><span class="n">timeinfo</span><span class="p">.</span><span class="n">gettime_remain_provider</span><span class="p">());</span>
+      <span class="k">if</span> <span class="p">(</span><span class="n">timeinfo</span><span class="p">.</span><span class="n">gettime_remain_provider</span><span class="p">()</span> <span class="o">==</span> <span class="m">0</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">t</span><span class="p">.</span><span class="n">cancel</span><span class="p">();</span>
+      <span class="p">}</span>
+    <span class="p">});</span>
+    <span class="k">super</span><span class="p">.</span><span class="n">initState</span><span class="p">();</span>
+  <span class="p">}</span>
+
+  <span class="nd">@override</span>
+  <span class="n">Widget</span> <span class="n">build</span><span class="p">(</span><span class="n">BuildContext</span> <span class="n">context</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">print</span><span class="p">(</span><span class="s2">&quot;Rebuilt... complete UI... Not Good for Flutter Engine&quot;</span><span class="p">);</span>
+    <span class="k">return</span> <span class="n">Scaffold</span><span class="p">(</span>
+      <span class="nl">appBar:</span> <span class="n">AppBar</span><span class="p">(</span>
+        <span class="nl">title:</span> <span class="n">Text</span><span class="p">(</span><span class="s1">&#39;Flutter Provider example&#39;</span><span class="p">),</span>
+      <span class="p">),</span>
+      <span class="nl">body:</span> <span class="n">Center</span><span class="p">(</span>
+          <span class="nl">child:</span> <span class="n">Column</span><span class="p">(</span>
+        <span class="nl">mainAxisAlignment:</span> <span class="n">MainAxisAlignment</span><span class="p">.</span><span class="n">center</span><span class="p">,</span>
+        <span class="nl">children:</span> <span class="p">[</span>
+          <span class="n">Text</span><span class="p">(</span>
+            <span class="s2">&quot;With setState property&quot;</span><span class="p">,</span>
+            <span class="nl">style:</span> <span class="n">TextStyle</span><span class="p">(</span><span class="nl">fontSize:</span> <span class="m">20</span><span class="p">),</span>
+          <span class="p">),</span>
+          <span class="n">Text</span><span class="p">(</span>
+            <span class="s2">&quot;</span><span class="si">$</span><span class="n">remaining</span><span class="s2">&quot;</span><span class="p">,</span>
+            <span class="nl">style:</span> <span class="n">TextStyle</span><span class="p">(</span><span class="nl">fontSize:</span> <span class="m">30</span><span class="p">),</span>
+          <span class="p">),</span>
+          <span class="n">SizedBox</span><span class="p">(</span>
+            <span class="nl">height:</span> <span class="m">25</span><span class="p">,</span>
+          <span class="p">),</span>
+          <span class="n">Text</span><span class="p">(</span>
+            <span class="s2">&quot;By using providers&quot;</span><span class="p">,</span>
+            <span class="nl">style:</span> <span class="n">TextStyle</span><span class="p">(</span><span class="nl">fontSize:</span> <span class="m">20</span><span class="p">),</span>
+          <span class="p">),</span>
+          <span class="n">Consumer</span><span class="o">&lt;</span><span class="n">Timer_Data</span><span class="o">&gt;</span><span class="p">(</span>
+            <span class="nl">builder:</span> <span class="p">(</span><span class="n">context</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">child</span><span class="p">)</span> <span class="p">{</span>
+              <span class="k">return</span> <span class="n">Text</span><span class="p">(</span>
+                <span class="n">data</span><span class="p">.</span><span class="n">gettime_remain_provider</span><span class="p">()</span><span class="o">?</span><span class="p">.</span><span class="n">toString</span><span class="p">()</span> <span class="o">??</span> <span class="s2">&quot; &quot;</span><span class="p">,</span>
+                <span class="nl">style:</span> <span class="n">TextStyle</span><span class="p">(</span><span class="nl">fontSize:</span> <span class="m">30</span><span class="p">),</span>
+              <span class="p">);</span>
+            <span class="p">},</span>
+          <span class="p">)</span>
+        <span class="p">],</span>
+      <span class="p">)),</span>
+    <span class="p">);</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+
+<p>Example 2:<br>
+This project code is copied from <a href="https://www.digitalocean.com/community/tutorials/flutter-state-management">here</a><br>
+In this example we are going to use <code>ChangeNotifierProvider</code><br>
+<code>main.dart</code></p>
+<div class="highlight"><pre><span></span><code><span class="k">import</span> <span class="s1">&#39;package:flutter/material.dart&#39;</span><span class="p">;</span>
+<span class="k">import</span> <span class="s1">&#39;package:provider/provider.dart&#39;</span><span class="p">;</span>
+<span class="k">import</span> <span class="s1">&#39;./screens/account.dart&#39;</span><span class="p">;</span>
+<span class="k">import</span> <span class="s1">&#39;./screens/settings.dart&#39;</span><span class="p">;</span>
+
+<span class="kt">void</span> <span class="n">main</span><span class="p">()</span> <span class="p">{</span>
+  <span class="n">runApp</span><span class="p">(</span><span class="n">MyApp</span><span class="p">());</span>
+<span class="p">}</span>
+
+<span class="kd">class</span> <span class="nc">MyApp</span> <span class="kd">extends</span> <span class="n">StatelessWidget</span> <span class="p">{</span>
+  <span class="nd">@override</span>
+  <span class="n">Widget</span> <span class="n">build</span><span class="p">(</span><span class="n">BuildContext</span> <span class="n">context</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="n">MaterialApp</span><span class="p">(</span>
+      <span class="nl">title:</span> <span class="s1">&#39;Flutter Provider Demo&#39;</span><span class="p">,</span>
+      <span class="nl">home:</span> <span class="n">MyHomePage</span><span class="p">(),</span>
+    <span class="p">);</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="kd">class</span> <span class="nc">MyHomePage</span> <span class="kd">extends</span> <span class="n">StatefulWidget</span> <span class="p">{</span>
+  <span class="nd">@override</span>
+  <span class="n">_MyHomePageState</span> <span class="n">createState</span><span class="p">()</span> <span class="o">=&gt;</span> <span class="n">_MyHomePageState</span><span class="p">();</span>
+<span class="p">}</span>
+
+<span class="kd">class</span> <span class="nc">_MyHomePageState</span> <span class="kd">extends</span> <span class="n">State</span><span class="o">&lt;</span><span class="n">MyHomePage</span><span class="o">&gt;</span> <span class="p">{</span>
+  <span class="c1">// Map data = {&#39;name&#39;: &#39;Jon Doe&#39;, &#39;email&#39;: &#39;jon.doe@example.com&#39;, &#39;age&#39;: 37};</span>
+
+  <span class="nd">@override</span>
+  <span class="n">Widget</span> <span class="n">build</span><span class="p">(</span><span class="n">BuildContext</span> <span class="n">context</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="n">ChangeNotifierProvider</span><span class="o">&lt;</span><span class="n">Data</span><span class="o">&gt;</span><span class="p">(</span>
+      <span class="nl">create:</span> <span class="p">(</span><span class="n">context</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="n">Data</span><span class="p">(),</span>
+      <span class="nl">child:</span> <span class="n">MaterialApp</span><span class="p">(</span><span class="nl">home:</span> <span class="n">AccountScreen</span><span class="p">(),</span> <span class="nl">routes:</span> <span class="p">{</span>
+        <span class="s1">&#39;account_screen&#39;</span><span class="o">:</span> <span class="p">(</span><span class="n">context</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="n">AccountScreen</span><span class="p">(),</span>
+        <span class="s1">&#39;settings_screen&#39;</span><span class="o">:</span> <span class="p">(</span><span class="n">context</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="n">SettingsScreen</span><span class="p">(),</span>
+      <span class="p">}),</span>
+    <span class="p">);</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="kd">class</span> <span class="nc">Data</span> <span class="kd">extends</span> <span class="n">ChangeNotifier</span> <span class="p">{</span>
+  <span class="n">Map</span> <span class="n">data</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;name&#39;</span><span class="o">:</span> <span class="s1">&#39;Jon Doe&#39;</span><span class="p">,</span> <span class="s1">&#39;email&#39;</span><span class="o">:</span> <span class="s1">&#39;jon.doe@example.com&#39;</span><span class="p">,</span> <span class="s1">&#39;age&#39;</span><span class="o">:</span> <span class="m">37</span><span class="p">};</span>
+
+  <span class="kt">void</span> <span class="n">updateAccount</span><span class="p">(</span><span class="n">input</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">data</span> <span class="o">=</span> <span class="n">input</span><span class="p">;</span>
+    <span class="n">notifyListeners</span><span class="p">();</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+
+<p><code>navbar.dart</code>  </p>
+<div class="highlight"><pre><span></span><code><span class="kn">import</span> <span class="s1">&#39;package:flutter/material.dart&#39;</span><span class="p">;</span>
+<span class="kn">import</span> <span class="s1">&#39;./screens/account.dart&#39;</span><span class="p">;</span>
+<span class="kn">import</span> <span class="s1">&#39;./screens/settings.dart&#39;</span><span class="p">;</span>
+
+<span class="k">class</span> <span class="nc">Navbar</span> <span class="n">extends</span> <span class="n">StatelessWidget</span> <span class="p">{</span>
+  <span class="nd">@override</span>
+  <span class="n">Widget</span> <span class="n">build</span><span class="p">(</span><span class="n">BuildContext</span> <span class="n">context</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="n">Container</span><span class="p">(</span>
+      <span class="n">color</span><span class="p">:</span> <span class="n">Colors</span><span class="o">.</span><span class="n">blue</span><span class="p">,</span>
+      <span class="n">child</span><span class="p">:</span> <span class="n">Row</span><span class="p">(</span>
+        <span class="n">mainAxisAlignment</span><span class="p">:</span> <span class="n">MainAxisAlignment</span><span class="o">.</span><span class="n">spaceAround</span><span class="p">,</span>
+        <span class="n">children</span><span class="p">:</span> <span class="o">&lt;</span><span class="n">Widget</span><span class="o">&gt;</span><span class="p">[</span>
+          <span class="n">TextButton</span><span class="p">(</span>
+              <span class="n">onPressed</span><span class="p">:</span> <span class="p">()</span> <span class="o">=&gt;</span>
+                  <span class="n">Navigator</span><span class="o">.</span><span class="n">pushReplacementNamed</span><span class="p">(</span><span class="n">context</span><span class="p">,</span> <span class="n">AccountScreen</span><span class="o">.</span><span class="n">id</span><span class="p">),</span>
+              <span class="n">child</span><span class="p">:</span> <span class="n">Icon</span><span class="p">(</span><span class="n">Icons</span><span class="o">.</span><span class="n">account_circle</span><span class="p">,</span> <span class="n">color</span><span class="p">:</span> <span class="n">Colors</span><span class="o">.</span><span class="n">white</span><span class="p">)),</span>
+          <span class="n">TextButton</span><span class="p">(</span>
+              <span class="n">onPressed</span><span class="p">:</span> <span class="p">()</span> <span class="o">=&gt;</span>
+                  <span class="n">Navigator</span><span class="o">.</span><span class="n">pushReplacementNamed</span><span class="p">(</span><span class="n">context</span><span class="p">,</span> <span class="n">SettingsScreen</span><span class="o">.</span><span class="n">id</span><span class="p">),</span>
+              <span class="n">child</span><span class="p">:</span> <span class="n">Icon</span><span class="p">(</span><span class="n">Icons</span><span class="o">.</span><span class="n">settings</span><span class="p">,</span> <span class="n">color</span><span class="p">:</span> <span class="n">Colors</span><span class="o">.</span><span class="n">white</span><span class="p">)),</span>
+        <span class="p">],</span>
+      <span class="p">),</span>
+    <span class="p">);</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+
+<p><code>screens/settings.dart</code></p>
+<div class="highlight"><pre><span></span><code><span class="k">import</span> <span class="s1">&#39;package:flutter/material.dart&#39;</span><span class="p">;</span>
+<span class="k">import</span> <span class="s1">&#39;package:provider/provider.dart&#39;</span><span class="p">;</span>
+<span class="k">import</span> <span class="s1">&#39;../main.dart&#39;</span><span class="p">;</span>
+<span class="k">import</span> <span class="s1">&#39;../navbar.dart&#39;</span><span class="p">;</span>
+
+<span class="kd">class</span> <span class="nc">SettingsScreen</span> <span class="kd">extends</span> <span class="n">StatelessWidget</span> <span class="p">{</span>
+  <span class="kd">static</span> <span class="k">const</span> <span class="kt">String</span> <span class="n">id</span> <span class="o">=</span> <span class="s1">&#39;settings_screen&#39;</span><span class="p">;</span>
+
+  <span class="kd">final</span> <span class="n">formKey</span> <span class="o">=</span> <span class="n">GlobalKey</span><span class="o">&lt;</span><span class="n">FormState</span><span class="o">&gt;</span><span class="p">();</span>
+
+  <span class="kd">final</span> <span class="n">Map</span> <span class="n">data</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;name&#39;</span><span class="o">:</span> <span class="kt">String</span><span class="p">,</span> <span class="s1">&#39;email&#39;</span><span class="o">:</span> <span class="kt">String</span><span class="p">,</span> <span class="s1">&#39;age&#39;</span><span class="o">:</span> <span class="kt">int</span><span class="p">};</span>
+
+  <span class="nd">@override</span>
+  <span class="n">Widget</span> <span class="n">build</span><span class="p">(</span><span class="n">BuildContext</span> <span class="n">context</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="n">Scaffold</span><span class="p">(</span>
+      <span class="nl">bottomNavigationBar:</span> <span class="n">Navbar</span><span class="p">(),</span>
+      <span class="nl">appBar:</span> <span class="n">AppBar</span><span class="p">(</span><span class="nl">title:</span> <span class="n">Text</span><span class="p">(</span><span class="s1">&#39;Change Account Details&#39;</span><span class="p">)),</span>
+      <span class="nl">body:</span> <span class="n">Center</span><span class="p">(</span>
+        <span class="nl">child:</span> <span class="n">Container</span><span class="p">(</span>
+          <span class="nl">padding:</span> <span class="n">EdgeInsets</span><span class="p">.</span><span class="n">symmetric</span><span class="p">(</span><span class="nl">vertical:</span> <span class="m">20</span><span class="p">,</span> <span class="nl">horizontal:</span> <span class="m">30</span><span class="p">),</span>
+          <span class="nl">child:</span> <span class="n">Form</span><span class="p">(</span>
+            <span class="nl">key:</span> <span class="n">formKey</span><span class="p">,</span>
+            <span class="nl">child:</span> <span class="n">Column</span><span class="p">(</span>
+                <span class="nl">mainAxisAlignment:</span> <span class="n">MainAxisAlignment</span><span class="p">.</span><span class="n">center</span><span class="p">,</span>
+                <span class="nl">crossAxisAlignment:</span> <span class="n">CrossAxisAlignment</span><span class="p">.</span><span class="n">center</span><span class="p">,</span>
+                <span class="nl">children:</span> <span class="o">&lt;</span><span class="n">Widget</span><span class="o">&gt;</span><span class="p">[</span>
+                  <span class="n">TextFormField</span><span class="p">(</span>
+                    <span class="nl">decoration:</span> <span class="n">InputDecoration</span><span class="p">(</span><span class="nl">labelText:</span> <span class="s1">&#39;Name&#39;</span><span class="p">),</span>
+                    <span class="nl">onSaved:</span> <span class="p">(</span><span class="n">input</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="n">data</span><span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">input</span><span class="p">,</span>
+                  <span class="p">),</span>
+                  <span class="n">TextFormField</span><span class="p">(</span>
+                    <span class="nl">decoration:</span> <span class="n">InputDecoration</span><span class="p">(</span><span class="nl">labelText:</span> <span class="s1">&#39;Email&#39;</span><span class="p">),</span>
+                    <span class="nl">onSaved:</span> <span class="p">(</span><span class="n">input</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="n">data</span><span class="p">[</span><span class="s1">&#39;email&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">input</span><span class="p">,</span>
+                  <span class="p">),</span>
+                  <span class="n">TextFormField</span><span class="p">(</span>
+                    <span class="nl">decoration:</span> <span class="n">InputDecoration</span><span class="p">(</span><span class="nl">labelText:</span> <span class="s1">&#39;Age&#39;</span><span class="p">),</span>
+                    <span class="nl">onSaved:</span> <span class="p">(</span><span class="n">input</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="n">data</span><span class="p">[</span><span class="s1">&#39;age&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">input</span><span class="p">,</span>
+                  <span class="p">),</span>
+                  <span class="n">TextButton</span><span class="p">(</span>
+                    <span class="nl">onPressed:</span> <span class="p">()</span> <span class="p">{</span>
+                      <span class="n">formKey</span><span class="p">.</span><span class="n">currentState</span><span class="o">?</span><span class="p">.</span><span class="n">save</span><span class="p">();</span>
+                      <span class="n">Provider</span><span class="p">.</span><span class="n">of</span><span class="o">&lt;</span><span class="n">Data</span><span class="o">&gt;</span><span class="p">(</span><span class="n">context</span><span class="p">,</span> <span class="nl">listen:</span> <span class="kc">false</span><span class="p">)</span>
+                          <span class="p">.</span><span class="n">updateAccount</span><span class="p">(</span><span class="n">data</span><span class="p">);</span>
+                      <span class="n">formKey</span><span class="p">.</span><span class="n">currentState</span><span class="o">?</span><span class="p">.</span><span class="n">reset</span><span class="p">();</span>
+                    <span class="p">},</span>
+                    <span class="nl">child:</span> <span class="n">Text</span><span class="p">(</span><span class="s1">&#39;Submit&#39;</span><span class="p">),</span>
+                    <span class="nl">style:</span> <span class="n">TextButton</span><span class="p">.</span><span class="n">styleFrom</span><span class="p">(</span>
+                      <span class="nl">primary:</span> <span class="n">Colors</span><span class="p">.</span><span class="n">white</span><span class="p">,</span>
+                      <span class="nl">backgroundColor:</span> <span class="n">Colors</span><span class="p">.</span><span class="n">blue</span><span class="p">,</span>
+                    <span class="p">),</span>
+                  <span class="p">)</span>
+                <span class="p">]),</span>
+          <span class="p">),</span>
+        <span class="p">),</span>
+      <span class="p">),</span>
+    <span class="p">);</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+
+<p><code>screens/account.dart</code></p>
+<div class="highlight"><pre><span></span><code><span class="k">import</span> <span class="s1">&#39;package:flutter/material.dart&#39;</span><span class="p">;</span>
+<span class="k">import</span> <span class="s1">&#39;package:provider/provider.dart&#39;</span><span class="p">;</span>
+<span class="k">import</span> <span class="s1">&#39;../main.dart&#39;</span><span class="p">;</span>
+<span class="k">import</span> <span class="s1">&#39;../navbar.dart&#39;</span><span class="p">;</span>
+
+<span class="kd">class</span> <span class="nc">AccountScreen</span> <span class="kd">extends</span> <span class="n">StatelessWidget</span> <span class="p">{</span>
+  <span class="kd">static</span> <span class="k">const</span> <span class="kt">String</span> <span class="n">id</span> <span class="o">=</span> <span class="s1">&#39;account_screen&#39;</span><span class="p">;</span>
+
+  <span class="nd">@override</span>
+  <span class="n">Widget</span> <span class="n">build</span><span class="p">(</span><span class="n">BuildContext</span> <span class="n">context</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="n">Scaffold</span><span class="p">(</span>
+      <span class="nl">bottomNavigationBar:</span> <span class="n">Navbar</span><span class="p">(),</span>
+      <span class="nl">appBar:</span> <span class="n">AppBar</span><span class="p">(</span>
+        <span class="nl">title:</span> <span class="n">Text</span><span class="p">(</span><span class="s1">&#39;Account Details&#39;</span><span class="p">),</span>
+      <span class="p">),</span>
+      <span class="nl">body:</span> <span class="n">Center</span><span class="p">(</span>
+        <span class="nl">child:</span> <span class="n">Column</span><span class="p">(</span>
+          <span class="nl">mainAxisAlignment:</span> <span class="n">MainAxisAlignment</span><span class="p">.</span><span class="n">center</span><span class="p">,</span>
+          <span class="nl">children:</span> <span class="o">&lt;</span><span class="n">Widget</span><span class="o">&gt;</span><span class="p">[</span>
+            <span class="n">Text</span><span class="p">(</span><span class="s1">&#39;Name: &#39;</span> <span class="o">+</span> <span class="n">Provider</span><span class="p">.</span><span class="n">of</span><span class="o">&lt;</span><span class="n">Data</span><span class="o">&gt;</span><span class="p">(</span><span class="n">context</span><span class="p">).</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">].</span><span class="n">toString</span><span class="p">()),</span>
+            <span class="n">Text</span><span class="p">(</span><span class="s1">&#39;Email: &#39;</span> <span class="o">+</span>
+                <span class="n">Provider</span><span class="p">.</span><span class="n">of</span><span class="o">&lt;</span><span class="n">Data</span><span class="o">&gt;</span><span class="p">(</span><span class="n">context</span><span class="p">).</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;email&#39;</span><span class="p">].</span><span class="n">toString</span><span class="p">()),</span>
+            <span class="n">Text</span><span class="p">(</span><span class="s1">&#39;Age: &#39;</span> <span class="o">+</span> <span class="n">Provider</span><span class="p">.</span><span class="n">of</span><span class="o">&lt;</span><span class="n">Data</span><span class="o">&gt;</span><span class="p">(</span><span class="n">context</span><span class="p">).</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;age&#39;</span><span class="p">].</span><span class="n">toString</span><span class="p">()),</span>
+          <span class="p">],</span>
+        <span class="p">),</span>
+      <span class="p">),</span>
+    <span class="p">);</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+
+<p>Useful Links<br>
+<a href="https://circleci.com/blog/state-management-for-flutter-apps-with-mobx/">https://circleci.com/blog/state-management-for-flutter-apps-with-mobx/</a><br>
+<a href="https://itnext.io/flutter-state-management-with-mobx-and-providers-change-app-theme-dynamically-ba3b60619050">https://itnext.io/flutter-state-management-with-mobx-and-providers-change-app-theme-dynamically-ba3b60619050</a><br>
+<a href="https://dexterx.dev/managing-ui-state-in-flutter-with-mobx-and-provider/">https://dexterx.dev/managing-ui-state-in-flutter-with-mobx-and-provider/</a><br>
+<a href="https://www.freecodecamp.org/news/provider-pattern-in-flutter/">https://www.freecodecamp.org/news/provider-pattern-in-flutter/</a><br>
+<a href="https://medium.flutterdevs.com/working-with-mobx-in-flutter-6a56dbff7027">https://medium.flutterdevs.com/working-with-mobx-in-flutter-6a56dbff7027</a></p>                </article>
+            </aside><!-- /#featured -->
+        <section id="extras" class="body">
+                <div class="blogroll">
+                        <h2>links</h2>
+                        <ul>
+                            <li><a href="https://flutter.dev/">Flutter</a></li>
+                            <li><a href="https://www.python.org/">Python.org</a></li>
+                        </ul>
+                </div><!-- /.blogroll -->
+                <div class="social">
+                        <h2>social</h2>
+                        <ul>
+
+                            <li><a href="https://twitter.com/SmratiKatiyar">Twitter</a></li>
+                            <li><a href="https://www.linkedin.com/in/smrati/">Linkedin</a></li>
+                        </ul>
+                </div><!-- /.social -->
+        </section><!-- /#extras -->
+
+        <footer id="contentinfo" class="body">
+                <address id="about" class="vcard body">
+                Proudly powered by <a href="https://getpelican.com/">Pelican</a>, which takes great advantage of <a href="https://www.python.org/">Python</a>.
+                </address><!-- /#about -->
+
+                <p>The theme is by <a href="https://www.smashingmagazine.com/2009/08/designing-a-html-5-layout-from-scratch/">Smashing Magazine</a>, thanks!</p>
+        </footer><!-- /#contentinfo -->
+
+</body>
+</html>
