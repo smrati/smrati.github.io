@@ -33,7 +33,31 @@
 <p>In <a href="/category/general.html">General</a>.</p>
 <p>tags: <a href="/tag/scientific-computing.html">Scientific Computing</a> <a href="/tag/programming-languages.html">Programming Languages</a> </p>
 </footer><!-- /.post-info --><p>In this article i am going to write matrix multiplication codes in different programming languages</p>
-<div class="highlight"><pre><span></span><code>
+<div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">matrix_multiplication</span><span class="p">(</span><span class="n">m1</span><span class="p">,</span> <span class="n">m2</span><span class="p">):</span>
+    <span class="n">matrix1_row</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">m1</span><span class="p">)</span>
+    <span class="n">matrix1_col</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">m1</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+    <span class="n">matrix2_row</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">m2</span><span class="p">)</span>
+    <span class="n">matrix2_col</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">m2</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+
+    <span class="k">if</span> <span class="n">matrix1_col</span> <span class="o">!=</span> <span class="n">matrix2_row</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s2">&quot;Matrix size not compatible for multiplication&quot;</span><span class="p">)</span>
+
+    <span class="n">final_matrix</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">matrix1_row</span><span class="p">):</span>
+        <span class="n">this_row</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">matrix2_col</span><span class="p">):</span>
+            <span class="n">element</span> <span class="o">=</span> <span class="mi">0</span>
+            <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">matrix1_col</span><span class="p">):</span>
+                <span class="n">element</span> <span class="o">+=</span> <span class="p">(</span><span class="n">m1</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">]</span> <span class="o">*</span> <span class="n">m2</span><span class="p">[</span><span class="n">j</span><span class="p">][</span><span class="n">n</span><span class="p">])</span>
+            <span class="n">this_row</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">element</span><span class="p">)</span>
+        <span class="n">final_matrix</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">this_row</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">final_matrix</span>
+
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="n">m3_3</span> <span class="o">=</span> <span class="p">[[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">],</span> <span class="p">[</span><span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">],</span> <span class="p">[</span><span class="mi">7</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">9</span><span class="p">]]</span>
+    <span class="n">m3_2</span> <span class="o">=</span> <span class="p">[[</span><span class="mi">10</span><span class="p">,</span> <span class="mi">11</span><span class="p">],</span> <span class="p">[</span><span class="mi">12</span><span class="p">,</span> <span class="mi">13</span><span class="p">],</span> <span class="p">[</span><span class="mi">14</span><span class="p">,</span> <span class="mi">15</span><span class="p">]]</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">matrix_multiplication</span><span class="p">(</span><span class="n">m3_3</span><span class="p">,</span> <span class="n">m3_2</span><span class="p">))</span>
 </code></pre></div>                </article>
             </aside><!-- /#featured -->
                 <section id="content" class="body">
