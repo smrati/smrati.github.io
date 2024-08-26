@@ -4,392 +4,45 @@
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <meta name="generator" content="Pelican" />
-        <title>Smrati's Tech Blog</title>
+        <title>Open Tech</title>
         <link rel="stylesheet" href="/theme/css/main.css" />
 </head>
 
 <body id="index" class="home">
         <header id="banner" class="body">
-                <h1><a href="/">Smrati's Tech Blog</a></h1>
+                <h1><a href="/">Open Tech</a></h1>
                 <nav><ul>
-                    <li><a href="/category/deep-learning.html">Deep Learning</a></li>
-                    <li><a href="/category/general.html">General</a></li>
-                    <li><a href="/category/mobile-development.html">Mobile Development</a></li>
-                    <li><a href="/category/web-development.html">Web Development</a></li>
                 </ul></nav>
         </header><!-- /#banner -->
-
-            <aside id="featured" class="body">
-                <article>
-                    <h1 class="entry-title"><a href="/matrix-multiplication-code-in-different-languages.html">matrix Multiplication code in different languages</a></h1>
-<footer class="post-info">
-        <abbr class="published" title="2022-01-13T23:52:00+05:30">
-                Published: Thu 13 January 2022
-        </abbr>
-
-        <address class="vcard author">
-                By                         <a class="url fn" href="/author/smrati-kumar-katiyar.html">Smrati Kumar Katiyar</a>
-        </address>
-<p>In <a href="/category/general.html">General</a>.</p>
-<p>tags: <a href="/tag/scientific-computing.html">Scientific Computing</a> <a href="/tag/programming-languages.html">Programming Languages</a> </p>
-</footer><!-- /.post-info --><p>In this article i am going to write matrix multiplication codes in different programming languages</p>
-<div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">matrix_multiplication</span><span class="p">(</span><span class="n">m1</span><span class="p">,</span> <span class="n">m2</span><span class="p">):</span>
-    <span class="n">matrix1_row</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">m1</span><span class="p">)</span>
-    <span class="n">matrix1_col</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">m1</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
-    <span class="n">matrix2_row</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">m2</span><span class="p">)</span>
-    <span class="n">matrix2_col</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">m2</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
-
-    <span class="k">if</span> <span class="n">matrix1_col</span> <span class="o">!=</span> <span class="n">matrix2_row</span><span class="p">:</span>
-        <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s2">&quot;Matrix size not compatible for multiplication&quot;</span><span class="p">)</span>
-
-    <span class="n">final_matrix</span> <span class="o">=</span> <span class="p">[]</span>
-    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">matrix1_row</span><span class="p">):</span>
-        <span class="n">this_row</span> <span class="o">=</span> <span class="p">[]</span>
-        <span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">matrix2_col</span><span class="p">):</span>
-            <span class="n">element</span> <span class="o">=</span> <span class="mi">0</span>
-            <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">matrix1_col</span><span class="p">):</span>
-                <span class="n">element</span> <span class="o">+=</span> <span class="p">(</span><span class="n">m1</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">]</span> <span class="o">*</span> <span class="n">m2</span><span class="p">[</span><span class="n">j</span><span class="p">][</span><span class="n">n</span><span class="p">])</span>
-            <span class="n">this_row</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">element</span><span class="p">)</span>
-        <span class="n">final_matrix</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">this_row</span><span class="p">)</span>
-    <span class="k">return</span> <span class="n">final_matrix</span>
-
-
-<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
-    <span class="n">m3_3</span> <span class="o">=</span> <span class="p">[[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">],</span> <span class="p">[</span><span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">],</span> <span class="p">[</span><span class="mi">7</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">9</span><span class="p">]]</span>
-    <span class="n">m3_2</span> <span class="o">=</span> <span class="p">[[</span><span class="mi">10</span><span class="p">,</span> <span class="mi">11</span><span class="p">],</span> <span class="p">[</span><span class="mi">12</span><span class="p">,</span> <span class="mi">13</span><span class="p">],</span> <span class="p">[</span><span class="mi">14</span><span class="p">,</span> <span class="mi">15</span><span class="p">]]</span>
-    <span class="nb">print</span><span class="p">(</span><span class="n">matrix_multiplication</span><span class="p">(</span><span class="n">m3_3</span><span class="p">,</span> <span class="n">m3_2</span><span class="p">))</span>
-</code></pre></div>                </article>
-            </aside><!-- /#featured -->
-                <section id="content" class="body">
-                    <h1>Other articles</h1>
-                    <hr />
-                    <ol id="posts-list" class="hfeed">
-
-            <li><article class="hentry">
-                <header>
-                    <h1><a href="/flutter-mobx-state-management-library-notes.html" rel="bookmark"
-                           title="Permalink to Flutter MobX state management library notes">Flutter MobX state management library notes</a></h1>
-                </header>
-
-                <div class="entry-content">
-<footer class="post-info">
-        <abbr class="published" title="2022-01-13T10:38:00+05:30">
-                Published: Thu 13 January 2022
-        </abbr>
-
-        <address class="vcard author">
-                By                         <a class="url fn" href="/author/smrati-kumar-katiyar.html">Smrati Kumar Katiyar</a>
-        </address>
-<p>In <a href="/category/mobile-development.html">Mobile Development</a>.</p>
-<p>tags: <a href="/tag/flutter.html">Flutter</a> <a href="/tag/mobx.html">MobX</a> <a href="/tag/state-management.html">State management</a> </p>
-</footer><!-- /.post-info -->                <p>Reference articles:<br>
-1. <a href="https://circleci.com/blog/state-management-for-flutter-apps-with-mobx/">https://circleci.com/blog/state-management-for-flutter-apps-with-mobx/</a></p>
-<p>MobX library main concept<br>
-1. @observable
-2. @action
-3. @computed</p>
-<p><code>observable</code> are the property(variable values) of app which may change over time</p>
-<p>For example in a to-do list app the todo list variable will shrink or expand over time, new elements …</p>
-                <a class="readmore" href="/flutter-mobx-state-management-library-notes.html">read more</a>
-                </div><!-- /.entry-content -->
-            </article></li>
-
-            <li><article class="hentry">
-                <header>
-                    <h1><a href="/flutter-provider-example-codes.html" rel="bookmark"
-                           title="Permalink to Flutter Provider example codes">Flutter Provider example codes</a></h1>
-                </header>
-
-                <div class="entry-content">
-<footer class="post-info">
-        <abbr class="published" title="2022-01-12T22:51:00+05:30">
-                Published: Wed 12 January 2022
-        </abbr>
-
-        <address class="vcard author">
-                By                         <a class="url fn" href="/author/smrati-kumar-katiyar.html">Smrati Kumar Katiyar</a>
-        </address>
-<p>In <a href="/category/mobile-development.html">Mobile Development</a>.</p>
-<p>tags: <a href="/tag/flutter.html">Flutter</a> <a href="/tag/provider.html">Provider</a> </p>
-</footer><!-- /.post-info -->                <p>Example 1:<br>
-<a href="https://protocoderspoint.com/flutter-provider-for-beginners-tutorial-with-example/#Step_1_Creating_a_new_Flutter_Project">Code below is copied from here</a></p>
-<p><code>main.dart</code></p>
-<div class="highlight"><pre><span></span><code><span class="k">import</span> <span class="s1">&#39;package:flutter/material.dart&#39;</span><span class="p">;</span>
-<span class="k">import</span> <span class="s1">&#39;package:provider_example/Homepage.dart&#39;</span><span class="p">;</span>
-<span class="k">import</span> <span class="s1">&#39;package:provider_example/Timer_Data.dart&#39;</span><span class="p">;</span>
-<span class="k">import</span> <span class="s1">&#39;package:provider/provider.dart&#39;</span><span class="p">;</span>
-
-<span class="kt">void</span> <span class="n">main</span><span class="p">()</span> <span class="p">{</span>
-  <span class="n">runApp</span><span class="p">(</span><span class="n">MyApp</span><span class="p">());</span>
-<span class="p">}</span>
-
-<span class="kd">class</span> <span class="nc">MyApp</span> <span class="kd">extends</span> <span class="n">StatelessWidget</span> <span class="p">{</span>
-  <span class="c1">// This widget is the root of your application.</span>
-  <span class="nd">@override …</span></code></pre></div>
-                <a class="readmore" href="/flutter-provider-example-codes.html">read more</a>
-                </div><!-- /.entry-content -->
-            </article></li>
-
-            <li><article class="hentry">
-                <header>
-                    <h1><a href="/explaining-asynchronous-programming-in-nodejs-in-easiest-way-possible.html" rel="bookmark"
-                           title="Permalink to Explaining asynchronous programming in Node.js in easiest way possible">Explaining asynchronous programming in Node.js in easiest way possible</a></h1>
-                </header>
-
-                <div class="entry-content">
-<footer class="post-info">
-        <abbr class="published" title="2022-01-09T13:40:00+05:30">
-                Published: Sun 09 January 2022
-        </abbr>
-
-        <address class="vcard author">
-                By                         <a class="url fn" href="/author/smrati-kumar-katiyar.html">Smrati Kumar Katiyar</a>
-        </address>
-<p>In <a href="/category/web-development.html">Web Development</a>.</p>
-<p>tags: <a href="/tag/nodejs.html">node.js</a> </p>
-</footer><!-- /.post-info -->                <p>Look at the synchrous code below</p>
-<div class="highlight"><pre><span></span><code><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;First Line&#39;</span><span class="p">);</span>
-<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;Second Line&#39;</span><span class="p">);</span>
-</code></pre></div>
-
-<p>Its output is:  </p>
-<div class="highlight"><pre><span></span><code>First Line
-Second Line
-</code></pre></div>
-
-<p>Now look at the asynchronous code below  </p>
-<div class="highlight"><pre><span></span><code><span class="nx">setTimeout</span><span class="p">(()</span> <span class="p">=&gt;</span> <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;First Line&#39;</span><span class="p">),</span> <span class="mf">1000</span><span class="p">);</span>
-<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;Second Line&#39;</span><span class="p">);</span>
-</code></pre></div>
-
-<p>Its output is:  </p>
-<div class="highlight"><pre><span></span><code>Second Line
-First Line
-</code></pre></div>
-
-<p>Now if you compare both …</p>
-                <a class="readmore" href="/explaining-asynchronous-programming-in-nodejs-in-easiest-way-possible.html">read more</a>
-                </div><!-- /.entry-content -->
-            </article></li>
-
-            <li><article class="hentry">
-                <header>
-                    <h1><a href="/flutter-crud-using-sqlite.html" rel="bookmark"
-                           title="Permalink to Flutter CRUD using SQLite">Flutter CRUD using SQLite</a></h1>
-                </header>
-
-                <div class="entry-content">
-<footer class="post-info">
-        <abbr class="published" title="2022-01-08T22:51:00+05:30">
-                Published: Sat 08 January 2022
-        </abbr>
-
-        <address class="vcard author">
-                By                         <a class="url fn" href="/author/smrati-kumar-katiyar.html">Smrati Kumar Katiyar</a>
-        </address>
-<p>In <a href="/category/mobile-development.html">Mobile Development</a>.</p>
-<p>tags: <a href="/tag/flutter.html">Flutter</a> <a href="/tag/sqlite.html">SQLite</a> </p>
-</footer><!-- /.post-info -->                <p>Plugin used in this tutorial <code>sqflite</code><br>
-The tutorials i am following to create these notes are given below <br>
-1. <a href="https://docs.flutter.dev/cookbook/persistence/sqlite">https://docs.flutter.dev/cookbook/persistence/sqlite</a><br>
-2. <a href="https://www.fluttercampus.com/guide/103/how-to-use-sqlite-sqflite-crud-operation-on-flutter-android-ios/">https://www.fluttercampus.com/guide/103/how-to-use-sqlite-sqflite-crud-operation-on-flutter-android-ios/</a></p>
-<p>In this tutorial we will create a CRUD application for News items. 
-1. Create a News …</p>
-                <a class="readmore" href="/flutter-crud-using-sqlite.html">read more</a>
-                </div><!-- /.entry-content -->
-            </article></li>
-
-            <li><article class="hentry">
-                <header>
-                    <h1><a href="/passing-data-between-screens.html" rel="bookmark"
-                           title="Permalink to Passing data between screens">Passing data between screens</a></h1>
-                </header>
-
-                <div class="entry-content">
-<footer class="post-info">
-        <abbr class="published" title="2022-01-08T21:25:00+05:30">
-                Published: Sat 08 January 2022
-        </abbr>
-
-        <address class="vcard author">
-                By                         <a class="url fn" href="/author/smrati-kumar-katiyar.html">Smrati Kumar Katiyar</a>
-        </address>
-<p>In <a href="/category/mobile-development.html">Mobile Development</a>.</p>
-<p>tags: <a href="/tag/flutter.html">Flutter</a> </p>
-</footer><!-- /.post-info -->                <p>I have learned this concept following tutorial given <a href="https://docs.flutter.dev/cookbook/navigation/passing-data">here</a></p>
-<p>Take example of an app where on one screen several news items are listed and when you <code>tap</code> on one news item you 
-reach to a new page where detail of this news is shown</p>
-<p>First create a new flutter project …</p>
-                <a class="readmore" href="/passing-data-between-screens.html">read more</a>
-                </div><!-- /.entry-content -->
-            </article></li>
-
-            <li><article class="hentry">
-                <header>
-                    <h1><a href="/3-different-ways-to-declare-variables-in-dart.html" rel="bookmark"
-                           title="Permalink to 3 different ways to declare variables in dart">3 different ways to declare variables in dart</a></h1>
-                </header>
-
-                <div class="entry-content">
-<footer class="post-info">
-        <abbr class="published" title="2022-01-01T13:24:00+05:30">
-                Published: Sat 01 January 2022
-        </abbr>
-
-        <address class="vcard author">
-                By                         <a class="url fn" href="/author/smrati-kumar-katiyar.html">Smrati Kumar Katiyar</a>
-        </address>
-<p>In <a href="/category/mobile-development.html">Mobile Development</a>.</p>
-<p>tags: <a href="/tag/flutter.html">Flutter</a> <a href="/tag/dart.html">dart</a> </p>
-</footer><!-- /.post-info -->                <ol>
-<li>var</li>
-<li>final</li>
-<li>const</li>
-</ol>
-<p>we will learn about difference in these 3 types </p>
-<p>mutable, static type</p>
-<div class="highlight"><pre><span></span><code>main() {
-  mutableBasicType();
-}
-
-void mutableBasicType(){
-  int a = 5;
-  double b = 12.7;
-  bool c = true;
-
-
-  print(a);
-  print(b);
-  print(c);
-
-}
-</code></pre></div>
-
-<p>A variable once assigned as int can't be reassigned as double</p>
-<div class="highlight"><pre><span></span><code>main() {
-  mutableBasicType();
-}
-
-void mutableBasicType …</code></pre></div>
-                <a class="readmore" href="/3-different-ways-to-declare-variables-in-dart.html">read more</a>
-                </div><!-- /.entry-content -->
-            </article></li>
-
-            <li><article class="hentry">
-                <header>
-                    <h1><a href="/how-to-use-shared-preference-in-flutter.html" rel="bookmark"
-                           title="Permalink to How to use shared preference in flutter">How to use shared preference in flutter</a></h1>
-                </header>
-
-                <div class="entry-content">
-<footer class="post-info">
-        <abbr class="published" title="2022-01-01T13:24:00+05:30">
-                Published: Sat 01 January 2022
-        </abbr>
-
-        <address class="vcard author">
-                By                         <a class="url fn" href="/author/smrati-kumar-katiyar.html">Smrati Kumar Katiyar</a>
-        </address>
-<p>In <a href="/category/mobile-development.html">Mobile Development</a>.</p>
-<p>tags: <a href="/tag/flutter.html">Flutter</a> <a href="/tag/shared-preference.html">shared preference</a> </p>
-</footer><!-- /.post-info -->                <p>It is used to store key value pairs in flutter
-Only int, String, double and bool can be stored using shared_preference</p>
-<p>Useful Resources:<br>
-<a href="https://www.youtube.com/watch?v=szOllHT1S7Y">https://www.youtube.com/watch?v=szOllHT1S7Y</a></p>
-                <a class="readmore" href="/how-to-use-shared-preference-in-flutter.html">read more</a>
-                </div><!-- /.entry-content -->
-            </article></li>
-
-            <li><article class="hentry">
-                <header>
-                    <h1><a href="/interactivity-and-buttons-in-flutter.html" rel="bookmark"
-                           title="Permalink to Interactivity and buttons in flutter">Interactivity and buttons in flutter</a></h1>
-                </header>
-
-                <div class="entry-content">
-<footer class="post-info">
-        <abbr class="published" title="2022-01-01T13:24:00+05:30">
-                Published: Sat 01 January 2022
-        </abbr>
-
-        <address class="vcard author">
-                By                         <a class="url fn" href="/author/smrati-kumar-katiyar.html">Smrati Kumar Katiyar</a>
-        </address>
-<p>In <a href="/category/mobile-development.html">Mobile Development</a>.</p>
-<p>tags: <a href="/tag/flutter.html">Flutter</a> <a href="/tag/button.html">button</a> </p>
-</footer><!-- /.post-info -->                <p>In this tutorial we will be explaining how to use buttons in flutter for taking some action, this example is copied from official boiler plate code flutter generates while creating a new app, more examples will be added on this page later</p>
-<div class="highlight"><pre><span></span><code><span class="k">import</span> <span class="s1">&#39;package:flutter/material.dart&#39;</span><span class="p">;</span>
-
-<span class="kt">void</span> <span class="n">main</span><span class="p">()</span> <span class="p">{</span>
-  <span class="n">runApp …</span></code></pre></div>
-                <a class="readmore" href="/interactivity-and-buttons-in-flutter.html">read more</a>
-                </div><!-- /.entry-content -->
-            </article></li>
-
-            <li><article class="hentry">
-                <header>
-                    <h1><a href="/mobx-state-management-my-notes.html" rel="bookmark"
-                           title="Permalink to MobX state management (My Notes)">MobX state management (My Notes)</a></h1>
-                </header>
-
-                <div class="entry-content">
-<footer class="post-info">
-        <abbr class="published" title="2022-01-01T13:24:00+05:30">
-                Published: Sat 01 January 2022
-        </abbr>
-
-        <address class="vcard author">
-                By                         <a class="url fn" href="/author/smrati-kumar-katiyar.html">Smrati Kumar Katiyar</a>
-        </address>
-<p>In <a href="/category/mobile-development.html">Mobile Development</a>.</p>
-<p>tags: <a href="/tag/flutter.html">Flutter</a> <a href="/tag/mobx.html">MobX</a> </p>
-</footer><!-- /.post-info -->                <p>add dependency in pubspec.yaml</p>
-<div class="highlight"><pre><span></span><code><span class="nt">dependencies</span><span class="p">:</span>
-  <span class="nt">mobx</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">^2.0.6+1</span>
-  <span class="nt">flutter_mobx</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">^2.0.3+2</span>
-
-<span class="nt">dev_dependencies</span><span class="p">:</span>
-  <span class="nt">build_runner</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">^2.1.7</span>
-  <span class="nt">mobx_codegen</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">^2.0.5+2</span>
-</code></pre></div>
-
-<h1>what is MobX store ?</h1>
-<p><a href="https://mobx.netlify.app/getting-started">Reference</a>  </p>
-<p>basically mobX store is the place where you define Observables state. This is the place …</p>
-                <a class="readmore" href="/mobx-state-management-my-notes.html">read more</a>
-                </div><!-- /.entry-content -->
-            </article></li>
-                </ol><!-- /#posts-list -->
-<p class="paginator">
-    Page 1 / 2
-        <a href="/index2.html">&raquo;</a>
-        <a href="/index2.html">&#8649;</a>
-</p>
-                </section><!-- /#content -->
+<section id="content" class="body">
+    <p>This site currently has no content.</p>
+</section>
         <section id="extras" class="body">
                 <div class="blogroll">
                         <h2>links</h2>
                         <ul>
-                            <li><a href="https://flutter.dev/">Flutter</a></li>
+                            <li><a href="https://getpelican.com/">Pelican</a></li>
                             <li><a href="https://www.python.org/">Python.org</a></li>
+                            <li><a href="https://palletsprojects.com/p/jinja/">Jinja2</a></li>
+                            <li><a href="#">You can modify those links in your config file</a></li>
                         </ul>
                 </div><!-- /.blogroll -->
                 <div class="social">
                         <h2>social</h2>
                         <ul>
 
-                            <li><a href="https://twitter.com/SmratiKatiyar">Twitter</a></li>
-                            <li><a href="https://www.linkedin.com/in/smrati/">Linkedin</a></li>
+                            <li><a href="#">You can add links in your config file</a></li>
+                            <li><a href="#">Another social link</a></li>
                         </ul>
                 </div><!-- /.social -->
         </section><!-- /#extras -->
 
         <footer id="contentinfo" class="body">
                 <address id="about" class="vcard body">
-                Proudly powered by <a href="https://getpelican.com/">Pelican</a>, which takes great advantage of <a href="https://www.python.org/">Python</a>.
+                Proudly powered by <a rel="nofollow" href="https://getpelican.com/">Pelican</a>, which takes great advantage of <a rel="nofollow" href="https://www.python.org/">Python</a>.
                 </address><!-- /#about -->
 
-                <p>The theme is by <a href="https://www.smashingmagazine.com/2009/08/designing-a-html-5-layout-from-scratch/">Smashing Magazine</a>, thanks!</p>
+                <p>The theme is by <a rel="nofollow" href="https://www.smashingmagazine.com/2009/08/designing-a-html-5-layout-from-scratch/">Smashing Magazine</a>, thanks!</p>
         </footer><!-- /#contentinfo -->
 
 </body>
