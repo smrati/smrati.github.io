@@ -18,7 +18,66 @@
 
             <aside id="featured" class="body">
                 <article>
-                    <h1 class="entry-title"><a href="/text-classification-using-spacy-end-to-end-custom-model-training-and-inferencing.html">Text Classification using spaCy (End to End custom model training and inferencing)</a></h1>
+                    <h1 class="entry-title"><a href="/how-to-use-ollama-python-library-to-give-context-before-query.html">How to use Ollama python library to give context before query</a></h1>
+<footer class="post-info">
+        <abbr class="published" title="2024-08-26T00:00:00+05:30">
+                Published: Mon 26 August 2024
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/smrati-kumar-katiyar.html">Smrati Kumar Katiyar</a>
+        </address>
+<p>In <a href="/category/blog.html">Blog</a>.</p>
+<p>tags: <a href="/tag/ollama.html">Ollama</a> <a href="/tag/llm.html">LLM</a> <a href="/tag/python.html">Python</a> </p>
+</footer><!-- /.post-info --><h1>Sending context to LLM before it generate response</h1>
+<div class="highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">ollama</span>
+
+<span class="c1"># Define the context and question</span>
+<span class="n">context</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">Indian shooting legend Abhinav Bindra believes that despite the country having a population of 1.4 billion people, the “playing population” of India remains significantly less.</span>
+
+<span class="s2">Bindra was speaking in the aftermath of India’s 2024 Paris Olympics campaign, where the nation won just six medals (one silver and five bronze), despite much being expected from a majority of the athletes.</span>
+
+<span class="s2">And on another six occasions in the Paris Games, Indian athletes endured fourth-place finishes. Had those fourth-place finishes been converted into medals, India’s medals tally might very well have gone into double digits.</span>
+
+<span class="s2">&quot;&quot;&quot;</span>
+<span class="n">question</span> <span class="o">=</span> <span class="s2">&quot;How many medals india won in olympic 2024? use the given context only to answer my question&quot;</span>
+
+<span class="c1"># Structure the messages</span>
+<span class="n">messages</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="p">{</span><span class="s2">&quot;role&quot;</span><span class="p">:</span> <span class="s2">&quot;system&quot;</span><span class="p">,</span> <span class="s2">&quot;content&quot;</span><span class="p">:</span> <span class="n">context</span><span class="p">},</span>
+    <span class="p">{</span><span class="s2">&quot;role&quot;</span><span class="p">:</span> <span class="s2">&quot;user&quot;</span><span class="p">,</span> <span class="s2">&quot;content&quot;</span><span class="p">:</span> <span class="n">question</span><span class="p">}</span>
+<span class="p">]</span>
+
+<span class="c1"># Make the API call</span>
+<span class="n">response</span> <span class="o">=</span> <span class="n">ollama</span><span class="o">.</span><span class="n">chat</span><span class="p">(</span><span class="n">model</span><span class="o">=</span><span class="s2">&quot;llama3.1&quot;</span><span class="p">,</span> <span class="n">messages</span><span class="o">=</span><span class="n">messages</span><span class="p">)</span>
+
+<span class="c1"># Print the response</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">response</span><span class="p">[</span><span class="s2">&quot;message&quot;</span><span class="p">][</span><span class="s2">&quot;content&quot;</span><span class="p">])</span>
+</code></pre></div>
+
+<p>Output:</p>
+<div class="highlight"><pre><span></span><code>India won 6 medals at the 2024 Paris Olympics. 
+
+These 6 medals consist of:
+- 1 Silver
+- 5 Bronze
+</code></pre></div>
+
+<p>Reference: Above context has been copied from a news artcile in firstpost.com </p>                </article>
+            </aside><!-- /#featured -->
+                <section id="content" class="body">
+                    <h1>Other articles</h1>
+                    <hr />
+                    <ol id="posts-list" class="hfeed">
+
+            <li><article class="hentry">
+                <header>
+                    <h1><a href="/text-classification-using-spacy-end-to-end-custom-model-training-and-inferencing.html" rel="bookmark"
+                           title="Permalink to Text Classification using spaCy (End to End custom model training and inferencing)">Text Classification using spaCy (End to End custom model training and inferencing)</a></h1>
+                </header>
+
+                <div class="entry-content">
 <footer class="post-info">
         <abbr class="published" title="2024-08-21T00:00:00+05:30">
                 Published: Wed 21 August 2024
@@ -29,195 +88,12 @@
         </address>
 <p>In <a href="/category/blog.html">Blog</a>.</p>
 <p>tags: <a href="/tag/spacy.html">spaCy</a> <a href="/tag/nlp.html">NLP</a> </p>
-</footer><!-- /.post-info --><h1>How to classify text using spaCy</h1>
-<p>In this tutorial we are going to use <a href="https://www.kaggle.com/datasets/team-ai/spam-text-message-classification">Spam Text Message Classification</a> from <code>kaggle</code></p>
-<p>let's download the dataset and first do some analysis on data</p>
-<p>First check label balance !</p>
-<div class="highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
-
-<span class="c1"># Load CSV file</span>
-<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;SPAM_text_message_20170820_Data.csv&#39;</span><span class="p">)</span>
-<span class="n">df</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
-</code></pre></div>
-
-<p>This is a 2 column file  </p>
-<p><img alt="Raw Data" src="images/raw_df_head.png"></p>
-<hr>
-<p>Let's check how many unique labels we have and what are their respective counts</p>
-<div class="highlight"><pre><span></span><code><span class="c1"># Get unique values and their counts in the &quot;Category&quot; column</span>
-<span class="n">category_counts</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;Category&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">value_counts</span><span class="p">()</span>
-</code></pre></div>
-
-<p><img alt="Unique Label Counts" src="images/unique_label_counts.png"></p>
-<p>We can see significant imbalance between <code>ham</code> and <code>spam</code> class</p>
-<p>Let's split data into test and train set, for simplicity and mitigate the effect of label imbalance</p>
-<p>use all datapoints for spam class but only use randomly shuffled limited number of data points from ham class</p>
-<p>create spam dataframe with 747 rows
-create ham dataframe with 747 rows (remember random shuffling)</p>
-<p>From the balanced data frame create 2 dataframes train and test</p>
-<div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">train_test_split</span>
-
-<span class="c1"># Filter the rows with &quot;spam&quot;</span>
-<span class="n">spam_df</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;Category&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;spam&#39;</span><span class="p">]</span>
-
-<span class="c1"># Randomly select 747 rows with &quot;ham&quot;</span>
-<span class="n">ham_df</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;Category&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;ham&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="n">n</span><span class="o">=</span><span class="mi">747</span><span class="p">)</span>
-
-<span class="c1"># Combine the two dataframes</span>
-<span class="n">balanced_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">([</span><span class="n">spam_df</span><span class="p">,</span> <span class="n">ham_df</span><span class="p">])</span>
-
-<span class="c1"># Optionally, shuffle the combined dataframe</span>
-<span class="n">balanced_df</span> <span class="o">=</span> <span class="n">balanced_df</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="n">frac</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">reset_index</span><span class="p">(</span><span class="n">drop</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-
-<span class="c1"># Display the result</span>
-<span class="n">balanced_df</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
-
-<span class="c1"># Split the balanced dataset into training and testing sets (80/20 ratio)</span>
-<span class="n">balanced_train_df</span><span class="p">,</span> <span class="n">balanced_test_df</span> <span class="o">=</span> <span class="n">train_test_split</span><span class="p">(</span><span class="n">balanced_df</span><span class="p">,</span> <span class="n">test_size</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">,</span> <span class="n">stratify</span><span class="o">=</span><span class="n">balanced_df</span><span class="p">[</span><span class="s1">&#39;Category&#39;</span><span class="p">])</span>
-</code></pre></div>
-
-<hr>
-<h3>What stratify do in above code?</h3>
-<p>The <code>stratify</code> parameter in <code>train_test_split</code> ensures that the proportion of classes (in your case, "ham" and "spam") is maintained in both the training and testing sets. This means that the split will have the same distribution of categories as the original dataset.</p>
-<h3>Without <code>stratify</code>:</h3>
-<p>If you don't use <code>stratify</code>, the split is done randomly, which might result in an imbalanced distribution of classes in the training and testing sets. For example, you could end up with more "ham" or "spam" instances in one set compared to the other.</p>
-<h3>With <code>stratify</code>:</h3>
-<p>When you set <code>stratify=balanced_df['Category']</code>, it ensures that both the training and testing sets will have the same proportion of "ham" and "spam" as in the original <code>balanced_df</code>. This is particularly important when dealing with imbalanced datasets or when the distribution of classes is crucial for the model's performance.</p>
-<p>For example, if your <code>balanced_df</code> has a 50/50 distribution of "ham" and "spam," using <code>stratify</code> ensures that both the training and testing sets will also have a 50/50 distribution.</p>
-<hr>
-<p>Now verify what's the category distribution in train dataset</p>
-<div class="highlight"><pre><span></span><code><span class="n">balanced_category_count</span> <span class="o">=</span> <span class="n">balanced_train_df</span><span class="p">[</span><span class="s1">&#39;Category&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">value_counts</span><span class="p">()</span>
-<span class="n">balanced_category_count</span>
-</code></pre></div>
-
-<p>Output:<br>
-<img alt="Balanced label count" src="images/balanced_label_count.png"></p>
-<hr>
-<h3>Let's arrange train data in a format spaCy can accept</h3>
-<div class="highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">spacy</span>
-<span class="kn">from</span> <span class="nn">spacy.training</span> <span class="kn">import</span> <span class="n">Example</span>
-
-<span class="c1"># Initialize spacy&#39;s English model</span>
-<span class="n">nlp</span> <span class="o">=</span> <span class="n">spacy</span><span class="o">.</span><span class="n">blank</span><span class="p">(</span><span class="s1">&#39;en&#39;</span><span class="p">)</span>
-
-<span class="c1"># Add the text classifier to the pipeline</span>
-<span class="k">if</span> <span class="s1">&#39;textcat&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">nlp</span><span class="o">.</span><span class="n">pipe_names</span><span class="p">:</span>
-    <span class="n">textcat</span> <span class="o">=</span> <span class="n">nlp</span><span class="o">.</span><span class="n">add_pipe</span><span class="p">(</span><span class="s1">&#39;textcat&#39;</span><span class="p">,</span> <span class="n">last</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-
-<span class="c1"># Add your labels to the text classifier</span>
-<span class="k">for</span> <span class="n">label</span> <span class="ow">in</span> <span class="n">balanced_train_df</span><span class="p">[</span><span class="s1">&#39;Category&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">unique</span><span class="p">():</span>  <span class="c1"># Replace with your actual label column name</span>
-    <span class="n">textcat</span><span class="o">.</span><span class="n">add_label</span><span class="p">(</span><span class="n">label</span><span class="p">)</span>
-
-<span class="c1"># Create training data</span>
-<span class="n">train_data</span> <span class="o">=</span> <span class="p">[]</span>
-<span class="k">for</span> <span class="n">text</span><span class="p">,</span> <span class="n">label</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">balanced_train_df</span><span class="p">[</span><span class="s1">&#39;Message&#39;</span><span class="p">],</span> <span class="n">balanced_train_df</span><span class="p">[</span><span class="s1">&#39;Category&#39;</span><span class="p">]):</span>  <span class="c1"># Replace with your actual column names</span>
-    <span class="n">doc</span> <span class="o">=</span> <span class="n">nlp</span><span class="o">.</span><span class="n">make_doc</span><span class="p">(</span><span class="n">text</span><span class="p">)</span>
-    <span class="n">example</span> <span class="o">=</span> <span class="n">Example</span><span class="o">.</span><span class="n">from_dict</span><span class="p">(</span><span class="n">doc</span><span class="p">,</span> <span class="p">{</span><span class="s2">&quot;cats&quot;</span><span class="p">:</span> <span class="p">{</span><span class="n">label</span><span class="p">:</span> <span class="mf">1.0</span><span class="p">}})</span>
-    <span class="n">train_data</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">example</span><span class="p">)</span>
-</code></pre></div>
-
-<hr>
-<h3>let's do spaCy training for 10 epochs</h3>
-<div class="highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">random</span>
-
-<span class="c1"># Initialize the training process</span>
-<span class="n">optimizer</span> <span class="o">=</span> <span class="n">nlp</span><span class="o">.</span><span class="n">begin_training</span><span class="p">()</span>
-
-<span class="c1"># Set the number of training iterations (epochs)</span>
-<span class="n">n_iter</span> <span class="o">=</span> <span class="mi">10</span>
-
-<span class="c1"># Training loop</span>
-<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n_iter</span><span class="p">):</span>
-    <span class="n">losses</span> <span class="o">=</span> <span class="p">{}</span>
-    <span class="n">random</span><span class="o">.</span><span class="n">shuffle</span><span class="p">(</span><span class="n">train_data</span><span class="p">)</span>
-    <span class="n">batches</span> <span class="o">=</span> <span class="n">spacy</span><span class="o">.</span><span class="n">util</span><span class="o">.</span><span class="n">minibatch</span><span class="p">(</span><span class="n">train_data</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="n">spacy</span><span class="o">.</span><span class="n">util</span><span class="o">.</span><span class="n">compounding</span><span class="p">(</span><span class="mf">4.0</span><span class="p">,</span> <span class="mf">32.0</span><span class="p">,</span> <span class="mf">1.001</span><span class="p">))</span>
-    <span class="k">for</span> <span class="n">batch</span> <span class="ow">in</span> <span class="n">batches</span><span class="p">:</span>
-        <span class="n">nlp</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">batch</span><span class="p">,</span> <span class="n">sgd</span><span class="o">=</span><span class="n">optimizer</span><span class="p">,</span> <span class="n">losses</span><span class="o">=</span><span class="n">losses</span><span class="p">)</span>
-    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Epoch </span><span class="si">{</span><span class="n">i</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="si">}</span><span class="s2">: Losses </span><span class="si">{</span><span class="n">losses</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-
-<span class="c1"># Save the trained model to disk</span>
-<span class="n">nlp</span><span class="o">.</span><span class="n">to_disk</span><span class="p">(</span><span class="s1">&#39;text_classifier_model&#39;</span><span class="p">)</span>
-</code></pre></div>
-
-<p>Output:  </p>
-<div class="highlight"><pre><span></span><code>Epoch<span class="w"> </span><span class="m">1</span>:<span class="w"> </span>Losses<span class="w"> </span><span class="o">{</span><span class="s1">&#39;textcat&#39;</span>:<span class="w"> </span><span class="m">17</span>.627797796547693<span class="o">}</span>
-Epoch<span class="w"> </span><span class="m">2</span>:<span class="w"> </span>Losses<span class="w"> </span><span class="o">{</span><span class="s1">&#39;textcat&#39;</span>:<span class="w"> </span><span class="m">1</span>.693402770760869<span class="o">}</span>
-Epoch<span class="w"> </span><span class="m">3</span>:<span class="w"> </span>Losses<span class="w"> </span><span class="o">{</span><span class="s1">&#39;textcat&#39;</span>:<span class="w"> </span><span class="m">0</span>.29480036633374296<span class="o">}</span>
-Epoch<span class="w"> </span><span class="m">4</span>:<span class="w"> </span>Losses<span class="w"> </span><span class="o">{</span><span class="s1">&#39;textcat&#39;</span>:<span class="w"> </span><span class="m">0</span>.2008683757211756<span class="o">}</span>
-Epoch<span class="w"> </span><span class="m">5</span>:<span class="w"> </span>Losses<span class="w"> </span><span class="o">{</span><span class="s1">&#39;textcat&#39;</span>:<span class="w"> </span><span class="m">4</span>.3413760062642557e-07<span class="o">}</span>
-Epoch<span class="w"> </span><span class="m">6</span>:<span class="w"> </span>Losses<span class="w"> </span><span class="o">{</span><span class="s1">&#39;textcat&#39;</span>:<span class="w"> </span><span class="m">8</span>.53025894304916e-08<span class="o">}</span>
-Epoch<span class="w"> </span><span class="m">7</span>:<span class="w"> </span>Losses<span class="w"> </span><span class="o">{</span><span class="s1">&#39;textcat&#39;</span>:<span class="w"> </span><span class="m">5</span>.673169704225754e-08<span class="o">}</span>
-Epoch<span class="w"> </span><span class="m">8</span>:<span class="w"> </span>Losses<span class="w"> </span><span class="o">{</span><span class="s1">&#39;textcat&#39;</span>:<span class="w"> </span><span class="m">3</span>.913132671566036e-08<span class="o">}</span>
-Epoch<span class="w"> </span><span class="m">9</span>:<span class="w"> </span>Losses<span class="w"> </span><span class="o">{</span><span class="s1">&#39;textcat&#39;</span>:<span class="w"> </span><span class="m">2</span>.72724149418869e-08<span class="o">}</span>
-Epoch<span class="w"> </span><span class="m">10</span>:<span class="w"> </span>Losses<span class="w"> </span><span class="o">{</span><span class="s1">&#39;textcat&#39;</span>:<span class="w"> </span><span class="m">1</span>.8967485559276214e-08<span class="o">}</span>
-</code></pre></div>
-
-<hr>
-<h3>Let's check accuracy on test data</h3>
-<div class="highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">spacy</span>
-<span class="kn">from</span> <span class="nn">sklearn.metrics</span> <span class="kn">import</span> <span class="n">accuracy_score</span>
-
-<span class="c1"># Load the saved model from disk</span>
-<span class="n">nlp</span> <span class="o">=</span> <span class="n">spacy</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s1">&#39;text_classifier_model&#39;</span><span class="p">)</span>
-
-<span class="c1"># Prepare the test data</span>
-<span class="n">texts</span> <span class="o">=</span> <span class="n">balanced_test_df</span><span class="p">[</span><span class="s1">&#39;Message&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span>  <span class="c1"># Replace with your actual column name</span>
-<span class="n">true_labels</span> <span class="o">=</span> <span class="n">balanced_test_df</span><span class="p">[</span><span class="s1">&#39;Category&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span>  <span class="c1"># Replace with your actual column name</span>
-
-<span class="c1"># Predict labels for the test data</span>
-<span class="n">predicted_labels</span> <span class="o">=</span> <span class="p">[]</span>
-<span class="k">for</span> <span class="n">text</span> <span class="ow">in</span> <span class="n">texts</span><span class="p">:</span>
-    <span class="n">doc</span> <span class="o">=</span> <span class="n">nlp</span><span class="p">(</span><span class="n">text</span><span class="p">)</span>
-    <span class="c1"># Get the scores for each category</span>
-    <span class="n">scores</span> <span class="o">=</span> <span class="n">doc</span><span class="o">.</span><span class="n">cats</span>
-    <span class="c1"># Find the category with the highest score</span>
-    <span class="n">predicted_label</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">scores</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="n">scores</span><span class="o">.</span><span class="n">get</span><span class="p">)</span>
-    <span class="n">predicted_labels</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">predicted_label</span><span class="p">)</span>
-    <span class="c1"># print(text)</span>
-    <span class="c1"># print(predicted_label)</span>
-    <span class="c1"># print(&quot;--------------------------------------&quot;)</span>
-
-<span class="c1"># Calculate the accuracy</span>
-<span class="n">accuracy</span> <span class="o">=</span> <span class="n">accuracy_score</span><span class="p">(</span><span class="n">true_labels</span><span class="p">,</span> <span class="n">predicted_labels</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Accuracy on the test set: </span><span class="si">{</span><span class="n">accuracy</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-</code></pre></div>
-
-<p>Output:</p>
-<div class="highlight"><pre><span></span><code>Accuracy<span class="w"> </span>on<span class="w"> </span>the<span class="w"> </span><span class="nb">test</span><span class="w"> </span>set:<span class="w"> </span><span class="m">0</span>.9833
-</code></pre></div>
-
-<hr>
-<h3>Let's randomly select some datapoint from test dataset and check its prediction by running this code multiple times</h3>
-<div class="highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">spacy</span>
-<span class="kn">import</span> <span class="nn">random</span>
-
-<span class="c1"># Load the saved model from disk</span>
-<span class="n">nlp</span> <span class="o">=</span> <span class="n">spacy</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s1">&#39;text_classifier_model&#39;</span><span class="p">)</span>
-
-<span class="c1"># Randomly pick one row from the test dataset</span>
-<span class="n">random_index</span> <span class="o">=</span> <span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">balanced_test_df</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span>
-<span class="n">random_text</span> <span class="o">=</span> <span class="n">balanced_test_df</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">random_index</span><span class="p">][</span><span class="s1">&#39;Message&#39;</span><span class="p">]</span>  <span class="c1"># Replace with your actual column name</span>
-<span class="n">true_label</span> <span class="o">=</span> <span class="n">balanced_test_df</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">random_index</span><span class="p">][</span><span class="s1">&#39;Category&#39;</span><span class="p">]</span>  <span class="c1"># Replace with your actual column name</span>
-
-<span class="c1"># Make a prediction on the randomly selected text</span>
-<span class="n">doc</span> <span class="o">=</span> <span class="n">nlp</span><span class="p">(</span><span class="n">random_text</span><span class="p">)</span>
-<span class="n">scores</span> <span class="o">=</span> <span class="n">doc</span><span class="o">.</span><span class="n">cats</span>
-<span class="n">predicted_label</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">scores</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="n">scores</span><span class="o">.</span><span class="n">get</span><span class="p">)</span>
-
-<span class="c1"># Output the results</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Randomly selected text: </span><span class="si">{</span><span class="n">random_text</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;True Label: </span><span class="si">{</span><span class="n">true_label</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Predicted Label: </span><span class="si">{</span><span class="n">predicted_label</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Scores: </span><span class="si">{</span><span class="n">scores</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-</code></pre></div>
-
-<p>Output:</p>
-<div class="highlight"><pre><span></span><code>Randomly selected text: URGENT! Your Mobile number has been awarded with a £2000 prize GUARANTEED. Call 09061790126 from land line. Claim 3030. Valid 12hrs only 150ppm
-True Label: spam
-Predicted Label: spam
-Scores: {&#39;spam&#39;: 0.9999997615814209, &#39;ham&#39;: 2.096758748848515e-07}
-</code></pre></div>                </article>
-            </aside><!-- /#featured -->
+</footer><!-- /.post-info -->                <p>Predict labels for a given text</p>
+                <a class="readmore" href="/text-classification-using-spacy-end-to-end-custom-model-training-and-inferencing.html">read more</a>
+                </div><!-- /.entry-content -->
+            </article></li>
+                </ol><!-- /#posts-list -->
+                </section><!-- /#content -->
         <section id="extras" class="body">
                 <div class="blogroll">
                         <h2>links</h2>
