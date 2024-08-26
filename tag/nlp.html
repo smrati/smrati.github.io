@@ -83,7 +83,8 @@ create ham dataframe with 747 rows (remember random shuffling)</p>
 <p>If you don't use <code>stratify</code>, the split is done randomly, which might result in an imbalanced distribution of classes in the training and testing sets. For example, you could end up with more "ham" or "spam" instances in one set compared to the other.</p>
 <h3>With <code>stratify</code>:</h3>
 <p>When you set <code>stratify=balanced_df['Category']</code>, it ensures that both the training and testing sets will have the same proportion of "ham" and "spam" as in the original <code>balanced_df</code>. This is particularly important when dealing with imbalanced datasets or when the distribution of classes is crucial for the model's performance.</p>
-<h2>For example, if your <code>balanced_df</code> has a 50/50 distribution of "ham" and "spam," using <code>stratify</code> ensures that both the training and testing sets will also have a 50/50 distribution.</h2>
+<p>For example, if your <code>balanced_df</code> has a 50/50 distribution of "ham" and "spam," using <code>stratify</code> ensures that both the training and testing sets will also have a 50/50 distribution.</p>
+<hr>
 <p>Now verify what's the category distribution in train dataset</p>
 <div class="highlight"><pre><span></span><code><span class="n">balanced_category_count</span> <span class="o">=</span> <span class="n">balanced_train_df</span><span class="p">[</span><span class="s1">&#39;Category&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">value_counts</span><span class="p">()</span>
 <span class="n">balanced_category_count</span>
