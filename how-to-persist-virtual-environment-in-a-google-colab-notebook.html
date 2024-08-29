@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta name="generator" content="Pelican" />
+        <title>How to persist virtual environment in a Google Colab notebook ?</title>
+        <link rel="stylesheet" href="/theme/css/main.css" />
+        <meta name="description" content="Whenever you close your colab notebook or restart kernel it is highly likely you will lose any third party package you may have installed in your..." />
+</head>
+
+<body id="index" class="home">
+        <header id="banner" class="body">
+                <h1><a href="/">Open Tech</a></h1>
+                <nav><ul>
+                    <li class="active"><a href="/category/blog.html">Blog</a></li>
+                </ul></nav>
+        </header><!-- /#banner -->
+<section id="content" class="body">
+  <article>
+    <header>
+      <h1 class="entry-title">
+        <a href="/how-to-persist-virtual-environment-in-a-google-colab-notebook.html" rel="bookmark"
+           title="Permalink to How to persist virtual environment in a Google Colab notebook ?">How to persist virtual environment in a Google Colab notebook ?</a></h1>
+    </header>
+
+    <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2024-08-29T00:00:00+05:30">
+                Published: Thu 29 August 2024
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/smrati-kumar-katiyar.html">Smrati Kumar Katiyar</a>
+        </address>
+<p>In <a href="/category/blog.html">Blog</a>.</p>
+<p>tags: <a href="/tag/google-colab.html">Google Colab</a> <a href="/tag/notebook.html">Notebook</a> <a href="/tag/infra.html">Infra</a> </p>
+</footer><!-- /.post-info -->      <p>Whenever you close your colab notebook or restart kernel it is highly likely you will lose any third party package you may have installed in your notebook.</p>
+<p>It is ok if these packages are small in size, you can install them again whenever you want but as we know some times deep learning packages could be quite large in size even in GBs</p>
+<p>So there must be some way or hack to persist these packages so that we need not to install them all the time. This tutorial is all about that only</p>
+<hr>
+<h3>Step 1:</h3>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">google.colab</span> <span class="kn">import</span> <span class="n">drive</span>
+<span class="n">drive</span><span class="o">.</span><span class="n">mount</span><span class="p">(</span><span class="s2">&quot;/content/drive&quot;</span><span class="p">)</span>
+</code></pre></div>
+
+<p>let's first mount google drive inside our notebook, when you run this cell a popup window may come in your browser asking for giving colab access to your drive, accept that</p>
+<h3>Step 2:</h3>
+<p>virtualenv package is not available in colab by default , you need to install it</p>
+<div class="highlight"><pre><span></span><code>!pip<span class="w"> </span>install<span class="w"> </span>virtualenv
+</code></pre></div>
+
+<h3>Step 3:</h3>
+<p>Create virtual environment</p>
+<div class="highlight"><pre><span></span><code>!virtualenv<span class="w"> </span>/content/drive/MyDrive/colab_env_vision
+</code></pre></div>
+
+<h3>Step 4:</h3>
+<p>Activate Virtual environment and install required packages (for example i am using <code>loguru</code> package)</p>
+<div class="highlight"><pre><span></span><code>!source<span class="w"> </span>/content/drive/MyDrive/colab_env_vision/bin/activate<span class="p">;</span><span class="w"> </span>pip<span class="w"> </span>install<span class="w"> </span>loguru
+</code></pre></div>
+
+<p>Note: Make sure you run pip install in same cell where you are activating your environment  </p>
+<h3>Step 5:</h3>
+<p>Add environment to system path</p>
+<div class="highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">sys</span>
+<span class="n">sys</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;/content/drive/MyDrive/colab_env_vision/lib/python3.10/site-packages&quot;</span><span class="p">)</span>
+</code></pre></div>
+
+<h3>Step 6:</h3>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">loguru</span> <span class="kn">import</span> <span class="n">logger</span>
+<span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;test log&quot;</span><span class="p">)</span>
+</code></pre></div>
+
+<p>import package and see it is working fine</p>
+<h3>Step 7 (Optional):</h3>
+<p>Close notebook and open again in a new tab to verify if installed package is still accessible</p>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">google.colab</span> <span class="kn">import</span> <span class="n">drive</span>
+<span class="n">drive</span><span class="o">.</span><span class="n">mount</span><span class="p">(</span><span class="s2">&quot;/content/drive&quot;</span><span class="p">)</span>
+
+<span class="kn">import</span> <span class="nn">sys</span>
+<span class="n">sys</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;/content/drive/MyDrive/colab_env_vision/lib/python3.10/site-packages&quot;</span><span class="p">)</span>
+
+<span class="kn">from</span> <span class="nn">loguru</span> <span class="kn">import</span> <span class="n">logger</span>
+<span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;test log&quot;</span><span class="p">)</span>
+</code></pre></div>
+    </div><!-- /.entry-content -->
+
+  </article>
+</section>
+        <section id="extras" class="body">
+                <div class="blogroll">
+                        <h2>links</h2>
+                        <ul>
+                            <li><a href="https://getpelican.com/">Pelican</a></li>
+                            <li><a href="https://www.python.org/">Python.org</a></li>
+                            <li><a href="https://palletsprojects.com/p/jinja/">Jinja2</a></li>
+                            <li><a href="#">You can modify those links in your config file</a></li>
+                        </ul>
+                </div><!-- /.blogroll -->
+                <div class="social">
+                        <h2>social</h2>
+                        <ul>
+
+                            <li><a href="https://www.linkedin.com/in/smrati/">LinkedIN</a></li>
+                            <li><a href="https://x.com/SmratiKatiyar">X (Twitter)</a></li>
+                        </ul>
+                </div><!-- /.social -->
+        </section><!-- /#extras -->
+
+        <footer id="contentinfo" class="body">
+                <address id="about" class="vcard body">
+                Proudly powered by <a rel="nofollow" href="https://getpelican.com/">Pelican</a>, which takes great advantage of <a rel="nofollow" href="https://www.python.org/">Python</a>.
+                </address><!-- /#about -->
+
+                <p>The theme is by <a rel="nofollow" href="https://www.smashingmagazine.com/2009/08/designing-a-html-5-layout-from-scratch/">Smashing Magazine</a>, thanks!</p>
+        </footer><!-- /#contentinfo -->
+
+</body>
+</html>
