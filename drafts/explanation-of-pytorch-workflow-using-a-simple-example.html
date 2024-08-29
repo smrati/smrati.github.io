@@ -4,21 +4,27 @@
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <meta name="generator" content="Pelican" />
-        <title>Open Tech - pytorch</title>
+        <title>Explanation of Pytorch workflow using a simple example</title>
         <link rel="stylesheet" href="/theme/css/main.css" />
+        <meta name="description" content="In this tutorial i am going to explain following - How to create load data into pytorch tensor for training - How to define the model - How to..." />
 </head>
 
 <body id="index" class="home">
         <header id="banner" class="body">
                 <h1><a href="/">Open Tech</a></h1>
                 <nav><ul>
-                    <li><a href="/category/blog.html">Blog</a></li>
+                    <li class="active"><a href="/category/blog.html">Blog</a></li>
                 </ul></nav>
         </header><!-- /#banner -->
+<section id="content" class="body">
+  <article>
+    <header>
+      <h1 class="entry-title">
+        <a href="/drafts/explanation-of-pytorch-workflow-using-a-simple-example.html" rel="bookmark"
+           title="Permalink to Explanation of Pytorch workflow using a simple example">Explanation of Pytorch workflow using a simple example</a></h1>
+    </header>
 
-            <aside id="featured" class="body">
-                <article>
-                    <h1 class="entry-title"><a href="/explanation-of-pytorch-workflow-using-a-simple-example.html">Explanation of Pytorch workflow using a simple example</a></h1>
+    <div class="entry-content">
 <footer class="post-info">
         <abbr class="published" title="2024-08-29T00:00:00+05:30">
                 Published: Thu 29 August 2024
@@ -29,9 +35,7 @@
         </address>
 <p>In <a href="/category/blog.html">Blog</a>.</p>
 <p>tags: <a href="/tag/pytorch.html">pytorch</a> </p>
-</footer><!-- /.post-info --><!-- status: draft -->
-
-<p>In this tutorial i am going to explain following
+</footer><!-- /.post-info -->      <p>In this tutorial i am going to explain following
 - How to create load data into pytorch tensor for training
 - How to define the model
 - How to train the model
@@ -140,74 +144,10 @@ Not everyone have access to GPU, infact GPU has less crucial role during inferen
 <span class="n">val</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">([[</span><span class="mi">1</span><span class="p">]])</span><span class="o">.</span><span class="n">float</span><span class="p">()</span>
 <span class="n">model</span><span class="p">(</span><span class="n">val</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">device</span><span class="p">))</span>
 </code></pre></div>
+    </div><!-- /.entry-content -->
 
-<p>Warning: saving the weights+architecture cause problem when the PyTorch/Python version changes during loading time.</p>                </article>
-            </aside><!-- /#featured -->
-                <section id="content" class="body">
-                    <h1>Other articles</h1>
-                    <hr />
-                    <ol id="posts-list" class="hfeed">
-
-            <li><article class="hentry">
-                <header>
-                    <h1><a href="/using-pytorch-to-compute-gradient.html" rel="bookmark"
-                           title="Permalink to Using Pytorch to compute gradient">Using Pytorch to compute gradient</a></h1>
-                </header>
-
-                <div class="entry-content">
-<footer class="post-info">
-        <abbr class="published" title="2024-08-29T00:00:00+05:30">
-                Published: Thu 29 August 2024
-        </abbr>
-
-        <address class="vcard author">
-                By                         <a class="url fn" href="/author/smrati-kumar-katiyar.html">Smrati Kumar Katiyar</a>
-        </address>
-<p>In <a href="/category/blog.html">Blog</a>.</p>
-<p>tags: <a href="/tag/pytorch.html">pytorch</a> </p>
-</footer><!-- /.post-info -->                <!-- status: draft -->
-
-<h1>Computing gradient using pytorch</h1>
-<p>Computing gradient is one of the most fundamental operation in deep learning. It is used in back propagation step while we are updating weights of network</p>
-<p>Next is a simple example of how pytorch do gradient computaion </p>
-<div class="math">$$
-y = 3x^2 + 2x + 1
-$$</div>
-<p>Compute gradient for <code>x=2</code></p>
-<div class="highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">torch</span>
-<span class="n">x</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">([[</span><span class="mf">2.</span><span class="p">]],</span> <span class="n">requires_grad</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-<span class="n">y</span> <span class="o">=</span> <span class="mi">3</span><span class="o">*</span><span class="p">(</span><span class="n">x</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span> <span class="o">+</span> <span class="mi">2</span><span class="o">*</span><span class="n">x</span> <span class="o">+</span><span class="mi">1</span>
-<span class="n">y</span><span class="o">.</span><span class="n">backward</span><span class="p">()</span>
-<span class="n">x</span><span class="o">.</span><span class="n">grad</span>
-</code></pre></div>
-
-<p>Output: <code>tensor([[14.]])</code></p>
-<script type="text/javascript">if (!document.getElementById('mathjaxscript_pelican_#%@#$@#')) {
-    var align = "center",
-        indent = "0em",
-        linebreak = "false";
-
-    if (false) {
-        align = (screen.width < 768) ? "left" : align;
-        indent = (screen.width < 768) ? "0em" : indent;
-        linebreak = (screen.width < 768) ? 'true' : linebreak;
-    }
-
-    var mathjaxscript = document.createElement('script');
-    mathjaxscript.id = 'mathjaxscript_pelican_#%@#$@#';
-    mathjaxscript.type = 'text/javascript';
-    mathjaxscript.src = 'https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.3/latest.js?config=TeX-AMS-MML_HTMLorMML';
-
-    var configscript = document.createElement('script');
-    configscript.type = 'text/x-mathjax-config';
-    configscript[(window.opera ? "innerHTML" : "text")] =
-        "MathJax.Hub.Config({" +
-        "    config …</script>
-                <a class="readmore" href="/using-pytorch-to-compute-gradient.html">read more</a>
-                </div><!-- /.entry-content -->
-            </article></li>
-                </ol><!-- /#posts-list -->
-                </section><!-- /#content -->
+  </article>
+</section>
         <section id="extras" class="body">
                 <div class="blogroll">
                         <h2>links</h2>

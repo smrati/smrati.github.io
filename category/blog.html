@@ -18,7 +18,143 @@
 
             <aside id="featured" class="body">
                 <article>
-                    <h1 class="entry-title"><a href="/how-to-persist-virtual-environment-in-a-google-colab-notebook.html">How to persist virtual environment in a Google Colab notebook ?</a></h1>
+                    <h1 class="entry-title"><a href="/explanation-of-pytorch-workflow-using-a-simple-example.html">Explanation of Pytorch workflow using a simple example</a></h1>
+<footer class="post-info">
+        <abbr class="published" title="2024-08-29T00:00:00+05:30">
+                Published: Thu 29 August 2024
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/smrati-kumar-katiyar.html">Smrati Kumar Katiyar</a>
+        </address>
+<p>In <a href="/category/blog.html">Blog</a>.</p>
+<p>tags: <a href="/tag/pytorch.html">pytorch</a> </p>
+</footer><!-- /.post-info --><!-- status: draft -->
+
+<p>In this tutorial i am going to explain following
+- How to create load data into pytorch tensor for training
+- How to define the model
+- How to train the model
+- How to save and load model
+- How to do prediction using model</p>
+<p>Note: In this tutorial our aim is to show you the whole workflow, because this is something fundamental we won't focus on bringing real life data, building some complex model architecture instead focus will be solely on showing you end to end work flow  </p>
+<h3>Let's create toy dataset</h3>
+<div class="highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">torch</span>
+
+<span class="c1"># Check if CUDA is available and set the device accordingly</span>
+<span class="n">device</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">device</span><span class="p">(</span><span class="s2">&quot;cuda&quot;</span> <span class="k">if</span> <span class="n">torch</span><span class="o">.</span><span class="n">cuda</span><span class="o">.</span><span class="n">is_available</span><span class="p">()</span> <span class="k">else</span> <span class="s2">&quot;cpu&quot;</span><span class="p">)</span>
+
+<span class="c1"># Create a 10x1 tensor with random values and move it to the appropriate device</span>
+<span class="n">X</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="mi">100</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">device</span><span class="o">=</span><span class="n">device</span><span class="p">)</span>
+
+<span class="c1"># Compute y = 3X + 5</span>
+<span class="n">y</span> <span class="o">=</span> <span class="mi">3</span> <span class="o">*</span> <span class="n">X</span> <span class="o">+</span> <span class="mi">5</span>
+</code></pre></div>
+
+<h3>pytorch imports</h3>
+<div class="highlight"><pre><span></span><code><span class="c1"># torch.nn module contain functions that help in building neural networks</span>
+<span class="kn">import</span> <span class="nn">torch.nn</span> <span class="k">as</span> <span class="nn">nn</span>
+<span class="kn">from</span> <span class="nn">torch.optim</span> <span class="kn">import</span> <span class="n">SGD</span>
+
+<span class="kn">from</span> <span class="nn">torch.utils.data</span> <span class="kn">import</span> <span class="n">Dataset</span><span class="p">,</span> <span class="n">DataLoader</span>
+<span class="kn">import</span> <span class="nn">torch</span>
+</code></pre></div>
+
+<h3>Create pytorch dataset in format it expect the data</h3>
+<div class="highlight"><pre><span></span><code><span class="k">class</span> <span class="nc">ToyDataset</span><span class="p">(</span><span class="n">Dataset</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">x</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="o">.</span><span class="n">float</span><span class="p">()</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">device</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">y</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">(</span><span class="n">y</span><span class="p">)</span><span class="o">.</span><span class="n">float</span><span class="p">()</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">device</span><span class="p">)</span>
+    <span class="k">def</span> <span class="fm">__getitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ix</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">x</span><span class="p">[</span><span class="n">ix</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">y</span><span class="p">[</span><span class="n">ix</span><span class="p">]</span>
+    <span class="k">def</span> <span class="fm">__len__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span> 
+        <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">x</span><span class="p">)</span>
+
+<span class="n">ds</span> <span class="o">=</span> <span class="n">ToyDataset</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+<span class="n">dl</span> <span class="o">=</span> <span class="n">DataLoader</span><span class="p">(</span><span class="n">ds</span><span class="p">,</span> <span class="n">batch_size</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">shuffle</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</code></pre></div>
+
+<h3>Create model</h3>
+<div class="highlight"><pre><span></span><code><span class="n">model</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Sequential</span><span class="p">(</span>
+    <span class="n">nn</span><span class="o">.</span><span class="n">Linear</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">6</span><span class="p">),</span>
+    <span class="n">nn</span><span class="o">.</span><span class="n">ReLU</span><span class="p">(),</span>
+    <span class="n">nn</span><span class="o">.</span><span class="n">Linear</span><span class="p">(</span><span class="mi">6</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+<span class="p">)</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">device</span><span class="p">)</span>
+</code></pre></div>
+
+<h3>Define loss function and train model</h3>
+<div class="highlight"><pre><span></span><code><span class="c1"># define the loss function that we need to optimize during training process</span>
+<span class="n">loss_func</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">MSELoss</span><span class="p">()</span>
+<span class="n">opt</span> <span class="o">=</span> <span class="n">SGD</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">parameters</span><span class="p">(),</span> <span class="n">lr</span> <span class="o">=</span> <span class="mf">0.001</span><span class="p">)</span>
+<span class="kn">import</span> <span class="nn">time</span>
+<span class="n">loss_history</span> <span class="o">=</span> <span class="p">[]</span>
+
+<span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">50</span><span class="p">):</span>
+    <span class="k">for</span> <span class="n">ix</span><span class="p">,</span> <span class="n">iy</span> <span class="ow">in</span> <span class="n">dl</span><span class="p">:</span>
+        <span class="n">opt</span><span class="o">.</span><span class="n">zero_grad</span><span class="p">()</span>
+        <span class="n">loss_value</span> <span class="o">=</span> <span class="n">loss_func</span><span class="p">(</span><span class="n">model</span><span class="p">(</span><span class="n">ix</span><span class="p">),</span><span class="n">iy</span><span class="p">)</span>
+        <span class="n">loss_value</span><span class="o">.</span><span class="n">backward</span><span class="p">()</span>
+        <span class="n">opt</span><span class="o">.</span><span class="n">step</span><span class="p">()</span>
+    <span class="n">loss_history</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">loss_value</span><span class="o">.</span><span class="n">item</span><span class="p">())</span>
+</code></pre></div>
+
+<h3>To get model summary</h3>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">torchsummary</span> <span class="kn">import</span> <span class="n">summary</span>
+<span class="n">summary</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">input_size</span><span class="o">=</span><span class="p">(</span><span class="mi">1</span><span class="p">,))</span>
+</code></pre></div>
+
+<h3>make a prediction</h3>
+<div class="highlight"><pre><span></span><code><span class="n">val</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">([[</span><span class="mi">1</span><span class="p">]])</span><span class="o">.</span><span class="n">float</span><span class="p">()</span>
+<span class="n">model</span><span class="p">(</span><span class="n">val</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">device</span><span class="p">))</span>
+</code></pre></div>
+
+<h3>Save model to disc (Only weights)</h3>
+<p>It is a good practice to save model after moving it to CPU device, why?<br>
+Not everyone have access to GPU, infact GPU has less crucial role during inferencing, there are use cases where CPU inferencing is fast enough even in production settings so if you save model after porting it to CPU, both kind of user later use it . </p>
+<div class="highlight"><pre><span></span><code><span class="n">torch</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="s1">&#39;cpu&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">state_dict</span><span class="p">(),</span> <span class="s1">&#39;/content/drive/MyDrive/mymodel.pth&#39;</span><span class="p">)</span>
+</code></pre></div>
+
+<h3>Save model architecture + weights</h3>
+<div class="highlight"><pre><span></span><code><span class="c1"># Save the entire model</span>
+<span class="n">torch</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="s1">&#39;cpu&#39;</span><span class="p">),</span> <span class="s1">&#39;/content/drive/MyDrive/mymodel_full.pth&#39;</span><span class="p">)</span>
+</code></pre></div>
+
+<h3>loading entire model in eval mode for inferencing</h3>
+<div class="highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">torch</span>
+
+<span class="c1"># Load the entire model</span>
+<span class="n">model</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s1">&#39;/content/drive/MyDrive/mymodel_full.pth&#39;</span><span class="p">)</span>
+<span class="n">model</span><span class="o">.</span><span class="n">eval</span><span class="p">()</span>  <span class="c1"># Set the model to evaluation mode if needed</span>
+
+<span class="n">val</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">([[</span><span class="mi">1</span><span class="p">]])</span><span class="o">.</span><span class="n">float</span><span class="p">()</span>
+<span class="n">model</span><span class="p">(</span><span class="n">val</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">device</span><span class="p">))</span>
+</code></pre></div>
+
+<h1>loading model weights only</h1>
+<div class="highlight"><pre><span></span><code><span class="c1"># i am assuming model architecture is already defined in model varaible in your code</span>
+<span class="n">state_dict</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s1">&#39;mymodel.pth&#39;</span><span class="p">)</span>
+<span class="n">model</span><span class="o">.</span><span class="n">load_state_dict</span><span class="p">(</span><span class="n">state_dict</span><span class="p">)</span>
+<span class="n">model</span><span class="o">.</span><span class="n">eval</span><span class="p">()</span>
+
+
+<span class="n">val</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">([[</span><span class="mi">1</span><span class="p">]])</span><span class="o">.</span><span class="n">float</span><span class="p">()</span>
+<span class="n">model</span><span class="p">(</span><span class="n">val</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">device</span><span class="p">))</span>
+</code></pre></div>
+
+<p>Warning: saving the weights+architecture cause problem when the PyTorch/Python version changes during loading time.</p>                </article>
+            </aside><!-- /#featured -->
+                <section id="content" class="body">
+                    <h1>Other articles</h1>
+                    <hr />
+                    <ol id="posts-list" class="hfeed">
+
+            <li><article class="hentry">
+                <header>
+                    <h1><a href="/how-to-persist-virtual-environment-in-a-google-colab-notebook.html" rel="bookmark"
+                           title="Permalink to How to persist virtual environment in a Google Colab notebook ?">How to persist virtual environment in a Google Colab notebook ?</a></h1>
+                </header>
+
+                <div class="entry-content">
 <footer class="post-info">
         <abbr class="published" title="2024-08-29T00:00:00+05:30">
                 Published: Thu 29 August 2024
@@ -29,7 +165,7 @@
         </address>
 <p>In <a href="/category/blog.html">Blog</a>.</p>
 <p>tags: <a href="/tag/google-colab.html">Google Colab</a> <a href="/tag/notebook.html">Notebook</a> <a href="/tag/infra.html">Infra</a> </p>
-</footer><!-- /.post-info --><p>Whenever you close your colab notebook or restart kernel it is highly likely you will lose any third party package you may have installed in your notebook.</p>
+</footer><!-- /.post-info -->                <p>Whenever you close your colab notebook or restart kernel it is highly likely you will lose any third party package you may have installed in your notebook.</p>
 <p>It is ok if these packages are small in size, you can install them again whenever you want but as we know some times deep learning packages could be quite large in size even in GBs</p>
 <p>So there must be some way or hack to persist these packages so that we need not to install them all the time. This tutorial is all about that only</p>
 <hr>
@@ -40,49 +176,10 @@
 
 <p>let's first mount google drive inside our notebook, when you run this cell a popup window may come in your browser asking for giving colab access to your drive, accept that</p>
 <h3>Step 2:</h3>
-<p>virtualenv package is not available in colab by default , you need to install it</p>
-<div class="highlight"><pre><span></span><code>!pip<span class="w"> </span>install<span class="w"> </span>virtualenv
-</code></pre></div>
-
-<h3>Step 3:</h3>
-<p>Create virtual environment</p>
-<div class="highlight"><pre><span></span><code>!virtualenv<span class="w"> </span>/content/drive/MyDrive/colab_env_vision
-</code></pre></div>
-
-<h3>Step 4:</h3>
-<p>Activate Virtual environment and install required packages (for example i am using <code>loguru</code> package)</p>
-<div class="highlight"><pre><span></span><code>!source<span class="w"> </span>/content/drive/MyDrive/colab_env_vision/bin/activate<span class="p">;</span><span class="w"> </span>pip<span class="w"> </span>install<span class="w"> </span>loguru
-</code></pre></div>
-
-<p>Note: Make sure you run pip install in same cell where you are activating your environment  </p>
-<h3>Step 5:</h3>
-<p>Add environment to system path</p>
-<div class="highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">sys</span>
-<span class="n">sys</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;/content/drive/MyDrive/colab_env_vision/lib/python3.10/site-packages&quot;</span><span class="p">)</span>
-</code></pre></div>
-
-<h3>Step 6:</h3>
-<div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">loguru</span> <span class="kn">import</span> <span class="n">logger</span>
-<span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;test log&quot;</span><span class="p">)</span>
-</code></pre></div>
-
-<p>import package and see it is working fine</p>
-<h3>Step 7 (Optional):</h3>
-<p>Close notebook and open again in a new tab to verify if installed package is still accessible</p>
-<div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">google.colab</span> <span class="kn">import</span> <span class="n">drive</span>
-<span class="n">drive</span><span class="o">.</span><span class="n">mount</span><span class="p">(</span><span class="s2">&quot;/content/drive&quot;</span><span class="p">)</span>
-
-<span class="kn">import</span> <span class="nn">sys</span>
-<span class="n">sys</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;/content/drive/MyDrive/colab_env_vision/lib/python3.10/site-packages&quot;</span><span class="p">)</span>
-
-<span class="kn">from</span> <span class="nn">loguru</span> <span class="kn">import</span> <span class="n">logger</span>
-<span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;test log&quot;</span><span class="p">)</span>
-</code></pre></div>                </article>
-            </aside><!-- /#featured -->
-                <section id="content" class="body">
-                    <h1>Other articles</h1>
-                    <hr />
-                    <ol id="posts-list" class="hfeed">
+<p>virtualenv package is not available in colab by default , you need to install …</p>
+                <a class="readmore" href="/how-to-persist-virtual-environment-in-a-google-colab-notebook.html">read more</a>
+                </div><!-- /.entry-content -->
+            </article></li>
 
             <li><article class="hentry">
                 <header>
