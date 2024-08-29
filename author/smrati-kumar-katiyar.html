@@ -86,6 +86,44 @@
 
             <li><article class="hentry">
                 <header>
+                    <h1><a href="/using-pytorch-to-compute-gradient.html" rel="bookmark"
+                           title="Permalink to Using Pytorch to compute gradient">Using Pytorch to compute gradient</a></h1>
+                </header>
+
+                <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2024-08-29T00:00:00+05:30">
+                Published: Thu 29 August 2024
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/smrati-kumar-katiyar.html">Smrati Kumar Katiyar</a>
+        </address>
+<p>In <a href="/category/blog.html">Blog</a>.</p>
+<p>tags: <a href="/tag/pytorch.html">pytorch</a> </p>
+</footer><!-- /.post-info -->                <!-- status: draft -->
+
+<h1>Computing gradient using pytorch</h1>
+<p>Computing gradient is one of the most fundamental operation in deep learning. It is used in back propagation step while we are updating weights of network</p>
+<p>Next is a simple example of how pytorch do gradient computaion </p>
+<p>$$
+y = 3x^2 + 2x + 1
+$$</p>
+<p>Compute gradient for <code>x=2</code></p>
+<div class="highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">torch</span>
+<span class="n">x</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">([[</span><span class="mf">2.</span><span class="p">]],</span> <span class="n">requires_grad</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">y</span> <span class="o">=</span> <span class="mi">3</span><span class="o">*</span><span class="p">(</span><span class="n">x</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span> <span class="o">+</span> <span class="mi">2</span><span class="o">*</span><span class="n">x</span> <span class="o">+</span><span class="mi">1</span>
+<span class="n">y</span><span class="o">.</span><span class="n">backward</span><span class="p">()</span>
+<span class="n">x</span><span class="o">.</span><span class="n">grad</span>
+</code></pre></div>
+
+<p>Output: <code>tensor([[14.]])</code></p>
+                <a class="readmore" href="/using-pytorch-to-compute-gradient.html">read more</a>
+                </div><!-- /.entry-content -->
+            </article></li>
+
+            <li><article class="hentry">
+                <header>
                     <h1><a href="/how-to-use-ollama-python-library-to-give-context-before-query.html" rel="bookmark"
                            title="Permalink to How to use Ollama python library to give context before query">How to use Ollama python library to give context before query</a></h1>
                 </header>
