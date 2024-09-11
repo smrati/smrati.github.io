@@ -165,6 +165,42 @@ Output:  </p>
 </code></pre></div>
 
 <p>This query lists all tables in the <code>public</code> schema (you can change the schema name if needed).</p>
+<h3>how to quit psql terminal/ exit loggedin session?</h3>
+<p>exit the current session:</p>
+<div class="highlight"><pre><span></span><code>\q
+</code></pre></div>
+
+<hr>
+<h1>Creating and removing the database</h1>
+<h3>How to create a new database?</h3>
+<div class="highlight"><pre><span></span><code>create database lms;
+</code></pre></div>
+
+<p>Don't forget to end statement with semicolon</p>
+<h3>How to remove database?</h3>
+<div class="highlight"><pre><span></span><code>DROP DATABASE lms;
+</code></pre></div>
+
+<hr>
+<h3>Create Schemas</h3>
+<div class="highlight"><pre><span></span><code>CREATE SCHEMA lms_schema;
+</code></pre></div>
+
+<p>if due to any reason you want to drop some schema, use following command</p>
+<div class="highlight"><pre><span></span><code>DROP SCHEMA lms_schema;
+</code></pre></div>
+
+<h3>Create table</h3>
+<div class="highlight"><pre><span></span><code><span class="n">CREATE</span><span class="w"> </span><span class="n">TABLE</span><span class="w"> </span><span class="n">course</span><span class="w"> </span><span class="p">(</span>
+<span class="w">    </span><span class="n">id</span><span class="w"> </span><span class="n">SERIAL</span><span class="w"> </span><span class="n">PRIMARY</span><span class="w"> </span><span class="n">KEY</span><span class="p">,</span>
+<span class="w">    </span><span class="n">title</span><span class="w"> </span><span class="n">varchar</span><span class="p">(</span><span class="mi">100</span><span class="p">),</span>
+<span class="w">    </span><span class="n">description</span><span class="w"> </span><span class="n">TEXT</span>
+<span class="p">);</span>
+</code></pre></div>
+
+<p>to drop table use command </p>
+<div class="highlight"><pre><span></span><code>DROP TABLE course;
+</code></pre></div>
     </div><!-- /.entry-content -->
 
   </article>
