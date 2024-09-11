@@ -298,6 +298,12 @@ VALUES
 <h3>Create table from the rows which are response to another select query</h3>
 <div class="highlight"><pre><span></span><code><span class="k">CREATE</span><span class="w"> </span><span class="k">TABLE</span><span class="w"> </span><span class="n">album_temp</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="p">(</span><span class="k">SELECT</span><span class="w"> </span><span class="n">title</span><span class="p">,</span><span class="w"> </span><span class="n">album_id</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">album</span><span class="w"> </span><span class="k">limit</span><span class="w"> </span><span class="mi">10</span><span class="p">);</span>
 </code></pre></div>
+
+<h3>How to create aliases for column and table names</h3>
+<div class="highlight"><pre><span></span><code>SELECT al.title AS t, al.album_id AS id FROM album AS al;
+</code></pre></div>
+
+<p>Building aliases like this when you are working with multiple tables in same quesry and both tables have common names in it</p>
     </div><!-- /.entry-content -->
 
   </article>
