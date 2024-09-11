@@ -1,0 +1,544 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta name="generator" content="Pelican" />
+        <title>SQL : String Manipulation</title>
+        <link rel="stylesheet" href="/theme/css/main.css" />
+        <meta name="description" content="In PostgreSQL, the TRIM function is used to remove both leading and trailing spaces (or specified characters) from a string. It is essentially a..." />
+</head>
+
+<body id="index" class="home">
+        <header id="banner" class="body">
+                <h1><a href="/">Open Tech</a></h1>
+                <nav><ul>
+                    <li class="active"><a href="/category/blog.html">Blog</a></li>
+                </ul></nav>
+        </header><!-- /#banner -->
+<section id="content" class="body">
+  <article>
+    <header>
+      <h1 class="entry-title">
+        <a href="/sql-string-manipulation.html" rel="bookmark"
+           title="Permalink to SQL : String Manipulation">SQL : String Manipulation</a></h1>
+    </header>
+
+    <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2024-09-11T00:00:00+05:30">
+                Published: Wed 11 September 2024
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/smrati-kumar-katiyar.html">Smrati Kumar Katiyar</a>
+        </address>
+<p>In <a href="/category/blog.html">Blog</a>.</p>
+<p>tags: <a href="/tag/sql.html">SQL</a> </p>
+</footer><!-- /.post-info -->      <p>In PostgreSQL, the <code>TRIM</code> function is used to remove both leading and trailing spaces (or specified characters) from a string. It is essentially a combination of <code>LTRIM</code> (left trim) and <code>RTRIM</code> (right trim).</p>
+<h3>Syntax:</h3>
+<div class="highlight"><pre><span></span><code><span class="k">TRIM</span><span class="p">([</span><span class="k">LEADING</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="k">TRAILING</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="k">BOTH</span><span class="p">]</span><span class="w"> </span><span class="p">[</span><span class="n">characters</span><span class="w"> </span><span class="k">FROM</span><span class="p">]</span><span class="w"> </span><span class="n">string</span><span class="p">)</span>
+</code></pre></div>
+
+<ul>
+<li><strong>LEADING</strong>: Removes only leading characters (default is spaces) from the string.</li>
+<li><strong>TRAILING</strong>: Removes only trailing characters (default is spaces) from the string.</li>
+<li><strong>BOTH</strong> (or no option specified): Removes both leading and trailing characters (default is spaces) from the string.</li>
+</ul>
+<h3>Example 1: Trimming Spaces</h3>
+<h4>Sample Data:</h4>
+<div class="highlight"><pre><span></span><code><span class="k">CREATE</span><span class="w"> </span><span class="k">TABLE</span><span class="w"> </span><span class="n">users</span><span class="w"> </span><span class="p">(</span>
+<span class="w">    </span><span class="n">id</span><span class="w"> </span><span class="nb">SERIAL</span><span class="w"> </span><span class="k">PRIMARY</span><span class="w"> </span><span class="k">KEY</span><span class="p">,</span>
+<span class="w">    </span><span class="n">username</span><span class="w"> </span><span class="nb">TEXT</span>
+<span class="p">);</span>
+
+<span class="k">INSERT</span><span class="w"> </span><span class="k">INTO</span><span class="w"> </span><span class="n">users</span><span class="w"> </span><span class="p">(</span><span class="n">username</span><span class="p">)</span><span class="w"> </span><span class="k">VALUES</span>
+<span class="w">    </span><span class="p">(</span><span class="s1">&#39;  Alice  &#39;</span><span class="p">),</span>
+<span class="w">    </span><span class="p">(</span><span class="s1">&#39;  Bob&#39;</span><span class="p">),</span>
+<span class="w">    </span><span class="p">(</span><span class="s1">&#39;Charlie  &#39;</span><span class="p">),</span>
+<span class="w">    </span><span class="p">(</span><span class="s1">&#39;  Dave   &#39;</span><span class="p">);</span>
+</code></pre></div>
+
+<h4>Query:</h4>
+<div class="highlight"><pre><span></span><code><span class="k">SELECT</span><span class="w"> </span><span class="n">id</span><span class="p">,</span><span class="w"> </span><span class="n">username</span><span class="p">,</span><span class="w"> </span><span class="k">TRIM</span><span class="p">(</span><span class="n">username</span><span class="p">)</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">trimmed_username</span>
+<span class="k">FROM</span><span class="w"> </span><span class="n">users</span><span class="p">;</span>
+</code></pre></div>
+
+<h4>Output:</h4>
+<div class="highlight"><pre><span></span><code> id | username   | trimmed_username
+----+------------+------------------
+  1 |   Alice    | Alice
+  2 |   Bob      | Bob
+  3 | Charlie    | Charlie
+  4 |   Dave     | Dave
+</code></pre></div>
+
+<p>In this example, <code>TRIM</code> removes both leading and trailing spaces from the <code>username</code> values.</p>
+<h3>Example 2: Trimming Specific Characters</h3>
+<p>You can specify the character(s) you want to trim. Let's trim underscores (<code>_</code>) from the beginning and end of a string.</p>
+<h4>Sample Data:</h4>
+<div class="highlight"><pre><span></span><code><span class="k">INSERT</span><span class="w"> </span><span class="k">INTO</span><span class="w"> </span><span class="n">users</span><span class="w"> </span><span class="p">(</span><span class="n">username</span><span class="p">)</span><span class="w"> </span><span class="k">VALUES</span>
+<span class="w">    </span><span class="p">(</span><span class="s1">&#39;__Eve__&#39;</span><span class="p">),</span>
+<span class="w">    </span><span class="p">(</span><span class="s1">&#39;__Frank_&#39;</span><span class="p">);</span>
+</code></pre></div>
+
+<h4>Query:</h4>
+<div class="highlight"><pre><span></span><code><span class="k">SELECT</span><span class="w"> </span><span class="n">id</span><span class="p">,</span><span class="w"> </span><span class="n">username</span><span class="p">,</span><span class="w"> </span><span class="k">TRIM</span><span class="p">(</span><span class="s1">&#39;_&#39;</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">username</span><span class="p">)</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">trimmed_username</span>
+<span class="k">FROM</span><span class="w"> </span><span class="n">users</span>
+<span class="k">WHERE</span><span class="w"> </span><span class="n">username</span><span class="w"> </span><span class="k">LIKE</span><span class="w"> </span><span class="s1">&#39;__%&#39;</span><span class="p">;</span>
+</code></pre></div>
+
+<h4>Output:</h4>
+<div class="highlight"><pre><span></span><code> id | username   | trimmed_username
+----+------------+------------------
+  5 | __Eve__    | Eve
+  6 | __Frank_   | Frank
+</code></pre></div>
+
+<p>In this case, <code>TRIM('_' FROM username)</code> removes the leading and trailing underscores.</p>
+<h3>Variations:</h3>
+<ol>
+<li><strong>Removing only leading characters:</strong>
+   <code>sql
+   SELECT TRIM(LEADING '_' FROM '__Alice__') AS trimmed_leading;</code></li>
+</ol>
+<p><strong>Output:</strong>
+   ```
+   trimmed_leading</p>
+<hr>
+<p>Alice__
+   ```</p>
+<ol>
+<li><strong>Removing only trailing characters:</strong>
+   <code>sql
+   SELECT TRIM(TRAILING '_' FROM '__Alice__') AS trimmed_trailing;</code></li>
+</ol>
+<p><strong>Output:</strong>
+   ```
+   trimmed_trailing</p>
+<hr>
+<p>__Alice
+   ```</p>
+<h3>Summary:</h3>
+<ul>
+<li><code>TRIM</code> removes both leading and trailing spaces or specified characters from a string.</li>
+<li>You can specify whether to trim only from the <strong>leading</strong> (left), <strong>trailing</strong> (right), or <strong>both</strong> (default) sides.</li>
+</ul>
+<hr>
+<p>In PostgreSQL, the <code>LTRIM</code> and <code>RTRIM</code> functions are used to remove leading and trailing spaces (or specified characters) from a string.</p>
+<ul>
+<li><strong><code>LTRIM</code></strong>: Removes leading spaces (or specified characters) from the left side of a string.</li>
+<li><strong><code>RTRIM</code></strong>: Removes trailing spaces (or specified characters) from the right side of a string.</li>
+</ul>
+<h3>Example 1: Using <code>LTRIM</code> and <code>RTRIM</code> to remove spaces</h3>
+<p>Let's assume we have a table <code>users</code> with a column <code>username</code> that contains some values with extra spaces at the beginning and/or end.</p>
+<h4>Sample Data:</h4>
+<div class="highlight"><pre><span></span><code><span class="k">CREATE</span><span class="w"> </span><span class="k">TABLE</span><span class="w"> </span><span class="n">users</span><span class="w"> </span><span class="p">(</span>
+<span class="w">    </span><span class="n">id</span><span class="w"> </span><span class="nb">SERIAL</span><span class="w"> </span><span class="k">PRIMARY</span><span class="w"> </span><span class="k">KEY</span><span class="p">,</span>
+<span class="w">    </span><span class="n">username</span><span class="w"> </span><span class="nb">TEXT</span>
+<span class="p">);</span>
+
+<span class="k">INSERT</span><span class="w"> </span><span class="k">INTO</span><span class="w"> </span><span class="n">users</span><span class="w"> </span><span class="p">(</span><span class="n">username</span><span class="p">)</span><span class="w"> </span><span class="k">VALUES</span>
+<span class="w">    </span><span class="p">(</span><span class="s1">&#39;  Alice  &#39;</span><span class="p">),</span>
+<span class="w">    </span><span class="p">(</span><span class="s1">&#39;  Bob&#39;</span><span class="p">),</span>
+<span class="w">    </span><span class="p">(</span><span class="s1">&#39;Charlie  &#39;</span><span class="p">),</span>
+<span class="w">    </span><span class="p">(</span><span class="s1">&#39;  Dave   &#39;</span><span class="p">);</span>
+</code></pre></div>
+
+<h4>Using <code>LTRIM</code> and <code>RTRIM</code>:</h4>
+<ol>
+<li><strong>Removing Leading Spaces with <code>LTRIM</code>:</strong>
+   <code>sql
+   SELECT id, username, LTRIM(username) AS trimmed_username
+   FROM users;</code></li>
+</ol>
+<p><strong>Output:</strong>
+   <code>id | username   | trimmed_username
+   ----+------------+------------------
+    1 |   Alice    | Alice
+    2 |   Bob      | Bob
+    3 | Charlie    | Charlie
+    4 |   Dave     | Dave</code></p>
+<p>The <code>LTRIM</code> function has removed the spaces from the left side of the <code>username</code> values.</p>
+<ol>
+<li><strong>Removing Trailing Spaces with <code>RTRIM</code>:</strong>
+   <code>sql
+   SELECT id, username, RTRIM(username) AS trimmed_username
+   FROM users;</code></li>
+</ol>
+<p><strong>Output:</strong>
+   <code>id | username   | trimmed_username
+   ----+------------+------------------
+    1 |   Alice    |   Alice
+    2 |   Bob      |   Bob
+    3 | Charlie    | Charlie
+    4 |   Dave     |   Dave</code></p>
+<p>The <code>RTRIM</code> function has removed the spaces from the right side of the <code>username</code> values.</p>
+<h3>Example 2: Removing Specific Characters</h3>
+<p>Both <code>LTRIM</code> and <code>RTRIM</code> can also be used to remove specific characters instead of just spaces. For example, you might want to remove leading or trailing underscores (<code>_</code>).</p>
+<h4>Sample Data:</h4>
+<div class="highlight"><pre><span></span><code><span class="k">INSERT</span><span class="w"> </span><span class="k">INTO</span><span class="w"> </span><span class="n">users</span><span class="w"> </span><span class="p">(</span><span class="n">username</span><span class="p">)</span><span class="w"> </span><span class="k">VALUES</span>
+<span class="w">    </span><span class="p">(</span><span class="s1">&#39;__Eve__&#39;</span><span class="p">),</span>
+<span class="w">    </span><span class="p">(</span><span class="s1">&#39;__Frank_&#39;</span><span class="p">);</span>
+</code></pre></div>
+
+<ol>
+<li><strong>Removing Leading and Trailing Underscores with <code>LTRIM</code> and <code>RTRIM</code>:</strong>
+   <code>sql
+   SELECT id, username,
+          LTRIM(username, '_') AS ltrimmed,
+          RTRIM(username, '_') AS rtrimmed
+   FROM users
+   WHERE username LIKE '__%';</code></li>
+</ol>
+<p><strong>Output:</strong>
+   <code>id | username   | ltrimmed | rtrimmed
+   ----+------------+----------+-----------
+    5 | __Eve__    | Eve__    | __Eve
+    6 | __Frank_   | Frank_   | __Frank</code></p>
+<p>Here, <code>LTRIM</code> removes leading underscores, and <code>RTRIM</code> removes trailing underscores.</p>
+<hr>
+<p>In PostgreSQL, <code>UPPER</code> and <code>LOWER</code> are string functions used to convert text to uppercase and lowercase, respectively.</p>
+<h3>1. <strong><code>UPPER</code></strong>:</h3>
+<ul>
+<li>Converts all characters in a string to uppercase.</li>
+</ul>
+<h4>Syntax:</h4>
+<div class="highlight"><pre><span></span><code><span class="k">UPPER</span><span class="p">(</span><span class="n">string</span><span class="p">)</span>
+</code></pre></div>
+
+<h4>Example:</h4>
+<div class="highlight"><pre><span></span><code><span class="k">SELECT</span><span class="w"> </span><span class="k">UPPER</span><span class="p">(</span><span class="s1">&#39;hello world&#39;</span><span class="p">)</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">uppercase_string</span><span class="p">;</span>
+</code></pre></div>
+
+<p><strong>Output:</strong></p>
+<div class="highlight"><pre><span></span><code> uppercase_string
+------------------
+ HELLO WORLD
+</code></pre></div>
+
+<h4>Example with a table:</h4>
+<p>Assume we have a table <code>users</code> with the following data:</p>
+<div class="highlight"><pre><span></span><code><span class="k">CREATE</span><span class="w"> </span><span class="k">TABLE</span><span class="w"> </span><span class="n">users</span><span class="w"> </span><span class="p">(</span>
+<span class="w">    </span><span class="n">id</span><span class="w"> </span><span class="nb">SERIAL</span><span class="w"> </span><span class="k">PRIMARY</span><span class="w"> </span><span class="k">KEY</span><span class="p">,</span>
+<span class="w">    </span><span class="n">username</span><span class="w"> </span><span class="nb">TEXT</span>
+<span class="p">);</span>
+
+<span class="k">INSERT</span><span class="w"> </span><span class="k">INTO</span><span class="w"> </span><span class="n">users</span><span class="w"> </span><span class="p">(</span><span class="n">username</span><span class="p">)</span><span class="w"> </span><span class="k">VALUES</span>
+<span class="w">    </span><span class="p">(</span><span class="s1">&#39;Alice&#39;</span><span class="p">),</span>
+<span class="w">    </span><span class="p">(</span><span class="s1">&#39;Bob&#39;</span><span class="p">),</span>
+<span class="w">    </span><span class="p">(</span><span class="s1">&#39;charlie&#39;</span><span class="p">),</span>
+<span class="w">    </span><span class="p">(</span><span class="s1">&#39;dave&#39;</span><span class="p">);</span>
+</code></pre></div>
+
+<p>You can convert all the usernames to uppercase:</p>
+<div class="highlight"><pre><span></span><code><span class="k">SELECT</span><span class="w"> </span><span class="n">id</span><span class="p">,</span><span class="w"> </span><span class="n">username</span><span class="p">,</span><span class="w"> </span><span class="k">UPPER</span><span class="p">(</span><span class="n">username</span><span class="p">)</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">uppercase_username</span>
+<span class="k">FROM</span><span class="w"> </span><span class="n">users</span><span class="p">;</span>
+</code></pre></div>
+
+<p><strong>Output:</strong></p>
+<div class="highlight"><pre><span></span><code> id | username | uppercase_username
+----+----------+--------------------
+  1 | Alice    | ALICE
+  2 | Bob      | BOB
+  3 | charlie  | CHARLIE
+  4 | dave     | DAVE
+</code></pre></div>
+
+<h3>2. <strong><code>LOWER</code></strong>:</h3>
+<ul>
+<li>Converts all characters in a string to lowercase.</li>
+</ul>
+<h4>Syntax:</h4>
+<div class="highlight"><pre><span></span><code><span class="k">LOWER</span><span class="p">(</span><span class="n">string</span><span class="p">)</span>
+</code></pre></div>
+
+<h4>Example:</h4>
+<div class="highlight"><pre><span></span><code><span class="k">SELECT</span><span class="w"> </span><span class="k">LOWER</span><span class="p">(</span><span class="s1">&#39;HELLO WORLD&#39;</span><span class="p">)</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">lowercase_string</span><span class="p">;</span>
+</code></pre></div>
+
+<p><strong>Output:</strong></p>
+<div class="highlight"><pre><span></span><code> lowercase_string
+------------------
+ hello world
+</code></pre></div>
+
+<h4>Example with a table:</h4>
+<p>To convert all the usernames to lowercase:</p>
+<div class="highlight"><pre><span></span><code><span class="k">SELECT</span><span class="w"> </span><span class="n">id</span><span class="p">,</span><span class="w"> </span><span class="n">username</span><span class="p">,</span><span class="w"> </span><span class="k">LOWER</span><span class="p">(</span><span class="n">username</span><span class="p">)</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">lowercase_username</span>
+<span class="k">FROM</span><span class="w"> </span><span class="n">users</span><span class="p">;</span>
+</code></pre></div>
+
+<p><strong>Output:</strong></p>
+<div class="highlight"><pre><span></span><code> id | username | lowercase_username
+----+----------+--------------------
+  1 | Alice    | alice
+  2 | Bob      | bob
+  3 | charlie  | charlie
+  4 | dave     | dave
+</code></pre></div>
+
+<h3>3. <strong>Practical Use Cases</strong>:</h3>
+<ul>
+<li><strong>Case-insensitive searches</strong>: When you want to make searches case-insensitive, you can convert both the input and the stored data to the same case.</li>
+</ul>
+<p><code>sql
+  SELECT *
+  FROM users
+  WHERE LOWER(username) = LOWER('ALICE');</code></p>
+<ul>
+<li><strong>Standardizing data</strong>: You can use <code>UPPER</code> or <code>LOWER</code> to standardize data for consistency (e.g., converting all email addresses to lowercase).</li>
+</ul>
+<h3>Summary:</h3>
+<ul>
+<li><strong><code>UPPER</code></strong> converts all characters to uppercase.</li>
+<li><strong><code>LOWER</code></strong> converts all characters to lowercase.</li>
+</ul>
+<hr>
+<p>In PostgreSQL, you can convert a numerical column to a string (text) and vice versa using the following functions:</p>
+<h3>1. <strong>Convert Numerical Column to String</strong></h3>
+<p>To convert a numerical value to a string (text), you can use the <code>::text</code> cast or the <code>TO_CHAR()</code> function.</p>
+<h4>Using <code>::text</code>:</h4>
+<p>The easiest way to convert a number to a string is by using the <code>::text</code> casting.</p>
+<h4>Syntax:</h4>
+<div class="highlight"><pre><span></span><code><span class="k">SELECT</span><span class="w"> </span><span class="k">column_name</span><span class="p">::</span><span class="nb">text</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="k">table_name</span><span class="p">;</span>
+</code></pre></div>
+
+<h4>Example:</h4>
+<p>Assume we have a table <code>products</code> with a column <code>price</code> (numeric):</p>
+<div class="highlight"><pre><span></span><code><span class="k">CREATE</span><span class="w"> </span><span class="k">TABLE</span><span class="w"> </span><span class="n">products</span><span class="w"> </span><span class="p">(</span>
+<span class="w">    </span><span class="n">id</span><span class="w"> </span><span class="nb">SERIAL</span><span class="w"> </span><span class="k">PRIMARY</span><span class="w"> </span><span class="k">KEY</span><span class="p">,</span>
+<span class="w">    </span><span class="n">name</span><span class="w"> </span><span class="nb">TEXT</span><span class="p">,</span>
+<span class="w">    </span><span class="n">price</span><span class="w"> </span><span class="nb">NUMERIC</span>
+<span class="p">);</span>
+
+<span class="k">INSERT</span><span class="w"> </span><span class="k">INTO</span><span class="w"> </span><span class="n">products</span><span class="w"> </span><span class="p">(</span><span class="n">name</span><span class="p">,</span><span class="w"> </span><span class="n">price</span><span class="p">)</span><span class="w"> </span><span class="k">VALUES</span>
+<span class="w">    </span><span class="p">(</span><span class="s1">&#39;Product A&#39;</span><span class="p">,</span><span class="w"> </span><span class="mi">100</span><span class="p">),</span>
+<span class="w">    </span><span class="p">(</span><span class="s1">&#39;Product B&#39;</span><span class="p">,</span><span class="w"> </span><span class="mi">250</span><span class="p">),</span>
+<span class="w">    </span><span class="p">(</span><span class="s1">&#39;Product C&#39;</span><span class="p">,</span><span class="w"> </span><span class="mi">99</span><span class="p">.</span><span class="mi">99</span><span class="p">);</span>
+</code></pre></div>
+
+<p>To convert the <code>price</code> column from a numeric value to a string:</p>
+<div class="highlight"><pre><span></span><code><span class="k">SELECT</span><span class="w"> </span><span class="n">id</span><span class="p">,</span><span class="w"> </span><span class="n">name</span><span class="p">,</span><span class="w"> </span><span class="n">price</span><span class="p">::</span><span class="nb">text</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">price_text</span>
+<span class="k">FROM</span><span class="w"> </span><span class="n">products</span><span class="p">;</span>
+</code></pre></div>
+
+<p><strong>Output:</strong></p>
+<div class="highlight"><pre><span></span><code> id |   name    | price_text
+----+-----------+------------
+  1 | Product A | 100
+  2 | Product B | 250
+  3 | Product C | 99.99
+</code></pre></div>
+
+<h4>Using <code>TO_CHAR()</code>:</h4>
+<p>You can also use the <code>TO_CHAR()</code> function to convert a number to a string, with the option to format it.</p>
+<h4>Syntax:</h4>
+<div class="highlight"><pre><span></span><code><span class="k">SELECT</span><span class="w"> </span><span class="n">TO_CHAR</span><span class="p">(</span><span class="n">numeric_column</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;format&#39;</span><span class="p">)</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="k">table_name</span><span class="p">;</span>
+</code></pre></div>
+
+<h4>Example with formatting:</h4>
+<div class="highlight"><pre><span></span><code><span class="k">SELECT</span><span class="w"> </span><span class="n">id</span><span class="p">,</span><span class="w"> </span><span class="n">name</span><span class="p">,</span><span class="w"> </span><span class="n">TO_CHAR</span><span class="p">(</span><span class="n">price</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;FM999.00&#39;</span><span class="p">)</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">price_formatted</span>
+<span class="k">FROM</span><span class="w"> </span><span class="n">products</span><span class="p">;</span>
+</code></pre></div>
+
+<p><strong>Output:</strong></p>
+<div class="highlight"><pre><span></span><code> id |   name    | price_formatted
+----+-----------+----------------
+  1 | Product A | 100.00
+  2 | Product B | 250.00
+  3 | Product C | 99.99
+</code></pre></div>
+
+<h3>2. <strong>Convert String Column to Numerical</strong></h3>
+<p>To convert a string (text) column to a number, you can use the <code>::numeric</code> (or <code>::integer</code>, <code>::bigint</code>) casting or the <code>TO_NUMBER()</code> function.</p>
+<h4>Using <code>::numeric</code> or <code>::integer</code>:</h4>
+<p>You can cast a string to a numeric value using the <code>::numeric</code> or <code>::integer</code> cast.</p>
+<h4>Syntax:</h4>
+<div class="highlight"><pre><span></span><code><span class="k">SELECT</span><span class="w"> </span><span class="k">column_name</span><span class="p">::</span><span class="nb">numeric</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="k">table_name</span><span class="p">;</span>
+</code></pre></div>
+
+<h4>Example:</h4>
+<p>Assume you have a <code>text</code> column <code>price_text</code> that contains numbers as strings:</p>
+<div class="highlight"><pre><span></span><code><span class="k">CREATE</span><span class="w"> </span><span class="k">TABLE</span><span class="w"> </span><span class="n">products_with_text_price</span><span class="w"> </span><span class="p">(</span>
+<span class="w">    </span><span class="n">id</span><span class="w"> </span><span class="nb">SERIAL</span><span class="w"> </span><span class="k">PRIMARY</span><span class="w"> </span><span class="k">KEY</span><span class="p">,</span>
+<span class="w">    </span><span class="n">name</span><span class="w"> </span><span class="nb">TEXT</span><span class="p">,</span>
+<span class="w">    </span><span class="n">price_text</span><span class="w"> </span><span class="nb">TEXT</span>
+<span class="p">);</span>
+
+<span class="k">INSERT</span><span class="w"> </span><span class="k">INTO</span><span class="w"> </span><span class="n">products_with_text_price</span><span class="w"> </span><span class="p">(</span><span class="n">name</span><span class="p">,</span><span class="w"> </span><span class="n">price_text</span><span class="p">)</span><span class="w"> </span><span class="k">VALUES</span>
+<span class="w">    </span><span class="p">(</span><span class="s1">&#39;Product X&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;100&#39;</span><span class="p">),</span>
+<span class="w">    </span><span class="p">(</span><span class="s1">&#39;Product Y&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;250&#39;</span><span class="p">),</span>
+<span class="w">    </span><span class="p">(</span><span class="s1">&#39;Product Z&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;99.99&#39;</span><span class="p">);</span>
+</code></pre></div>
+
+<p>To convert the <code>price_text</code> column to a numeric value:</p>
+<div class="highlight"><pre><span></span><code><span class="k">SELECT</span><span class="w"> </span><span class="n">id</span><span class="p">,</span><span class="w"> </span><span class="n">name</span><span class="p">,</span><span class="w"> </span><span class="n">price_text</span><span class="p">::</span><span class="nb">numeric</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">price_numeric</span>
+<span class="k">FROM</span><span class="w"> </span><span class="n">products_with_text_price</span><span class="p">;</span>
+</code></pre></div>
+
+<p><strong>Output:</strong></p>
+<div class="highlight"><pre><span></span><code> id |   name    | price_numeric
+----+-----------+---------------
+  1 | Product X | 100
+  2 | Product Y | 250
+  3 | Product Z | 99.99
+</code></pre></div>
+
+<h4>Using <code>TO_NUMBER()</code>:</h4>
+<p>You can also use the <code>TO_NUMBER()</code> function to convert a string to a number, especially if the string has a specific format.</p>
+<h4>Syntax:</h4>
+<div class="highlight"><pre><span></span><code><span class="k">SELECT</span><span class="w"> </span><span class="n">TO_NUMBER</span><span class="p">(</span><span class="n">text_column</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;format&#39;</span><span class="p">)</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="k">table_name</span><span class="p">;</span>
+</code></pre></div>
+
+<h4>Example:</h4>
+<p>If <code>price_text</code> has formatting characters like commas or currency symbols:</p>
+<div class="highlight"><pre><span></span><code><span class="k">SELECT</span><span class="w"> </span><span class="n">id</span><span class="p">,</span><span class="w"> </span><span class="n">name</span><span class="p">,</span><span class="w"> </span><span class="n">TO_NUMBER</span><span class="p">(</span><span class="n">price_text</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;999G999D99&#39;</span><span class="p">)</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">price_numeric</span>
+<span class="k">FROM</span><span class="w"> </span><span class="n">products_with_text_price</span><span class="p">;</span>
+</code></pre></div>
+
+<p><strong>Output:</strong></p>
+<div class="highlight"><pre><span></span><code> id |   name    | price_numeric
+----+-----------+---------------
+  1 | Product X | 100
+  2 | Product Y | 250
+  3 | Product Z | 99.99
+</code></pre></div>
+
+<h3>Summary:</h3>
+<ul>
+<li><strong>Convert number to string</strong>:</li>
+<li>Use <code>::text</code> or <code>TO_CHAR()</code> to convert numerical values to string format.</li>
+<li><strong>Convert string to number</strong>:</li>
+<li>Use <code>::numeric</code>, <code>::integer</code>, or <code>TO_NUMBER()</code> to convert text to numerical format.</li>
+</ul>
+<hr>
+<p>In PostgreSQL, the <code>LENGTH</code> and <code>POSITION</code> functions are used to manipulate and analyze strings.</p>
+<h3>1. <strong><code>LENGTH</code></strong></h3>
+<p>The <code>LENGTH</code> function returns the number of characters in a string.</p>
+<h4>Syntax:</h4>
+<div class="highlight"><pre><span></span><code><span class="k">LENGTH</span><span class="p">(</span><span class="n">string</span><span class="p">)</span>
+</code></pre></div>
+
+<h4>Example 1: Basic Usage</h4>
+<div class="highlight"><pre><span></span><code><span class="k">SELECT</span><span class="w"> </span><span class="k">LENGTH</span><span class="p">(</span><span class="s1">&#39;PostgreSQL&#39;</span><span class="p">)</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">string_length</span><span class="p">;</span>
+</code></pre></div>
+
+<p><strong>Output:</strong></p>
+<div class="highlight"><pre><span></span><code> string_length
+---------------
+            10
+</code></pre></div>
+
+<p>In this example, the string <code>'PostgreSQL'</code> contains 10 characters.</p>
+<h4>Example 2: Length of a Column Value</h4>
+<p>Assume we have a table <code>employees</code> with a column <code>name</code>:</p>
+<div class="highlight"><pre><span></span><code><span class="k">CREATE</span><span class="w"> </span><span class="k">TABLE</span><span class="w"> </span><span class="n">employees</span><span class="w"> </span><span class="p">(</span>
+<span class="w">    </span><span class="n">id</span><span class="w"> </span><span class="nb">SERIAL</span><span class="w"> </span><span class="k">PRIMARY</span><span class="w"> </span><span class="k">KEY</span><span class="p">,</span>
+<span class="w">    </span><span class="n">name</span><span class="w"> </span><span class="nb">TEXT</span>
+<span class="p">);</span>
+
+<span class="k">INSERT</span><span class="w"> </span><span class="k">INTO</span><span class="w"> </span><span class="n">employees</span><span class="w"> </span><span class="p">(</span><span class="n">name</span><span class="p">)</span><span class="w"> </span><span class="k">VALUES</span>
+<span class="w">    </span><span class="p">(</span><span class="s1">&#39;Alice&#39;</span><span class="p">),</span>
+<span class="w">    </span><span class="p">(</span><span class="s1">&#39;Bob&#39;</span><span class="p">),</span>
+<span class="w">    </span><span class="p">(</span><span class="s1">&#39;Charlie&#39;</span><span class="p">);</span>
+</code></pre></div>
+
+<p>You can use <code>LENGTH</code> to get the length of each name:</p>
+<div class="highlight"><pre><span></span><code><span class="k">SELECT</span><span class="w"> </span><span class="n">id</span><span class="p">,</span><span class="w"> </span><span class="n">name</span><span class="p">,</span><span class="w"> </span><span class="k">LENGTH</span><span class="p">(</span><span class="n">name</span><span class="p">)</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">name_length</span>
+<span class="k">FROM</span><span class="w"> </span><span class="n">employees</span><span class="p">;</span>
+</code></pre></div>
+
+<p><strong>Output:</strong></p>
+<div class="highlight"><pre><span></span><code> id |  name   | name_length
+----+---------+-------------
+  1 | Alice   | 5
+  2 | Bob     | 3
+  3 | Charlie | 7
+</code></pre></div>
+
+<h3>2. <strong><code>POSITION</code></strong></h3>
+<p>The <code>POSITION</code> function finds the location of a substring within a string. It returns the position (starting from 1) where the substring is first found. If the substring is not found, it returns 0.</p>
+<h4>Syntax:</h4>
+<div class="highlight"><pre><span></span><code><span class="k">POSITION</span><span class="p">(</span><span class="k">substring</span><span class="w"> </span><span class="k">IN</span><span class="w"> </span><span class="n">string</span><span class="p">)</span>
+</code></pre></div>
+
+<h4>Example 1: Basic Usage</h4>
+<div class="highlight"><pre><span></span><code><span class="k">SELECT</span><span class="w"> </span><span class="k">POSITION</span><span class="p">(</span><span class="s1">&#39;gre&#39;</span><span class="w"> </span><span class="k">IN</span><span class="w"> </span><span class="s1">&#39;PostgreSQL&#39;</span><span class="p">)</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">substring_position</span><span class="p">;</span>
+</code></pre></div>
+
+<p><strong>Output:</strong></p>
+<div class="highlight"><pre><span></span><code> substring_position
+--------------------
+                  5
+</code></pre></div>
+
+<p>In this case, the substring <code>'gre'</code> starts at the 5th position in the string <code>'PostgreSQL'</code>.</p>
+<h4>Example 2: Finding Substring in a Column Value</h4>
+<p>Using the same <code>employees</code> table:</p>
+<div class="highlight"><pre><span></span><code><span class="k">SELECT</span><span class="w"> </span><span class="n">id</span><span class="p">,</span><span class="w"> </span><span class="n">name</span><span class="p">,</span><span class="w"> </span><span class="k">POSITION</span><span class="p">(</span><span class="s1">&#39;a&#39;</span><span class="w"> </span><span class="k">IN</span><span class="w"> </span><span class="n">name</span><span class="p">)</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">position_of_a</span>
+<span class="k">FROM</span><span class="w"> </span><span class="n">employees</span><span class="p">;</span>
+</code></pre></div>
+
+<p><strong>Output:</strong></p>
+<div class="highlight"><pre><span></span><code> id |  name   | position_of_a
+----+---------+---------------
+  1 | Alice   |             1
+  2 | Bob     |             0
+  3 | Charlie |             4
+</code></pre></div>
+
+<p>In this case:
+- <code>'a'</code> is found at position 1 in the name <code>'Alice'</code>.
+- <code>'a'</code> is not found in the name <code>'Bob'</code>, so the position is 0.
+- <code>'a'</code> is found at position 4 in the name <code>'Charlie'</code>.</p>
+<h3>Practical Use Cases:</h3>
+<ol>
+<li>
+<p><strong>Finding String Lengths for Validation</strong>:
+   You can use <code>LENGTH</code> to validate the length of a string, e.g., to check if a name exceeds a maximum length.</p>
+</li>
+<li>
+<p><strong>Searching for Substrings</strong>:
+   <code>POSITION</code> can be useful for finding the position of specific characters or substrings in a column, for example, finding a domain in email addresses.</p>
+</li>
+</ol>
+<h3>Summary:</h3>
+<ul>
+<li><strong><code>LENGTH</code></strong>: Returns the number of characters in a string.</li>
+<li><strong><code>POSITION</code></strong>: Returns the starting position of a substring in a string, or 0 if the substring is not found.</li>
+</ul>
+    </div><!-- /.entry-content -->
+
+  </article>
+</section>
+        <section id="extras" class="body">
+                <div class="blogroll">
+                        <h2>links</h2>
+                        <ul>
+                            <li><a href="https://getpelican.com/">Pelican</a></li>
+                            <li><a href="https://www.python.org/">Python.org</a></li>
+                            <li><a href="https://palletsprojects.com/p/jinja/">Jinja2</a></li>
+                            <li><a href="#">You can modify those links in your config file</a></li>
+                        </ul>
+                </div><!-- /.blogroll -->
+                <div class="social">
+                        <h2>social</h2>
+                        <ul>
+
+                            <li><a href="https://www.linkedin.com/in/smrati/">LinkedIN</a></li>
+                            <li><a href="https://x.com/SmratiKatiyar">X (Twitter)</a></li>
+                        </ul>
+                </div><!-- /.social -->
+        </section><!-- /#extras -->
+
+        <footer id="contentinfo" class="body">
+                <address id="about" class="vcard body">
+                Proudly powered by <a rel="nofollow" href="https://getpelican.com/">Pelican</a>, which takes great advantage of <a rel="nofollow" href="https://www.python.org/">Python</a>.
+                </address><!-- /#about -->
+
+                <p>The theme is by <a rel="nofollow" href="https://www.smashingmagazine.com/2009/08/designing-a-html-5-layout-from-scratch/">Smashing Magazine</a>, thanks!</p>
+        </footer><!-- /#contentinfo -->
+
+</body>
+</html>

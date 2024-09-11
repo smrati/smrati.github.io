@@ -325,6 +325,68 @@ VALUES
                 <a class="readmore" href="/sql-filtering-rows.html">read more</a>
                 </div><!-- /.entry-content -->
             </article></li>
+
+            <li><article class="hentry">
+                <header>
+                    <h1><a href="/sql-string-manipulation.html" rel="bookmark"
+                           title="Permalink to SQL : String Manipulation">SQL : String Manipulation</a></h1>
+                </header>
+
+                <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2024-09-11T00:00:00+05:30">
+                Published: Wed 11 September 2024
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/smrati-kumar-katiyar.html">Smrati Kumar Katiyar</a>
+        </address>
+<p>In <a href="/category/blog.html">Blog</a>.</p>
+<p>tags: <a href="/tag/sql.html">SQL</a> </p>
+</footer><!-- /.post-info -->                <p>In PostgreSQL, the <code>TRIM</code> function is used to remove both leading and trailing spaces (or specified characters) from a string. It is essentially a combination of <code>LTRIM</code> (left trim) and <code>RTRIM</code> (right trim).</p>
+<h3>Syntax:</h3>
+<div class="highlight"><pre><span></span><code><span class="k">TRIM</span><span class="p">([</span><span class="k">LEADING</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="k">TRAILING</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="k">BOTH</span><span class="p">]</span><span class="w"> </span><span class="p">[</span><span class="n">characters</span><span class="w"> </span><span class="k">FROM</span><span class="p">]</span><span class="w"> </span><span class="n">string</span><span class="p">)</span>
+</code></pre></div>
+
+<ul>
+<li><strong>LEADING</strong>: Removes only leading characters (default is spaces) from the string.</li>
+<li><strong>TRAILING</strong>: Removes only trailing characters (default is spaces) from the string.</li>
+<li><strong>BOTH</strong> (or no option specified): Removes both leading and trailing characters (default is spaces) from the string.</li>
+</ul>
+<h3>Example 1: Trimming Spaces</h3>
+<h4>Sample Data:</h4>
+<div class="highlight"><pre><span></span><code><span class="k">CREATE</span><span class="w"> </span><span class="k">TABLE</span><span class="w"> </span><span class="n">users</span><span class="w"> </span><span class="p">(</span>
+<span class="w">    </span><span class="n">id</span><span class="w"> </span><span class="nb">SERIAL</span><span class="w"> </span><span class="k">PRIMARY</span><span class="w"> </span><span class="k">KEY</span><span class="p">,</span>
+<span class="w">    </span><span class="n">username</span><span class="w"> </span><span class="nb">TEXT</span>
+<span class="p">);</span>
+
+<span class="k">INSERT</span><span class="w"> </span><span class="k">INTO</span><span class="w"> </span><span class="n">users</span><span class="w"> </span><span class="p">(</span><span class="n">username</span><span class="p">)</span><span class="w"> </span><span class="k">VALUES</span>
+<span class="w">    </span><span class="p">(</span><span class="s1">&#39;  Alice  &#39;</span><span class="p">),</span>
+<span class="w">    </span><span class="p">(</span><span class="s1">&#39;  Bob&#39;</span><span class="p">),</span>
+<span class="w">    </span><span class="p">(</span><span class="s1">&#39;Charlie  &#39;</span><span class="p">),</span>
+<span class="w">    </span><span class="p">(</span><span class="s1">&#39;  Dave   &#39;</span><span class="p">);</span>
+</code></pre></div>
+
+<h4>Query:</h4>
+<div class="highlight"><pre><span></span><code><span class="k">SELECT</span><span class="w"> </span><span class="n">id</span><span class="p">,</span><span class="w"> </span><span class="n">username</span><span class="p">,</span><span class="w"> </span><span class="k">TRIM</span><span class="p">(</span><span class="n">username</span><span class="p">)</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">trimmed_username</span>
+<span class="k">FROM</span><span class="w"> </span><span class="n">users</span><span class="p">;</span>
+</code></pre></div>
+
+<h4>Output:</h4>
+<div class="highlight"><pre><span></span><code> id | username   | trimmed_username
+----+------------+------------------
+  1 |   Alice    | Alice
+  2 |   Bob      | Bob
+  3 | Charlie    | Charlie
+  4 |   Dave     | Dave
+</code></pre></div>
+
+<p>In this example, <code>TRIM</code> removes both leading and trailing spaces from the <code>username</code> values.</p>
+<h3>Example 2: Trimming Specific Characters</h3>
+<p>You …</p>
+                <a class="readmore" href="/sql-string-manipulation.html">read more</a>
+                </div><!-- /.entry-content -->
+            </article></li>
                 </ol><!-- /#posts-list -->
                 </section><!-- /#content -->
         <section id="extras" class="body">
