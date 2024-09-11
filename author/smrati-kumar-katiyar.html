@@ -18,7 +18,45 @@
 
             <aside id="featured" class="body">
                 <article>
-                    <h1 class="entry-title"><a href="/explanation-of-pytorch-workflow-using-a-simple-example.html">Explanation of Pytorch workflow using a simple example</a></h1>
+                    <h1 class="entry-title"><a href="/sql-basics.html">SQL : Basics</a></h1>
+<footer class="post-info">
+        <abbr class="published" title="2024-09-11T00:00:00+05:30">
+                Published: Wed 11 September 2024
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/smrati-kumar-katiyar.html">Smrati Kumar Katiyar</a>
+        </address>
+<p>In <a href="/category/blog.html">Blog</a>.</p>
+<p>tags: <a href="/tag/sql.html">SQL</a> </p>
+</footer><!-- /.post-info --><ul>
+<li>relational databases are made up of tables</li>
+<li>tables are made of rows and columns</li>
+<li>Each table in relational databases also have primary key, primary key can be used to uniquely identify each and every row in a database table</li>
+<li>we can always have only one primary key column per table , you can't have multiple columns as primary key in a SQL table</li>
+<li>In SQL columns are also called <code>attributes</code> and rows <code>records</code></li>
+<li>In database we usually have multiple tables and related with each other through relationships known as <code>foreign keys</code></li>
+<li>Tables may have additional constraints as well , like some column or collection of columns are unique (Example you have a user table and there is a email column , it will be a good idea to make this column unique since having multiple rows in database table with same email will be a data design problem going forward)</li>
+<li>Indexing: it is an important feature in database tables, it basically using hash maps under the hood, so when you query data instead of scanning whole table , indexes allow accessing the data by focusing searhc on a group of data hence it make querying faster, indexing is usually done on columns which are more often used for filtering the data</li>
+<li>Tables in relationnal databases may have </li>
+<li>One to one mapping - One row in a table is mapped to another row in other table</li>
+<li>One to many mapping - One row in a table is mapped to multiple rows in another table</li>
+<li>Many to many mapping - Many rows in a table is mapped to multiple rows in another table</li>
+</ul>
+<hr>                </article>
+            </aside><!-- /#featured -->
+                <section id="content" class="body">
+                    <h1>Other articles</h1>
+                    <hr />
+                    <ol id="posts-list" class="hfeed">
+
+            <li><article class="hentry">
+                <header>
+                    <h1><a href="/explanation-of-pytorch-workflow-using-a-simple-example.html" rel="bookmark"
+                           title="Permalink to Explanation of Pytorch workflow using a simple example">Explanation of Pytorch workflow using a simple example</a></h1>
+                </header>
+
+                <div class="entry-content">
 <footer class="post-info">
         <abbr class="published" title="2024-08-29T00:00:00+05:30">
                 Published: Thu 29 August 2024
@@ -29,7 +67,7 @@
         </address>
 <p>In <a href="/category/blog.html">Blog</a>.</p>
 <p>tags: <a href="/tag/pytorch.html">pytorch</a> </p>
-</footer><!-- /.post-info --><!-- status: draft -->
+</footer><!-- /.post-info -->                <!-- status: draft -->
 
 <p>In this tutorial i am going to explain following<br>
 - How to create load data into pytorch tensor for training
@@ -52,101 +90,10 @@
 </code></pre></div>
 
 <h3>pytorch imports</h3>
-<div class="highlight"><pre><span></span><code><span class="c1"># torch.nn module contain functions that help in building neural networks</span>
-<span class="kn">import</span> <span class="nn">torch.nn</span> <span class="k">as</span> <span class="nn">nn</span>
-<span class="kn">from</span> <span class="nn">torch.optim</span> <span class="kn">import</span> <span class="n">SGD</span>
-
-<span class="kn">from</span> <span class="nn">torch.utils.data</span> <span class="kn">import</span> <span class="n">Dataset</span><span class="p">,</span> <span class="n">DataLoader</span>
-<span class="kn">import</span> <span class="nn">torch</span>
-</code></pre></div>
-
-<h3>Create pytorch dataset in format it expect the data</h3>
-<div class="highlight"><pre><span></span><code><span class="k">class</span> <span class="nc">ToyDataset</span><span class="p">(</span><span class="n">Dataset</span><span class="p">):</span>
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">x</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="o">.</span><span class="n">float</span><span class="p">()</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">device</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">y</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">(</span><span class="n">y</span><span class="p">)</span><span class="o">.</span><span class="n">float</span><span class="p">()</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">device</span><span class="p">)</span>
-    <span class="k">def</span> <span class="fm">__getitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ix</span><span class="p">):</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">x</span><span class="p">[</span><span class="n">ix</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">y</span><span class="p">[</span><span class="n">ix</span><span class="p">]</span>
-    <span class="k">def</span> <span class="fm">__len__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span> 
-        <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">x</span><span class="p">)</span>
-
-<span class="n">ds</span> <span class="o">=</span> <span class="n">ToyDataset</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
-<span class="n">dl</span> <span class="o">=</span> <span class="n">DataLoader</span><span class="p">(</span><span class="n">ds</span><span class="p">,</span> <span class="n">batch_size</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">shuffle</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-</code></pre></div>
-
-<h3>Create model</h3>
-<div class="highlight"><pre><span></span><code><span class="n">model</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Sequential</span><span class="p">(</span>
-    <span class="n">nn</span><span class="o">.</span><span class="n">Linear</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">6</span><span class="p">),</span>
-    <span class="n">nn</span><span class="o">.</span><span class="n">ReLU</span><span class="p">(),</span>
-    <span class="n">nn</span><span class="o">.</span><span class="n">Linear</span><span class="p">(</span><span class="mi">6</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
-<span class="p">)</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">device</span><span class="p">)</span>
-</code></pre></div>
-
-<h3>Define loss function and train model</h3>
-<div class="highlight"><pre><span></span><code><span class="c1"># define the loss function that we need to optimize during training process</span>
-<span class="n">loss_func</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">MSELoss</span><span class="p">()</span>
-<span class="n">opt</span> <span class="o">=</span> <span class="n">SGD</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">parameters</span><span class="p">(),</span> <span class="n">lr</span> <span class="o">=</span> <span class="mf">0.001</span><span class="p">)</span>
-<span class="kn">import</span> <span class="nn">time</span>
-<span class="n">loss_history</span> <span class="o">=</span> <span class="p">[]</span>
-
-<span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">50</span><span class="p">):</span>
-    <span class="k">for</span> <span class="n">ix</span><span class="p">,</span> <span class="n">iy</span> <span class="ow">in</span> <span class="n">dl</span><span class="p">:</span>
-        <span class="n">opt</span><span class="o">.</span><span class="n">zero_grad</span><span class="p">()</span>
-        <span class="n">loss_value</span> <span class="o">=</span> <span class="n">loss_func</span><span class="p">(</span><span class="n">model</span><span class="p">(</span><span class="n">ix</span><span class="p">),</span><span class="n">iy</span><span class="p">)</span>
-        <span class="n">loss_value</span><span class="o">.</span><span class="n">backward</span><span class="p">()</span>
-        <span class="n">opt</span><span class="o">.</span><span class="n">step</span><span class="p">()</span>
-    <span class="n">loss_history</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">loss_value</span><span class="o">.</span><span class="n">item</span><span class="p">())</span>
-</code></pre></div>
-
-<h3>To get model summary</h3>
-<div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">torchsummary</span> <span class="kn">import</span> <span class="n">summary</span>
-<span class="n">summary</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">input_size</span><span class="o">=</span><span class="p">(</span><span class="mi">1</span><span class="p">,))</span>
-</code></pre></div>
-
-<h3>make a prediction</h3>
-<div class="highlight"><pre><span></span><code><span class="n">val</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">([[</span><span class="mi">1</span><span class="p">]])</span><span class="o">.</span><span class="n">float</span><span class="p">()</span>
-<span class="n">model</span><span class="p">(</span><span class="n">val</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">device</span><span class="p">))</span>
-</code></pre></div>
-
-<h3>Save model to disc (Only weights)</h3>
-<p>It is a good practice to save model after moving it to CPU device, why?<br>
-Not everyone have access to GPU, infact GPU has less crucial role during inferencing, there are use cases where CPU inferencing is fast enough even in production settings so if you save model after porting it to CPU, both kind of user later use it . </p>
-<div class="highlight"><pre><span></span><code><span class="n">torch</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="s1">&#39;cpu&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">state_dict</span><span class="p">(),</span> <span class="s1">&#39;/content/drive/MyDrive/mymodel.pth&#39;</span><span class="p">)</span>
-</code></pre></div>
-
-<h3>Save model architecture + weights</h3>
-<div class="highlight"><pre><span></span><code><span class="c1"># Save the entire model</span>
-<span class="n">torch</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="s1">&#39;cpu&#39;</span><span class="p">),</span> <span class="s1">&#39;/content/drive/MyDrive/mymodel_full.pth&#39;</span><span class="p">)</span>
-</code></pre></div>
-
-<h3>loading entire model in eval mode for inferencing</h3>
-<div class="highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">torch</span>
-
-<span class="c1"># Load the entire model</span>
-<span class="n">model</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s1">&#39;/content/drive/MyDrive/mymodel_full.pth&#39;</span><span class="p">)</span>
-<span class="n">model</span><span class="o">.</span><span class="n">eval</span><span class="p">()</span>  <span class="c1"># Set the model to evaluation mode if needed</span>
-
-<span class="n">val</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">([[</span><span class="mi">1</span><span class="p">]])</span><span class="o">.</span><span class="n">float</span><span class="p">()</span>
-<span class="n">model</span><span class="p">(</span><span class="n">val</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">device</span><span class="p">))</span>
-</code></pre></div>
-
-<h1>loading model weights only</h1>
-<div class="highlight"><pre><span></span><code><span class="c1"># i am assuming model architecture is already defined in model varaible in your code</span>
-<span class="n">state_dict</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s1">&#39;mymodel.pth&#39;</span><span class="p">)</span>
-<span class="n">model</span><span class="o">.</span><span class="n">load_state_dict</span><span class="p">(</span><span class="n">state_dict</span><span class="p">)</span>
-<span class="n">model</span><span class="o">.</span><span class="n">eval</span><span class="p">()</span>
-
-
-<span class="n">val</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">([[</span><span class="mi">1</span><span class="p">]])</span><span class="o">.</span><span class="n">float</span><span class="p">()</span>
-<span class="n">model</span><span class="p">(</span><span class="n">val</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">device</span><span class="p">))</span>
-</code></pre></div>
-
-<p>Warning: saving the weights+architecture cause problem when the PyTorch/Python version changes during loading time.</p>                </article>
-            </aside><!-- /#featured -->
-                <section id="content" class="body">
-                    <h1>Other articles</h1>
-                    <hr />
-                    <ol id="posts-list" class="hfeed">
+<div class="highlight"><pre><span></span><code><span class="c1"># torch.nn module contain functions that help in …</span></code></pre></div>
+                <a class="readmore" href="/explanation-of-pytorch-workflow-using-a-simple-example.html">read more</a>
+                </div><!-- /.entry-content -->
+            </article></li>
 
             <li><article class="hentry">
                 <header>
