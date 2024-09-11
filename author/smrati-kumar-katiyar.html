@@ -225,7 +225,53 @@ Output:  </p>
     FOREIGN KEY (course_id) REFERENCES course (id),
     FOREIGN KEY (student_id) REFERENCES student (id)
 );
-</code></pre></div>                </article>
+</code></pre></div>
+
+<h3>Alter table and add a column</h3>
+<div class="highlight"><pre><span></span><code>ALTER TABLE course
+ADD COLUMN duration INT;
+</code></pre></div>
+
+<h3>Alter table and drop a column</h3>
+<div class="highlight"><pre><span></span><code>ALTER TABLE course
+DROP COLUMN duration;
+</code></pre></div>
+
+<h3>Alter data type in a given column</h3>
+<div class="highlight"><pre><span></span><code>ALTER TABLE course
+ALTER COLUMN duration SET DATA TYPE VARCHAR(50);
+</code></pre></div>
+
+<h3>How to change the column name</h3>
+<div class="highlight"><pre><span></span><code>ALTER TABLE course
+RENAME COLUMN duration TO course_duration;
+</code></pre></div>
+
+<h3>How to create enumerated data type ?</h3>
+<div class="highlight"><pre><span></span><code>CREATE TYPE course_level AS ENUM (&#39;beginner&#39;, &#39;intermediate&#39;, &#39;advanced&#39;);
+</code></pre></div>
+
+<div class="highlight"><pre><span></span><code>ALTER TABLE course
+ADD COLUMN level course_level;
+</code></pre></div>
+
+<hr>
+<h1>Inserting data into tables</h1>
+<p>Single row insert</p>
+<div class="highlight"><pre><span></span><code>INSERT INTO course (title, description, course_duration, level)
+VALUES (&#39;Python Programming&#39;, &#39;An introductory course on Python programming&#39;, 30, &#39;beginner&#39;);
+</code></pre></div>
+
+<p>Multi row insert</p>
+<div class="highlight"><pre><span></span><code>INSERT INTO course (title, description, course_duration, level)
+VALUES 
+    (&#39;Data Science with Python&#39;, &#39;A course on data science fundamentals using Python&#39;, 40, &#39;intermediate&#39;),
+    (&#39;Advanced Machine Learning&#39;, &#39;An advanced course on machine learning techniques&#39;, 50, &#39;advanced&#39;),
+    (&#39;Database Systems&#39;, &#39;A comprehensive guide to database systems and SQL&#39;, 25, &#39;beginner&#39;);
+</code></pre></div>
+
+<p>We are going to use a open database available on github in further tutorial
+<a href="https://github.com/lerocha/chinook-database/blob/master/ChinookDatabase/DataSources/Chinook_PostgreSql.sql">DB LINK</a></p>                </article>
             </aside><!-- /#featured -->
                 <section id="content" class="body">
                     <h1>Other articles</h1>
