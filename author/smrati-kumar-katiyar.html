@@ -194,6 +194,37 @@ Output:  </p>
 
 <p>to drop table use command </p>
 <div class="highlight"><pre><span></span><code>DROP TABLE course;
+</code></pre></div>
+
+<p>Once you have tables created inside your schema , simply doing a <code>DROP SCHEMA schema_name</code> won't work, you have to drop tables as well first then only you can drop schema or you can use <code>CASCADE</code> command</p>
+<div class="highlight"><pre><span></span><code>DROP SCHEMA lms_schema CASCADE
+</code></pre></div>
+
+<h3>How to create foreign key relationships?</h3>
+<p>Let say you have following tables:</p>
+<div class="highlight"><pre><span></span><code><span class="n">CREATE</span><span class="w"> </span><span class="n">TABLE</span><span class="w"> </span><span class="n">course</span><span class="w"> </span><span class="p">(</span>
+<span class="w">    </span><span class="n">id</span><span class="w"> </span><span class="n">SERIAL</span><span class="w"> </span><span class="n">PRIMARY</span><span class="w"> </span><span class="n">KEY</span><span class="p">,</span>
+<span class="w">    </span><span class="n">title</span><span class="w"> </span><span class="n">varchar</span><span class="p">(</span><span class="mi">100</span><span class="p">),</span>
+<span class="w">    </span><span class="n">description</span><span class="w"> </span><span class="n">TEXT</span>
+<span class="p">);</span>
+</code></pre></div>
+
+<div class="highlight"><pre><span></span><code><span class="n">CREATE</span><span class="w"> </span><span class="n">TABLE</span><span class="w"> </span><span class="n">student</span><span class="w"> </span><span class="p">(</span>
+<span class="w">    </span><span class="n">id</span><span class="w"> </span><span class="n">SERIAL</span><span class="w"> </span><span class="n">PRIMARY</span><span class="w"> </span><span class="n">KEY</span><span class="p">,</span>
+<span class="w">    </span><span class="n">name</span><span class="w"> </span><span class="n">varchar</span><span class="p">(</span><span class="mi">100</span><span class="p">),</span>
+<span class="w">    </span><span class="n">email</span><span class="w"> </span><span class="n">varchar</span><span class="p">(</span><span class="mi">100</span><span class="p">),</span>
+<span class="w">    </span><span class="n">age</span><span class="w"> </span><span class="n">INT</span>
+<span class="p">);</span>
+</code></pre></div>
+
+<p>Now to create a many to many foreign relationship between course and student , we can do it like this</p>
+<div class="highlight"><pre><span></span><code>CREATE TABLE student_course_map (
+    id SERIAL PRIMARY KEY ,
+    course_id INT,
+    student_id INT,
+    FOREIGN KEY (course_id) REFERENCES course (id),
+    FOREIGN KEY (student_id) REFERENCES student (id)
+);
 </code></pre></div>                </article>
             </aside><!-- /#featured -->
                 <section id="content" class="body">
