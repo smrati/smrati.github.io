@@ -81,9 +81,90 @@ Declaring data type help in more efficient operations and storage strategy for y
 <ul>
 <li>json</li>
 <li>array</li>
-<li>uuid</li>
-<li>etc.</li>
+<li>uuid<br>
+etc.</li>
 </ul>
+<h2>What does database schema mean?</h2>
+<p>Think of schema as collective information about all the tables , their structures, constraints, relationships etc.</p>
+<hr>
+<h3>How to run a postgres instance as a docker container?</h3>
+<div class="highlight"><pre><span></span><code>docker run --name my_pg_inst -p 5432:5432 -e POSTGRES_PASSWORD=admin123 -e POSTGRES_USER=admin_test_db -d postgres:15.4
+</code></pre></div>
+
+<p>This command will create custom user password port mapping and a default database same as username assigned above</p>
+<p>Confirm your db instance has come up properly
+<code>docker container ls -a</code><br>
+Output:  </p>
+<div class="highlight"><pre><span></span><code><span class="n">CONTAINER</span><span class="w"> </span><span class="n">ID</span><span class="w">   </span><span class="n">IMAGE</span><span class="w">           </span><span class="n">COMMAND</span><span class="w">                  </span><span class="n">CREATED</span><span class="w">          </span><span class="n">STATUS</span><span class="w">                   </span><span class="n">PORTS</span><span class="w">                                       </span><span class="n">NAMES</span>
+<span class="n">b956e23ad3af</span><span class="w">   </span><span class="n">postgres</span><span class="o">:</span><span class="mf">15.4</span><span class="w">   </span><span class="s">&quot;docker-entrypoint.s…&quot;</span><span class="w">   </span><span class="mi">23</span><span class="w"> </span><span class="n">seconds</span><span class="w"> </span><span class="n">ago</span><span class="w">   </span><span class="n">Up</span><span class="w"> </span><span class="mi">21</span><span class="w"> </span><span class="n">seconds</span><span class="w">            </span><span class="mf">0.0.0.0</span><span class="o">:</span><span class="mi">5432</span><span class="o">-&gt;</span><span class="mi">5432</span><span class="o">/</span><span class="n">tcp</span><span class="p">,</span><span class="w"> </span><span class="o">:::</span><span class="mi">5432</span><span class="o">-&gt;</span><span class="mi">5432</span><span class="o">/</span><span class="n">tcp</span><span class="w">   </span><span class="n">my_pg_inst</span>
+</code></pre></div>
+
+<h3>If you are running postgres as a docker container how you can access it using command line ?</h3>
+<p>To access a PostgreSQL database running in a Docker container from the command line, follow these steps:</p>
+<ol>
+<li>
+<p><strong>Identify the container name or ID</strong>:
+   List your running Docker containers to find the one running PostgreSQL:
+   <code>bash
+   docker ps</code></p>
+</li>
+<li>
+<p><strong>Run <code>psql</code> inside the container</strong>:
+   If your container has <code>psql</code> installed, you can directly execute the command inside the container:
+   <code>bash
+   docker exec -it &lt;container_name_or_id&gt; psql -U &lt;username&gt; -d &lt;database&gt;</code></p>
+</li>
+</ol>
+<p>Replace <code>&lt;container_name_or_id&gt;</code> with the actual container name or ID, <code>&lt;username&gt;</code> with your PostgreSQL username (commonly <code>postgres</code>), and <code>&lt;database&gt;</code> with the database name.</p>
+<ol>
+<li><strong>Access via host machine</strong>:
+   If you want to access PostgreSQL from your host machine and the container exposes the PostgreSQL port (<code>5432</code> by default), use the following:
+   <code>bash
+   psql -h localhost -p &lt;port&gt; -U &lt;username&gt; -d &lt;database&gt;</code>
+   Ensure the port is correctly mapped in your Docker container (<code>docker run -p 5432:5432</code>).</li>
+</ol>
+<p>If needed, you can check the mapped ports using <code>docker ps</code>.</p>
+<h3>How to list all databases?</h3>
+<p>To list all databases in PostgreSQL, you can run the following command after accessing the PostgreSQL instance via <code>psql</code>:</p>
+<ol>
+<li>
+<p><strong>Access the PostgreSQL instance</strong>:
+   After connecting to the database as described earlier, enter the interactive <code>psql</code> prompt.</p>
+</li>
+<li>
+<p><strong>List all databases</strong>:
+   Once you're inside the <code>psql</code> prompt, run:
+   <code>sql
+   \l</code>
+   This will display all available databases.</p>
+</li>
+</ol>
+<p>Alternatively, you can use the following SQL query to list the databases:</p>
+<div class="highlight"><pre><span></span><code><span class="k">SELECT</span><span class="w"> </span><span class="n">datname</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">pg_database</span><span class="p">;</span>
+</code></pre></div>
+
+<h3>how to list all tables?</h3>
+<p>To list all tables in a specific PostgreSQL database, follow these steps:</p>
+<ol>
+<li>
+<p><strong>Connect to the database</strong>:
+   Access the desired database using <code>psql</code>:
+   <code>bash
+   psql -U &lt;username&gt; -d &lt;database&gt;</code></p>
+</li>
+<li>
+<p><strong>List all tables</strong>:
+   Once inside the <code>psql</code> prompt, you can list all tables using:
+   <code>sql
+   \dt</code></p>
+</li>
+</ol>
+<p>This will show a list of tables in the current database, along with the schema, name, type, and owner.</p>
+<p>Alternatively, you can use an SQL query to get a list of tables:</p>
+<div class="highlight"><pre><span></span><code><span class="k">SELECT</span><span class="w"> </span><span class="k">table_name</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">information_schema</span><span class="p">.</span><span class="n">tables</span><span class="w"> </span><span class="k">WHERE</span><span class="w"> </span><span class="n">table_schema</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;public&#39;</span><span class="p">;</span>
+</code></pre></div>
+
+<p>This query lists all tables in the <code>public</code> schema (you can change the schema name if needed).</p>
     </div><!-- /.entry-content -->
 
   </article>
