@@ -271,7 +271,27 @@ VALUES
 </code></pre></div>
 
 <p>We are going to use a open database available on github in further tutorial
-<a href="https://github.com/lerocha/chinook-database/blob/master/ChinookDatabase/DataSources/Chinook_PostgreSql.sql">DB LINK</a></p>                </article>
+<a href="https://github.com/lerocha/chinook-database/blob/master/ChinookDatabase/DataSources/Chinook_PostgreSql.sql">DB LINK</a></p>
+<p>Restore above database into your postgres instance</p>
+<hr>
+<h1>Reading data</h1>
+<h3>read all rows</h3>
+<div class="highlight"><pre><span></span><code><span class="k">SELECT</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">album</span><span class="p">;</span>
+</code></pre></div>
+
+<p><code>*</code> in above sql statement mean select all columns in above table</p>
+<p>if you only want to show certain columns in your output, here is the sql query for that</p>
+<div class="highlight"><pre><span></span><code><span class="k">SELECT</span><span class="w"> </span><span class="n">title</span><span class="p">,</span><span class="w"> </span><span class="n">album_id</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">album</span><span class="p">;</span>
+</code></pre></div>
+
+<p>Limit number of rows to be returned, let say we only want to return 10 rows from the result</p>
+<div class="highlight"><pre><span></span><code><span class="k">SELECT</span><span class="w"> </span><span class="n">title</span><span class="p">,</span><span class="w"> </span><span class="n">album_id</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">album</span><span class="w"> </span><span class="k">limit</span><span class="w"> </span><span class="mi">10</span><span class="p">;</span>
+</code></pre></div>
+
+<p>returning all columns or all rows have computation and read cost associated with it, so while you are playing with your queries, building them it will be good to use limit query</p>
+<h3>Create table from the rows which are response to another select query</h3>
+<div class="highlight"><pre><span></span><code><span class="k">CREATE</span><span class="w"> </span><span class="k">TABLE</span><span class="w"> </span><span class="n">album_temp</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="p">(</span><span class="k">SELECT</span><span class="w"> </span><span class="n">title</span><span class="p">,</span><span class="w"> </span><span class="n">album_id</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">album</span><span class="w"> </span><span class="k">limit</span><span class="w"> </span><span class="mi">10</span><span class="p">);</span>
+</code></pre></div>                </article>
             </aside><!-- /#featured -->
         <section id="extras" class="body">
                 <div class="blogroll">
