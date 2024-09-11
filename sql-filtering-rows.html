@@ -69,6 +69,19 @@
 <h3>How to filter using null values</h3>
 <div class="highlight"><pre><span></span><code><span class="k">SELECT</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">invoice</span><span class="w"> </span><span class="k">WHERE</span><span class="w"> </span><span class="n">billing_state</span><span class="w"> </span><span class="k">IS</span><span class="w"> </span><span class="k">NOT</span><span class="w"> </span><span class="k">NULL</span><span class="p">;</span>
 </code></pre></div>
+
+<h3>How to output derived columns</h3>
+<div class="highlight"><pre><span></span><code><span class="k">SELECT</span><span class="w"> </span><span class="o">*</span><span class="p">,</span><span class="w"> </span><span class="p">(</span><span class="n">milliseconds</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="mi">1000</span><span class="p">)</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">seconds</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">track</span><span class="w"> </span><span class="k">limit</span><span class="w"> </span><span class="mi">5</span><span class="p">;</span>
+</code></pre></div>
+
+<p>As you can see i have derived a new column called seconds which have beeen derived from milliseconds column</p>
+<h3>Round seconds to 2 decimal places</h3>
+<div class="highlight"><pre><span></span><code><span class="k">SELECT</span><span class="w"> </span><span class="o">*</span><span class="p">,</span><span class="w"> </span><span class="n">ROUND</span><span class="p">(</span><span class="n">milliseconds</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="mi">1000</span><span class="p">.</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">)</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">seconds</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">track</span><span class="w"> </span><span class="k">LIMIT</span><span class="w"> </span><span class="mi">5</span><span class="p">;</span>
+</code></pre></div>
+
+<h3>Add new columns based on logical statements</h3>
+<div class="highlight"><pre><span></span><code><span class="k">SELECT</span><span class="w"> </span><span class="o">*</span><span class="p">,</span><span class="w"> </span><span class="k">CASE</span><span class="w"> </span><span class="k">WHEN</span><span class="w"> </span><span class="n">unit_price</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="mi">0</span><span class="p">.</span><span class="mi">85</span><span class="w"> </span><span class="k">THEN</span><span class="w"> </span><span class="s1">&#39;TRUE&#39;</span><span class="w"> </span><span class="k">ELSE</span><span class="w"> </span><span class="s1">&#39;FALSE&#39;</span><span class="w"> </span><span class="k">END</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">more_than_two</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">track</span><span class="w"> </span><span class="k">limit</span><span class="w"> </span><span class="mi">5</span><span class="p">;</span>
+</code></pre></div>
     </div><!-- /.entry-content -->
 
   </article>
