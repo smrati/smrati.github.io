@@ -508,6 +508,113 @@
 <li><strong><code>LENGTH</code></strong>: Returns the number of characters in a string.</li>
 <li><strong><code>POSITION</code></strong>: Returns the starting position of a substring in a string, or 0 if the substring is not found.</li>
 </ul>
+<hr>
+<h2>Concat strings</h2>
+<p>In a table we have two columns <code>first_name</code> and <code>last_name</code>, while running the sql query i want to combine <code>first_name</code> and <code>second_name</code> and output it as a <code>full_name</code> , how to do it ?</p>
+<p>You can concatenate the <code>first_name</code> and <code>last_name</code> columns in PostgreSQL using the <code>CONCAT()</code> function or the <code>||</code> operator. Here's an example SQL query for both methods:</p>
+<h3>Using <code>CONCAT()</code> function:</h3>
+<div class="highlight"><pre><span></span><code><span class="k">SELECT</span><span class="w"> </span><span class="n">CONCAT</span><span class="p">(</span><span class="n">first_name</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39; &#39;</span><span class="p">,</span><span class="w"> </span><span class="n">last_name</span><span class="p">)</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">full_name</span>
+<span class="k">FROM</span><span class="w"> </span><span class="n">your_table</span><span class="p">;</span>
+</code></pre></div>
+
+<h3>Using <code>||</code> operator:</h3>
+<div class="highlight"><pre><span></span><code><span class="k">SELECT</span><span class="w"> </span><span class="n">first_name</span><span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="s1">&#39; &#39;</span><span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="n">last_name</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">full_name</span>
+<span class="k">FROM</span><span class="w"> </span><span class="n">your_table</span><span class="p">;</span>
+</code></pre></div>
+
+<p>Both of these queries will combine the <code>first_name</code> and <code>last_name</code> into a <code>full_name</code>, separated by a space.</p>
+<hr>
+<h3>SUBSTRING function</h3>
+<p>The <code>SUBSTRING</code> function in PostgreSQL is used to extract a portion (or substring) of a string. It allows you to specify the starting position and the length of the substring you want to extract from a larger string.</p>
+<h3>Syntax:</h3>
+<div class="highlight"><pre><span></span><code><span class="k">SUBSTRING</span><span class="p">(</span><span class="n">string</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">start_position</span><span class="w"> </span><span class="k">FOR</span><span class="w"> </span><span class="k">length</span><span class="p">)</span>
+</code></pre></div>
+
+<ul>
+<li><code>string</code>: The string from which the substring will be extracted.</li>
+<li><code>start_position</code>: The starting position in the string (1-based index).</li>
+<li><code>length</code>: The number of characters to extract (optional).</li>
+</ul>
+<h3>Example 1: Extract a portion of the string</h3>
+<div class="highlight"><pre><span></span><code><span class="k">SELECT</span><span class="w"> </span><span class="k">SUBSTRING</span><span class="p">(</span><span class="s1">&#39;Hello World&#39;</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="k">FOR</span><span class="w"> </span><span class="mi">5</span><span class="p">)</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="k">result</span><span class="p">;</span>
+</code></pre></div>
+
+<p><strong>Output:</strong></p>
+<div class="highlight"><pre><span></span><code> result
+--------
+ Hello
+</code></pre></div>
+
+<p>In this example, it extracts the first 5 characters from the string <code>'Hello World'</code>.</p>
+<h3>Example 2: Extract without specifying the length</h3>
+<div class="highlight"><pre><span></span><code><span class="k">SELECT</span><span class="w"> </span><span class="k">SUBSTRING</span><span class="p">(</span><span class="s1">&#39;Hello World&#39;</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="mi">7</span><span class="p">)</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="k">result</span><span class="p">;</span>
+</code></pre></div>
+
+<p><strong>Output:</strong></p>
+<div class="highlight"><pre><span></span><code> result
+--------
+ World
+</code></pre></div>
+
+<p>Here, the substring starts from position 7 and continues to the end of the string.</p>
+<h3>Example 3: Using with a column</h3>
+<div class="highlight"><pre><span></span><code><span class="k">SELECT</span><span class="w"> </span><span class="k">SUBSTRING</span><span class="p">(</span><span class="n">first_name</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="k">FOR</span><span class="w"> </span><span class="mi">3</span><span class="p">)</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">short_name</span>
+<span class="k">FROM</span><span class="w"> </span><span class="n">your_table</span><span class="p">;</span>
+</code></pre></div>
+
+<p>This extracts the first 3 characters from the <code>first_name</code> column.</p>
+<hr>
+<h2>Using REPLACE</h2>
+<p>The <code>REPLACE</code> function in PostgreSQL is used to replace all occurrences of a specified substring within a string with another substring.</p>
+<h3>Syntax:</h3>
+<div class="highlight"><pre><span></span><code><span class="k">REPLACE</span><span class="p">(</span><span class="n">string</span><span class="p">,</span><span class="w"> </span><span class="n">substring_to_replace</span><span class="p">,</span><span class="w"> </span><span class="n">replacement</span><span class="p">)</span>
+</code></pre></div>
+
+<ul>
+<li><code>string</code>: The original string where you want to perform the replacement.</li>
+<li><code>substring_to_replace</code>: The substring you want to find and replace.</li>
+<li><code>replacement</code>: The substring to replace the old one with.</li>
+</ul>
+<h3>Example 1: Replace part of a string</h3>
+<div class="highlight"><pre><span></span><code><span class="k">SELECT</span><span class="w"> </span><span class="k">REPLACE</span><span class="p">(</span><span class="s1">&#39;PostgreSQL is awesome&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;awesome&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;great&#39;</span><span class="p">)</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="k">result</span><span class="p">;</span>
+</code></pre></div>
+
+<p><strong>Output:</strong></p>
+<div class="highlight"><pre><span></span><code>       result
+---------------------
+ PostgreSQL is great
+</code></pre></div>
+
+<p>In this example, the word "awesome" is replaced by "great".</p>
+<h3>Example 2: Replace multiple occurrences of a substring</h3>
+<div class="highlight"><pre><span></span><code><span class="k">SELECT</span><span class="w"> </span><span class="k">REPLACE</span><span class="p">(</span><span class="s1">&#39;banana&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;a&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;o&#39;</span><span class="p">)</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="k">result</span><span class="p">;</span>
+</code></pre></div>
+
+<p><strong>Output:</strong></p>
+<div class="highlight"><pre><span></span><code> result
+---------
+ bonono
+</code></pre></div>
+
+<p>Here, all occurrences of the letter "a" are replaced with "o", resulting in "bonono".</p>
+<h3>Example 3: Using <code>REPLACE</code> with a column</h3>
+<div class="highlight"><pre><span></span><code><span class="k">SELECT</span><span class="w"> </span><span class="k">REPLACE</span><span class="p">(</span><span class="n">first_name</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;a&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;e&#39;</span><span class="p">)</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">updated_name</span>
+<span class="k">FROM</span><span class="w"> </span><span class="n">your_table</span><span class="p">;</span>
+</code></pre></div>
+
+<p>This replaces all occurrences of the letter "a" with "e" in the <code>first_name</code> column for all rows in the table.</p>
+<h3>Example 4: Removing a substring</h3>
+<p>If you want to remove a substring entirely, you can replace it with an empty string <code>''</code>:</p>
+<div class="highlight"><pre><span></span><code><span class="k">SELECT</span><span class="w"> </span><span class="k">REPLACE</span><span class="p">(</span><span class="s1">&#39;2024-09-12&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;-&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;&#39;</span><span class="p">)</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="k">result</span><span class="p">;</span>
+</code></pre></div>
+
+<p><strong>Output:</strong></p>
+<div class="highlight"><pre><span></span><code>  result
+----------
+ 20240912
+</code></pre></div>
+
+<p>This removes all hyphens <code>-</code> from the date string, resulting in <code>20240912</code>.</p>
     </div><!-- /.entry-content -->
 
   </article>

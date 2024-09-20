@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta name="generator" content="Pelican" />
+        <title>Open Tech - Smrati Kumar Katiyar</title>
+        <link rel="stylesheet" href="/theme/css/main.css" />
+</head>
+
+<body id="index" class="home">
+        <header id="banner" class="body">
+                <h1><a href="/">Open Tech</a></h1>
+                <nav><ul>
+                    <li><a href="/category/blog.html">Blog</a></li>
+                </ul></nav>
+        </header><!-- /#banner -->
+
+                <section id="content" class="body">
+                    <ol id="posts-list" class="hfeed" start="9">
+            <li><article class="hentry">
+                <header>
+                    <h1><a href="/using-pytorch-to-compute-gradient.html" rel="bookmark"
+                           title="Permalink to Using Pytorch to compute gradient">Using Pytorch to compute gradient</a></h1>
+                </header>
+
+                <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2024-08-29T00:00:00+05:30">
+                Published: Thu 29 August 2024
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/smrati-kumar-katiyar.html">Smrati Kumar Katiyar</a>
+        </address>
+<p>In <a href="/category/blog.html">Blog</a>.</p>
+<p>tags: <a href="/tag/pytorch.html">pytorch</a> </p>
+</footer><!-- /.post-info -->                <!-- status: draft -->
+
+<h1>Computing gradient using pytorch</h1>
+<p>Computing gradient is one of the most fundamental operation in deep learning. It is used in back propagation step while we are updating weights of network</p>
+<p>Next is a simple example of how pytorch do gradient computaion </p>
+<div class="math">$$
+y = 3x^2 + 2x + 1
+$$</div>
+<p>Compute gradient for <code>x=2</code></p>
+<div class="highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">torch</span>
+<span class="n">x</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">([[</span><span class="mf">2.</span><span class="p">]],</span> <span class="n">requires_grad</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">y</span> <span class="o">=</span> <span class="mi">3</span><span class="o">*</span><span class="p">(</span><span class="n">x</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span> <span class="o">+</span> <span class="mi">2</span><span class="o">*</span><span class="n">x</span> <span class="o">+</span><span class="mi">1</span>
+<span class="n">y</span><span class="o">.</span><span class="n">backward</span><span class="p">()</span>
+<span class="n">x</span><span class="o">.</span><span class="n">grad</span>
+</code></pre></div>
+
+<p>Output: <code>tensor([[14.]])</code></p>
+<script type="text/javascript">if (!document.getElementById('mathjaxscript_pelican_#%@#$@#')) {
+    var align = "center",
+        indent = "0em",
+        linebreak = "false";
+
+    if (false) {
+        align = (screen.width < 768) ? "left" : align;
+        indent = (screen.width < 768) ? "0em" : indent;
+        linebreak = (screen.width < 768) ? 'true' : linebreak;
+    }
+
+    var mathjaxscript = document.createElement('script');
+    mathjaxscript.id = 'mathjaxscript_pelican_#%@#$@#';
+    mathjaxscript.type = 'text/javascript';
+    mathjaxscript.src = 'https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.3/latest.js?config=TeX-AMS-MML_HTMLorMML';
+
+    var configscript = document.createElement('script');
+    configscript.type = 'text/x-mathjax-config';
+    configscript[(window.opera ? "innerHTML" : "text")] =
+        "MathJax.Hub.Config({" +
+        "    config …</script>
+                <a class="readmore" href="/using-pytorch-to-compute-gradient.html">read more</a>
+                </div><!-- /.entry-content -->
+            </article></li>
+
+            <li><article class="hentry">
+                <header>
+                    <h1><a href="/how-to-use-ollama-python-library-to-give-context-before-query.html" rel="bookmark"
+                           title="Permalink to How to use Ollama python library to give context before query">How to use Ollama python library to give context before query</a></h1>
+                </header>
+
+                <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2024-08-26T00:00:00+05:30">
+                Published: Mon 26 August 2024
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/smrati-kumar-katiyar.html">Smrati Kumar Katiyar</a>
+        </address>
+<p>In <a href="/category/blog.html">Blog</a>.</p>
+<p>tags: <a href="/tag/ollama.html">Ollama</a> <a href="/tag/llm.html">LLM</a> <a href="/tag/python.html">Python</a> </p>
+</footer><!-- /.post-info -->                <h1>Sending context to LLM before it generate response</h1>
+<div class="highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">ollama</span>
+
+<span class="c1"># Define the context and question</span>
+<span class="n">context</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">Indian shooting legend Abhinav Bindra believes that despite the country having a population of 1.4 billion people, the “playing population” of India remains significantly less.</span>
+
+<span class="s2">Bindra was speaking in the aftermath of India’s 2024 Paris Olympics campaign, where the nation won just six medals (one silver and five bronze), despite much being expected from a majority of the athletes.</span>
+
+<span class="s2">And on another six occasions in the Paris Games, Indian athletes endured fourth-place finishes. Had those fourth-place finishes been converted into medals, India’s medals tally might very well have gone into double digits.</span>
+
+<span class="s2">&quot;&quot;&quot;</span>
+<span class="n">question</span> <span class="o">=</span> <span class="s2">&quot;How many medals india won in olympic 2024? use the given context only to answer my question&quot;</span>
+
+<span class="c1"># Structure the messages</span>
+<span class="n">messages</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="p">{</span><span class="s2">&quot;role&quot;</span><span class="p">:</span> <span class="s2">&quot;system&quot;</span><span class="p">,</span> <span class="s2">&quot;content&quot;</span><span class="p">:</span> <span class="n">context</span><span class="p">},</span>
+    <span class="p">{</span><span class="s2">&quot;role&quot;</span><span class="p">:</span> <span class="s2">&quot;user&quot;</span><span class="p">,</span> <span class="s2">&quot;content&quot;</span><span class="p">:</span> <span class="n">question</span><span class="p">}</span>
+<span class="p">]</span>
+
+<span class="c1"># Make the API call</span>
+<span class="n">response</span> <span class="o">=</span> <span class="n">ollama</span><span class="o">.</span><span class="n">chat</span><span class="p">(</span><span class="n">model</span><span class="o">=</span><span class="s2">&quot;llama3 …</span></code></pre></div>
+                <a class="readmore" href="/how-to-use-ollama-python-library-to-give-context-before-query.html">read more</a>
+                </div><!-- /.entry-content -->
+            </article></li>
+
+            <li><article class="hentry">
+                <header>
+                    <h1><a href="/using-chroma-db-as-a-search-engine.html" rel="bookmark"
+                           title="Permalink to Using Chroma DB as a search engine">Using Chroma DB as a search engine</a></h1>
+                </header>
+
+                <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2024-08-26T00:00:00+05:30">
+                Published: Mon 26 August 2024
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/smrati-kumar-katiyar.html">Smrati Kumar Katiyar</a>
+        </address>
+<p>In <a href="/category/blog.html">Blog</a>.</p>
+<p>tags: <a href="/tag/vector-database.html">Vector Database</a> <a href="/tag/llm.html">LLM</a> <a href="/tag/nlp.html">NLP</a> </p>
+</footer><!-- /.post-info -->                <h1>ChromaDB an out of the box semantic search engine</h1>
+<p>I always wanted some solution on my laptop where i can communicate to my laptop like a human, like taking to an assitant in natural language and getting things done.<br>
+With the advent of LLMs or transformers in general we have got access to AI agents which can make us 2-10X more productive.</p>
+<p>I am interested in building small and smart solutions for my personal laptop which make me x% more productive, in the same direction i am going to work on a tool which son't require a graphic card to run but still respond to my text queries in acceptable time frame.</p>
+<p>How i am going to use this tool
+- searching some text in PDFs available on my laptop
+- searching for new items in the rss feeds already synced to my laptop
+- searching code snippets 
+- n other ways i am …</p>
+                <a class="readmore" href="/using-chroma-db-as-a-search-engine.html">read more</a>
+                </div><!-- /.entry-content -->
+            </article></li>
+
+            <li><article class="hentry">
+                <header>
+                    <h1><a href="/text-classification-using-spacy-end-to-end-custom-model-training-and-inferencing.html" rel="bookmark"
+                           title="Permalink to Text Classification using spaCy (End to End custom model training and inferencing)">Text Classification using spaCy (End to End custom model training and inferencing)</a></h1>
+                </header>
+
+                <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2024-08-21T00:00:00+05:30">
+                Published: Wed 21 August 2024
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/smrati-kumar-katiyar.html">Smrati Kumar Katiyar</a>
+        </address>
+<p>In <a href="/category/blog.html">Blog</a>.</p>
+<p>tags: <a href="/tag/spacy.html">spaCy</a> <a href="/tag/nlp.html">NLP</a> </p>
+</footer><!-- /.post-info -->                <p>Predict labels for a given text</p>
+                <a class="readmore" href="/text-classification-using-spacy-end-to-end-custom-model-training-and-inferencing.html">read more</a>
+                </div><!-- /.entry-content -->
+            </article></li>
+                </ol><!-- /#posts-list -->
+<nav>
+  <ul>
+        <li><a href="/author/smrati-kumar-katiyar.html">&Lang;</a></li>
+        <li><a href="/author/smrati-kumar-katiyar.html">&lang;</a></li>
+    <li>Page 2 / 2</li>
+  </ul>
+</nav>
+                </section><!-- /#content -->
+        <section id="extras" class="body">
+                <div class="blogroll">
+                        <h2>links</h2>
+                        <ul>
+                            <li><a href="https://getpelican.com/">Pelican</a></li>
+                            <li><a href="https://www.python.org/">Python.org</a></li>
+                            <li><a href="https://palletsprojects.com/p/jinja/">Jinja2</a></li>
+                            <li><a href="#">You can modify those links in your config file</a></li>
+                        </ul>
+                </div><!-- /.blogroll -->
+                <div class="social">
+                        <h2>social</h2>
+                        <ul>
+
+                            <li><a href="https://www.linkedin.com/in/smrati/">LinkedIN</a></li>
+                            <li><a href="https://x.com/SmratiKatiyar">X (Twitter)</a></li>
+                        </ul>
+                </div><!-- /.social -->
+        </section><!-- /#extras -->
+
+        <footer id="contentinfo" class="body">
+                <address id="about" class="vcard body">
+                Proudly powered by <a rel="nofollow" href="https://getpelican.com/">Pelican</a>, which takes great advantage of <a rel="nofollow" href="https://www.python.org/">Python</a>.
+                </address><!-- /#about -->
+
+                <p>The theme is by <a rel="nofollow" href="https://www.smashingmagazine.com/2009/08/designing-a-html-5-layout-from-scratch/">Smashing Magazine</a>, thanks!</p>
+        </footer><!-- /#contentinfo -->
+
+</body>
+</html>

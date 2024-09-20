@@ -1,0 +1,489 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta name="generator" content="Pelican" />
+        <title>SQL : JOINS, Union, Subqueries, CTE</title>
+        <link rel="stylesheet" href="/theme/css/main.css" />
+        <meta name="description" content="In PostgreSQL, joins are used to retrieve data from multiple tables based on a related column. There are several types of joins, including INNER,..." />
+</head>
+
+<body id="index" class="home">
+        <header id="banner" class="body">
+                <h1><a href="/">Open Tech</a></h1>
+                <nav><ul>
+                    <li class="active"><a href="/category/blog.html">Blog</a></li>
+                </ul></nav>
+        </header><!-- /#banner -->
+<section id="content" class="body">
+  <article>
+    <header>
+      <h1 class="entry-title">
+        <a href="/sql-joins-union-subqueries-cte.html" rel="bookmark"
+           title="Permalink to SQL : JOINS, Union, Subqueries, CTE">SQL : JOINS, Union, Subqueries, CTE</a></h1>
+    </header>
+
+    <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2024-09-12T00:00:00+05:30">
+                Published: Thu 12 September 2024
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/smrati-kumar-katiyar.html">Smrati Kumar Katiyar</a>
+        </address>
+<p>In <a href="/category/blog.html">Blog</a>.</p>
+<p>tags: <a href="/tag/sql.html">SQL</a> </p>
+</footer><!-- /.post-info -->      <p>In PostgreSQL, joins are used to retrieve data from multiple tables based on a related column. There are several types of joins, including INNER, LEFT, RIGHT, and FULL (OUTER). Here's a breakdown of each with an example.</p>
+<h3>Example Setup:</h3>
+<p>Suppose we have two tables: <code>students</code> and <code>courses</code>.</p>
+<p><strong>students table:</strong>
+| id  | name    | course_id |
+| --- | ------- | --------- |
+| 1   | Alice   | 101       |
+| 2   | Bob     | NULL      |
+| 3   | Charlie | 102       |
+| 4   | David   | 103       |</p>
+<p><strong>courses table:</strong>
+| id  | course_name      |
+| --- | ---------------  |
+| 101 | Math             |
+| 102 | Science          |
+| 104 | History          |</p>
+<h3>1. INNER JOIN:</h3>
+<p>An <code>INNER JOIN</code> returns rows when there is a match in both tables.</p>
+<div class="highlight"><pre><span></span><code><span class="k">SELECT</span><span class="w"> </span><span class="n">students</span><span class="p">.</span><span class="n">name</span><span class="p">,</span><span class="w"> </span><span class="n">courses</span><span class="p">.</span><span class="n">course_name</span>
+<span class="k">FROM</span><span class="w"> </span><span class="n">students</span>
+<span class="k">INNER</span><span class="w"> </span><span class="k">JOIN</span><span class="w"> </span><span class="n">courses</span><span class="w"> </span><span class="k">ON</span><span class="w"> </span><span class="n">students</span><span class="p">.</span><span class="n">course_id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">courses</span><span class="p">.</span><span class="n">id</span><span class="p">;</span>
+</code></pre></div>
+
+<p><strong>Result:</strong>
+| name    | course_name |
+| ------- | ----------- |
+| Alice   | Math        |
+| Charlie | Science     |</p>
+<ul>
+<li><strong>Explanation</strong>: Only students with a matching <code>course_id</code> in the <code>courses</code> table are included in the result.</li>
+</ul>
+<h3>2. LEFT JOIN (or LEFT OUTER JOIN):</h3>
+<p>A <code>LEFT JOIN</code> returns all rows from the left table (students), and the matched rows from the right table (courses). If there's no match, NULL values are returned for the columns from the right table.</p>
+<div class="highlight"><pre><span></span><code><span class="k">SELECT</span><span class="w"> </span><span class="n">students</span><span class="p">.</span><span class="n">name</span><span class="p">,</span><span class="w"> </span><span class="n">courses</span><span class="p">.</span><span class="n">course_name</span>
+<span class="k">FROM</span><span class="w"> </span><span class="n">students</span>
+<span class="k">LEFT</span><span class="w"> </span><span class="k">JOIN</span><span class="w"> </span><span class="n">courses</span><span class="w"> </span><span class="k">ON</span><span class="w"> </span><span class="n">students</span><span class="p">.</span><span class="n">course_id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">courses</span><span class="p">.</span><span class="n">id</span><span class="p">;</span>
+</code></pre></div>
+
+<p><strong>Result:</strong>
+| name    | course_name |
+| ------- | ----------- |
+| Alice   | Math        |
+| Bob     | NULL        |
+| Charlie | Science     |
+| David   | NULL        |</p>
+<ul>
+<li><strong>Explanation</strong>: All rows from <code>students</code> are included. For Bob and David, there's no corresponding course, so <code>NULL</code> is returned for <code>course_name</code>.</li>
+</ul>
+<h3>3. RIGHT JOIN (or RIGHT OUTER JOIN):</h3>
+<p>A <code>RIGHT JOIN</code> returns all rows from the right table (courses), and the matched rows from the left table (students). If there's no match, NULL values are returned for the columns from the left table.</p>
+<div class="highlight"><pre><span></span><code><span class="k">SELECT</span><span class="w"> </span><span class="n">students</span><span class="p">.</span><span class="n">name</span><span class="p">,</span><span class="w"> </span><span class="n">courses</span><span class="p">.</span><span class="n">course_name</span>
+<span class="k">FROM</span><span class="w"> </span><span class="n">students</span>
+<span class="k">RIGHT</span><span class="w"> </span><span class="k">JOIN</span><span class="w"> </span><span class="n">courses</span><span class="w"> </span><span class="k">ON</span><span class="w"> </span><span class="n">students</span><span class="p">.</span><span class="n">course_id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">courses</span><span class="p">.</span><span class="n">id</span><span class="p">;</span>
+</code></pre></div>
+
+<p><strong>Result:</strong>
+| name    | course_name |
+| ------- | ----------- |
+| Alice   | Math        |
+| Charlie | Science     |
+| NULL    | History     |</p>
+<ul>
+<li><strong>Explanation</strong>: All rows from the <code>courses</code> table are included. For the <code>History</code> course, there's no matching student, so <code>NULL</code> is returned for <code>name</code>.</li>
+</ul>
+<h3>4. FULL JOIN (or FULL OUTER JOIN):</h3>
+<p>A <code>FULL JOIN</code> returns all rows when there is a match in either table. If there is no match, <code>NULL</code> values are returned for the missing matches.</p>
+<div class="highlight"><pre><span></span><code><span class="k">SELECT</span><span class="w"> </span><span class="n">students</span><span class="p">.</span><span class="n">name</span><span class="p">,</span><span class="w"> </span><span class="n">courses</span><span class="p">.</span><span class="n">course_name</span>
+<span class="k">FROM</span><span class="w"> </span><span class="n">students</span>
+<span class="k">FULL</span><span class="w"> </span><span class="k">JOIN</span><span class="w"> </span><span class="n">courses</span><span class="w"> </span><span class="k">ON</span><span class="w"> </span><span class="n">students</span><span class="p">.</span><span class="n">course_id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">courses</span><span class="p">.</span><span class="n">id</span><span class="p">;</span>
+</code></pre></div>
+
+<p><strong>Result:</strong>
+| name    | course_name |
+| ------- | ----------- |
+| Alice   | Math        |
+| Bob     | NULL        |
+| Charlie | Science     |
+| David   | NULL        |
+| NULL    | History     |</p>
+<ul>
+<li><strong>Explanation</strong>: All rows from both <code>students</code> and <code>courses</code> are included. Unmatched rows are filled with <code>NULL</code>.</li>
+</ul>
+<h3>Summary:</h3>
+<ul>
+<li><strong>INNER JOIN</strong>: Returns matching rows from both tables.</li>
+<li><strong>LEFT JOIN</strong>: Returns all rows from the left table and matched rows from the right table. Unmatched rows from the right are <code>NULL</code>.</li>
+<li><strong>RIGHT JOIN</strong>: Returns all rows from the right table and matched rows from the left table. Unmatched rows from the left are <code>NULL</code>.</li>
+<li><strong>FULL JOIN</strong>: Returns all rows from both tables, with <code>NULL</code> in place of unmatched rows.</li>
+</ul>
+<p>These are powerful tools for combining data from multiple tables in relational databases like PostgreSQL.</p>
+<hr>
+<p>If you use only the word <code>JOIN</code> without specifying a type, it defaults to an <code>INNER JOIN</code> in PostgreSQL.</p>
+<p>For example, the following query:</p>
+<div class="highlight"><pre><span></span><code><span class="k">SELECT</span><span class="w"> </span><span class="n">students</span><span class="p">.</span><span class="n">name</span><span class="p">,</span><span class="w"> </span><span class="n">courses</span><span class="p">.</span><span class="n">course_name</span>
+<span class="k">FROM</span><span class="w"> </span><span class="n">students</span>
+<span class="k">JOIN</span><span class="w"> </span><span class="n">courses</span><span class="w"> </span><span class="k">ON</span><span class="w"> </span><span class="n">students</span><span class="p">.</span><span class="n">course_id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">courses</span><span class="p">.</span><span class="n">id</span><span class="p">;</span>
+</code></pre></div>
+
+<p>is equivalent to:</p>
+<div class="highlight"><pre><span></span><code><span class="k">SELECT</span><span class="w"> </span><span class="n">students</span><span class="p">.</span><span class="n">name</span><span class="p">,</span><span class="w"> </span><span class="n">courses</span><span class="p">.</span><span class="n">course_name</span>
+<span class="k">FROM</span><span class="w"> </span><span class="n">students</span>
+<span class="k">INNER</span><span class="w"> </span><span class="k">JOIN</span><span class="w"> </span><span class="n">courses</span><span class="w"> </span><span class="k">ON</span><span class="w"> </span><span class="n">students</span><span class="p">.</span><span class="n">course_id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">courses</span><span class="p">.</span><span class="n">id</span><span class="p">;</span>
+</code></pre></div>
+
+<p>This will return only the rows where there is a match in both tables, just like an <code>INNER JOIN</code>.</p>
+<hr>
+<p>A self-join is a type of join where a table is joined with itself. This can be useful when you need to compare rows within the same table. To perform a self-join, you use table aliases to differentiate between the instances of the same table.</p>
+<h3>Example Scenario</h3>
+<p>Let's consider a table called <code>employees</code> that contains employee information, including their managers.</p>
+<p><strong>employees table:</strong>
+| id  | name     | manager_id |
+| --- | -------- | ---------- |
+| 1   | Alice    | NULL       |
+| 2   | Bob      | 1          |
+| 3   | Charlie  | 1          |
+| 4   | David    | 2          |
+| 5   | Eve      | 2          |</p>
+<p>In this table:
+- Alice is the manager of Bob and Charlie.
+- Bob is the manager of David and Eve.</p>
+<h3>Example Query</h3>
+<p>To find each employee and their manager’s name, you would perform a self-join:</p>
+<div class="highlight"><pre><span></span><code><span class="k">SELECT</span><span class="w"> </span><span class="n">e1</span><span class="p">.</span><span class="n">name</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">employee_name</span><span class="p">,</span><span class="w"> </span><span class="n">e2</span><span class="p">.</span><span class="n">name</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">manager_name</span>
+<span class="k">FROM</span><span class="w"> </span><span class="n">employees</span><span class="w"> </span><span class="n">e1</span>
+<span class="k">LEFT</span><span class="w"> </span><span class="k">JOIN</span><span class="w"> </span><span class="n">employees</span><span class="w"> </span><span class="n">e2</span><span class="w"> </span><span class="k">ON</span><span class="w"> </span><span class="n">e1</span><span class="p">.</span><span class="n">manager_id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">e2</span><span class="p">.</span><span class="n">id</span><span class="p">;</span>
+</code></pre></div>
+
+<p><strong>Result:</strong>
+| employee_name | manager_name |
+| ------------- | ------------ |
+| Alice         | NULL         |
+| Bob           | Alice        |
+| Charlie       | Alice        |
+| David         | Bob          |
+| Eve           | Bob          |</p>
+<h3>Explanation</h3>
+<ul>
+<li><strong>Table Aliases:</strong> <code>e1</code> and <code>e2</code> are aliases for the same <code>employees</code> table. <code>e1</code> represents the employee, and <code>e2</code> represents the manager.</li>
+<li><strong>JOIN Condition:</strong> <code>e1.manager_id = e2.id</code> specifies how rows from the table should be matched. It joins the rows where the <code>manager_id</code> of <code>e1</code> matches the <code>id</code> of <code>e2</code>.</li>
+</ul>
+<h3>Why Use a Self-Join?</h3>
+<p>Self-joins are particularly useful when you need to:</p>
+<ol>
+<li><strong>Compare Rows Within the Same Table:</strong> For example, comparing employees with their managers.</li>
+<li><strong>Find Relationships or Hierarchies:</strong> Like organizational hierarchies, parent-child relationships, etc.</li>
+<li><strong>Aggregate Data:</strong> Such as finding the average salary of employees who report to a specific manager.</li>
+</ol>
+<p>By using a self-join, you can effectively analyze and retrieve data based on relationships within a single table.</p>
+<hr>
+<p>In SQL, the <code>UNION</code> operator is used to combine the results of two or more <code>SELECT</code> queries into a single result set. The key points about <code>UNION</code> are:</p>
+<ol>
+<li><strong>Combines Results</strong>: It combines rows from multiple <code>SELECT</code> queries into a single result set.</li>
+<li><strong>Eliminates Duplicates</strong>: By default, <code>UNION</code> removes duplicate rows from the result set.</li>
+<li><strong>Column Matching</strong>: The number of columns and their data types must match in all <code>SELECT</code> queries being combined.</li>
+</ol>
+<h3>Types of Unions</h3>
+<ol>
+<li><strong>UNION</strong>:</li>
+<li>Combines the results of two or more <code>SELECT</code> statements and removes duplicate rows.</li>
+<li>
+<p>Example:</p>
+<p><code>sql
+ SELECT column1, column2 FROM table1
+ UNION
+ SELECT column1, column2 FROM table2;</code></p>
+</li>
+<li>
+<p><strong>UNION ALL</strong>:</p>
+</li>
+<li>Combines the results of two or more <code>SELECT</code> statements but does not remove duplicate rows.</li>
+<li>
+<p>Example:</p>
+<p><code>sql
+ SELECT column1, column2 FROM table1
+ UNION ALL
+ SELECT column1, column2 FROM table2;</code></p>
+</li>
+</ol>
+<h3>Example Scenario</h3>
+<p>Suppose you have two tables: <code>students_2023</code> and <code>students_2024</code>.</p>
+<p><strong>students_2023 table:</strong>
+| id  | name     |
+| --- | -------- |
+| 1   | Alice    |
+| 2   | Bob      |</p>
+<p><strong>students_2024 table:</strong>
+| id  | name     |
+| --- | -------- |
+| 2   | Bob      |
+| 3   | Charlie  |</p>
+<h4>Using <code>UNION</code>:</h4>
+<div class="highlight"><pre><span></span><code><span class="k">SELECT</span><span class="w"> </span><span class="n">name</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">students_2023</span>
+<span class="k">UNION</span>
+<span class="k">SELECT</span><span class="w"> </span><span class="n">name</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">students_2024</span><span class="p">;</span>
+</code></pre></div>
+
+<p><strong>Result:</strong>
+| name     |
+| -------- |
+| Alice    |
+| Bob      |
+| Charlie  |</p>
+<ul>
+<li><strong>Explanation</strong>: This query combines the names from both tables and removes duplicate values (Bob appears only once).</li>
+</ul>
+<h4>Using <code>UNION ALL</code>:</h4>
+<div class="highlight"><pre><span></span><code><span class="k">SELECT</span><span class="w"> </span><span class="n">name</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">students_2023</span>
+<span class="k">UNION</span><span class="w"> </span><span class="k">ALL</span>
+<span class="k">SELECT</span><span class="w"> </span><span class="n">name</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">students_2024</span><span class="p">;</span>
+</code></pre></div>
+
+<p><strong>Result:</strong>
+| name     |
+| -------- |
+| Alice    |
+| Bob      |
+| Bob      |
+| Charlie  |</p>
+<ul>
+<li><strong>Explanation</strong>: This query combines the names from both tables without removing duplicates, so Bob appears twice.</li>
+</ul>
+<h3>Important Considerations</h3>
+<ul>
+<li><strong>Column Compatibility</strong>: Each <code>SELECT</code> query must have the same number of columns, and the data types of the columns must be compatible.</li>
+<li><strong>Column Names</strong>: The column names in the result set are taken from the first <code>SELECT</code> query.</li>
+</ul>
+<h3>Use Cases</h3>
+<ul>
+<li><strong>Combining Results from Similar Tables</strong>: For example, if you have different tables for different years and want to get a combined list of entries.</li>
+<li><strong>Combining Data from Multiple Sources</strong>: For example, merging customer lists from different regions.</li>
+</ul>
+<p>The <code>UNION</code> and <code>UNION ALL</code> operators are useful for aggregating data from multiple sources and can be used in various scenarios to consolidate information.</p>
+<hr>
+<p>A subquery, also known as a nested query or inner query, is a query within another SQL query. Subqueries are used to perform operations that require multiple steps, such as filtering, aggregation, or complex joins. They allow you to use the result of one query as input for another query.</p>
+<h3>Types of Subqueries</h3>
+<ol>
+<li><strong>Single-row Subquery</strong>: Returns a single row with a single value.</li>
+<li><strong>Multiple-row Subquery</strong>: Returns multiple rows.</li>
+<li><strong>Correlated Subquery</strong>: References columns from the outer query.</li>
+<li><strong>Non-correlated Subquery</strong>: Independent of the outer query.</li>
+</ol>
+<h3>Example Scenario</h3>
+<p>Consider two tables: <code>employees</code> and <code>departments</code>.</p>
+<p><strong>employees table:</strong>
+| id  | name     | department_id | salary |
+| --- | -------- | ------------- | ------ |
+| 1   | Alice    | 1             | 70000  |
+| 2   | Bob      | 2             | 80000  |
+| 3   | Charlie  | 1             | 90000  |
+| 4   | David    | 3             | 95000  |
+| 5   | Eve      | 2             | 85000  |</p>
+<p><strong>departments table:</strong>
+| id  | department_name |
+| --- | --------------- |
+| 1   | HR              |
+| 2   | Finance         |
+| 3   | IT              |</p>
+<h3>Example 1: Single-row Subquery</h3>
+<p><strong>Goal</strong>: Find the name of the employee with the highest salary.</p>
+<div class="highlight"><pre><span></span><code><span class="k">SELECT</span><span class="w"> </span><span class="n">name</span>
+<span class="k">FROM</span><span class="w"> </span><span class="n">employees</span>
+<span class="k">WHERE</span><span class="w"> </span><span class="n">salary</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="k">SELECT</span><span class="w"> </span><span class="k">MAX</span><span class="p">(</span><span class="n">salary</span><span class="p">)</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">employees</span><span class="p">);</span>
+</code></pre></div>
+
+<p><strong>Explanation</strong>:
+- The inner query <code>(SELECT MAX(salary) FROM employees)</code> finds the highest salary.
+- The outer query retrieves the name of the employee with that highest salary.</p>
+<p><strong>Result:</strong>
+| name    |
+| ------- |
+| Charlie |</p>
+<h3>Example 2: Multiple-row Subquery</h3>
+<p><strong>Goal</strong>: Find employees who work in the departments with more than one employee.</p>
+<div class="highlight"><pre><span></span><code><span class="k">SELECT</span><span class="w"> </span><span class="n">name</span>
+<span class="k">FROM</span><span class="w"> </span><span class="n">employees</span>
+<span class="k">WHERE</span><span class="w"> </span><span class="n">department_id</span><span class="w"> </span><span class="k">IN</span><span class="w"> </span><span class="p">(</span>
+<span class="w">    </span><span class="k">SELECT</span><span class="w"> </span><span class="n">department_id</span>
+<span class="w">    </span><span class="k">FROM</span><span class="w"> </span><span class="n">employees</span>
+<span class="w">    </span><span class="k">GROUP</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="n">department_id</span>
+<span class="w">    </span><span class="k">HAVING</span><span class="w"> </span><span class="k">COUNT</span><span class="p">(</span><span class="o">*</span><span class="p">)</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="mi">1</span>
+<span class="p">);</span>
+</code></pre></div>
+
+<p><strong>Explanation</strong>:
+- The inner query finds <code>department_id</code>s where the count of employees is greater than one.
+- The outer query retrieves the names of employees who work in these departments.</p>
+<p><strong>Result:</strong>
+| name    |
+| ------- |
+| Alice   |
+| Bob     |
+| Charlie |
+| Eve     |</p>
+<h3>Example 3: Correlated Subquery</h3>
+<p><strong>Goal</strong>: Find employees whose salary is greater than the average salary of their own department.</p>
+<div class="highlight"><pre><span></span><code><span class="k">SELECT</span><span class="w"> </span><span class="n">name</span><span class="p">,</span><span class="w"> </span><span class="n">salary</span>
+<span class="k">FROM</span><span class="w"> </span><span class="n">employees</span><span class="w"> </span><span class="n">e1</span>
+<span class="k">WHERE</span><span class="w"> </span><span class="n">salary</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="p">(</span>
+<span class="w">    </span><span class="k">SELECT</span><span class="w"> </span><span class="k">AVG</span><span class="p">(</span><span class="n">salary</span><span class="p">)</span>
+<span class="w">    </span><span class="k">FROM</span><span class="w"> </span><span class="n">employees</span><span class="w"> </span><span class="n">e2</span>
+<span class="w">    </span><span class="k">WHERE</span><span class="w"> </span><span class="n">e1</span><span class="p">.</span><span class="n">department_id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">e2</span><span class="p">.</span><span class="n">department_id</span>
+<span class="p">);</span>
+</code></pre></div>
+
+<p><strong>Explanation</strong>:
+- The inner query calculates the average salary within the same department as the current row (<code>e1</code>).
+- The outer query retrieves employees whose salary is greater than the average salary in their department.</p>
+<p><strong>Result:</strong>
+| name    | salary |
+| ------- | ------ |
+| Charlie | 90000  |</p>
+<h3>Key Points:</h3>
+<ul>
+<li><strong>Single-row Subquery</strong>: Returns one value.</li>
+<li><strong>Multiple-row Subquery</strong>: Returns multiple rows.</li>
+<li><strong>Correlated Subquery</strong>: References the outer query, recalculating for each row.</li>
+<li><strong>Non-correlated Subquery</strong>: Independent of the outer query.</li>
+</ul>
+<p>Subqueries can be very powerful for performing complex queries and filtering data based on conditions that are computed dynamically. They are an essential tool in SQL for handling multi-step data retrieval and manipulation tasks.</p>
+<hr>
+<p>Common Table Expressions (CTEs) are a feature in SQL that allows you to create temporary result sets that can be referenced within a <code>SELECT</code>, <code>INSERT</code>, <code>UPDATE</code>, or <code>DELETE</code> statement. CTEs are useful for breaking down complex queries into simpler parts, improving readability and maintainability. They can also be used to simplify recursive queries.</p>
+<h3>Basic Syntax</h3>
+<p>A CTE is defined using the <code>WITH</code> clause and is followed by a query that defines the CTE. You can then reference this CTE in the main query.</p>
+<p><strong>Syntax:</strong></p>
+<div class="highlight"><pre><span></span><code><span class="k">WITH</span><span class="w"> </span><span class="n">cte_name</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="p">(</span>
+<span class="w">    </span><span class="c1">-- CTE Query</span>
+<span class="w">    </span><span class="k">SELECT</span><span class="w"> </span><span class="n">column1</span><span class="p">,</span><span class="w"> </span><span class="n">column2</span>
+<span class="w">    </span><span class="k">FROM</span><span class="w"> </span><span class="k">table_name</span>
+<span class="w">    </span><span class="k">WHERE</span><span class="w"> </span><span class="n">condition</span>
+<span class="p">)</span>
+<span class="c1">-- Main Query</span>
+<span class="k">SELECT</span><span class="w"> </span><span class="n">column1</span><span class="p">,</span><span class="w"> </span><span class="n">column2</span>
+<span class="k">FROM</span><span class="w"> </span><span class="n">cte_name</span>
+<span class="k">WHERE</span><span class="w"> </span><span class="n">condition</span><span class="p">;</span>
+</code></pre></div>
+
+<h3>Example Scenario</h3>
+<p>Consider a database with an <code>employees</code> table:</p>
+<p><strong>employees table:</strong>
+| id  | name     | department | salary |
+| --- | -------- | ---------- | ------ |
+| 1   | Alice    | HR         | 70000  |
+| 2   | Bob      | Finance    | 80000  |
+| 3   | Charlie  | HR         | 90000  |
+| 4   | David    | IT         | 95000  |
+| 5   | Eve      | Finance    | 85000  |</p>
+<h3>Example 1: Using a CTE to Simplify a Query</h3>
+<p><strong>Goal</strong>: Find the average salary in each department and list employees who earn more than the average salary in their department.</p>
+<div class="highlight"><pre><span></span><code><span class="k">WITH</span><span class="w"> </span><span class="n">DepartmentAverage</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="p">(</span>
+<span class="w">    </span><span class="k">SELECT</span><span class="w"> </span><span class="n">department</span><span class="p">,</span><span class="w"> </span><span class="k">AVG</span><span class="p">(</span><span class="n">salary</span><span class="p">)</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">avg_salary</span>
+<span class="w">    </span><span class="k">FROM</span><span class="w"> </span><span class="n">employees</span>
+<span class="w">    </span><span class="k">GROUP</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="n">department</span>
+<span class="p">)</span>
+<span class="k">SELECT</span><span class="w"> </span><span class="n">e</span><span class="p">.</span><span class="n">name</span><span class="p">,</span><span class="w"> </span><span class="n">e</span><span class="p">.</span><span class="n">salary</span><span class="p">,</span><span class="w"> </span><span class="n">d</span><span class="p">.</span><span class="n">avg_salary</span>
+<span class="k">FROM</span><span class="w"> </span><span class="n">employees</span><span class="w"> </span><span class="n">e</span>
+<span class="k">JOIN</span><span class="w"> </span><span class="n">DepartmentAverage</span><span class="w"> </span><span class="n">d</span><span class="w"> </span><span class="k">ON</span><span class="w"> </span><span class="n">e</span><span class="p">.</span><span class="n">department</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">d</span><span class="p">.</span><span class="n">department</span>
+<span class="k">WHERE</span><span class="w"> </span><span class="n">e</span><span class="p">.</span><span class="n">salary</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="n">d</span><span class="p">.</span><span class="n">avg_salary</span><span class="p">;</span>
+</code></pre></div>
+
+<p><strong>Explanation</strong>:
+- <strong>CTE Definition (<code>DepartmentAverage</code>)</strong>: Calculates the average salary for each department.
+- <strong>Main Query</strong>: Joins the <code>employees</code> table with the <code>DepartmentAverage</code> CTE to filter employees earning more than the average salary in their department.</p>
+<p><strong>Result:</strong>
+| name    | salary | avg_salary |
+| ------- | ------ | ---------- |
+| Charlie | 90000  | 70000      |
+| Eve     | 85000  | 80000      |</p>
+<h3>Example 2: Recursive CTE</h3>
+<p>Recursive CTEs are used to handle hierarchical or recursive data, such as organizational charts or tree structures.</p>
+<p><strong>Example</strong>: Suppose we have an <code>employees</code> table with a <code>manager_id</code> column indicating each employee's manager.</p>
+<p><strong>employees table:</strong>
+| id  | name     | manager_id |
+| --- | -------- | ---------- |
+| 1   | Alice    | NULL       |
+| 2   | Bob      | 1          |
+| 3   | Charlie  | 1          |
+| 4   | David    | 2          |
+| 5   | Eve      | 2          |</p>
+<p><strong>Goal</strong>: List all employees and their direct and indirect reports (recursive hierarchy).</p>
+<div class="highlight"><pre><span></span><code><span class="k">WITH</span><span class="w"> </span><span class="k">RECURSIVE</span><span class="w"> </span><span class="n">EmployeeHierarchy</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="p">(</span>
+<span class="w">    </span><span class="c1">-- Anchor member: Select top-level employees</span>
+<span class="w">    </span><span class="k">SELECT</span><span class="w"> </span><span class="n">id</span><span class="p">,</span><span class="w"> </span><span class="n">name</span><span class="p">,</span><span class="w"> </span><span class="n">manager_id</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="k">level</span>
+<span class="w">    </span><span class="k">FROM</span><span class="w"> </span><span class="n">employees</span>
+<span class="w">    </span><span class="k">WHERE</span><span class="w"> </span><span class="n">manager_id</span><span class="w"> </span><span class="k">IS</span><span class="w"> </span><span class="k">NULL</span>
+
+<span class="w">    </span><span class="k">UNION</span><span class="w"> </span><span class="k">ALL</span>
+
+<span class="w">    </span><span class="c1">-- Recursive member: Select employees reporting to those in the previous level</span>
+<span class="w">    </span><span class="k">SELECT</span><span class="w"> </span><span class="n">e</span><span class="p">.</span><span class="n">id</span><span class="p">,</span><span class="w"> </span><span class="n">e</span><span class="p">.</span><span class="n">name</span><span class="p">,</span><span class="w"> </span><span class="n">e</span><span class="p">.</span><span class="n">manager_id</span><span class="p">,</span><span class="w"> </span><span class="n">eh</span><span class="p">.</span><span class="k">level</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span>
+<span class="w">    </span><span class="k">FROM</span><span class="w"> </span><span class="n">employees</span><span class="w"> </span><span class="n">e</span>
+<span class="w">    </span><span class="k">INNER</span><span class="w"> </span><span class="k">JOIN</span><span class="w"> </span><span class="n">EmployeeHierarchy</span><span class="w"> </span><span class="n">eh</span><span class="w"> </span><span class="k">ON</span><span class="w"> </span><span class="n">e</span><span class="p">.</span><span class="n">manager_id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">eh</span><span class="p">.</span><span class="n">id</span>
+<span class="p">)</span>
+<span class="k">SELECT</span><span class="w"> </span><span class="n">id</span><span class="p">,</span><span class="w"> </span><span class="n">name</span><span class="p">,</span><span class="w"> </span><span class="n">manager_id</span><span class="p">,</span><span class="w"> </span><span class="k">level</span>
+<span class="k">FROM</span><span class="w"> </span><span class="n">EmployeeHierarchy</span>
+<span class="k">ORDER</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="k">level</span><span class="p">,</span><span class="w"> </span><span class="n">manager_id</span><span class="p">;</span>
+</code></pre></div>
+
+<p><strong>Explanation</strong>:
+- <strong>CTE Definition</strong>:
+  - <strong>Anchor Member</strong>: Selects employees with no managers (top-level).
+  - <strong>Recursive Member</strong>: Selects employees who report to those in the previous level.
+- <strong>Main Query</strong>: Retrieves and orders employees based on their hierarchy level.</p>
+<p><strong>Result:</strong>
+| id  | name     | manager_id | level |
+| --- | -------- | ---------- | ----- |
+| 1   | Alice    | NULL       | 1     |
+| 2   | Bob      | 1          | 2     |
+| 3   | Charlie  | 1          | 2     |
+| 4   | David    | 2          | 3     |
+| 5   | Eve      | 2          | 3     |</p>
+<h3>Advantages of CTEs</h3>
+<ol>
+<li><strong>Readability</strong>: Breaks down complex queries into simpler, more manageable parts.</li>
+<li><strong>Reusability</strong>: Allows you to reference the CTE multiple times within the same query.</li>
+<li><strong>Recursion</strong>: Enables recursive queries for hierarchical data.</li>
+<li><strong>Maintainability</strong>: Makes the SQL code easier to understand and maintain.</li>
+</ol>
+<p>CTEs are a powerful feature in SQL that can help simplify complex queries and handle recursive data structures efficiently.</p>
+    </div><!-- /.entry-content -->
+
+  </article>
+</section>
+        <section id="extras" class="body">
+                <div class="blogroll">
+                        <h2>links</h2>
+                        <ul>
+                            <li><a href="https://getpelican.com/">Pelican</a></li>
+                            <li><a href="https://www.python.org/">Python.org</a></li>
+                            <li><a href="https://palletsprojects.com/p/jinja/">Jinja2</a></li>
+                            <li><a href="#">You can modify those links in your config file</a></li>
+                        </ul>
+                </div><!-- /.blogroll -->
+                <div class="social">
+                        <h2>social</h2>
+                        <ul>
+
+                            <li><a href="https://www.linkedin.com/in/smrati/">LinkedIN</a></li>
+                            <li><a href="https://x.com/SmratiKatiyar">X (Twitter)</a></li>
+                        </ul>
+                </div><!-- /.social -->
+        </section><!-- /#extras -->
+
+        <footer id="contentinfo" class="body">
+                <address id="about" class="vcard body">
+                Proudly powered by <a rel="nofollow" href="https://getpelican.com/">Pelican</a>, which takes great advantage of <a rel="nofollow" href="https://www.python.org/">Python</a>.
+                </address><!-- /#about -->
+
+                <p>The theme is by <a rel="nofollow" href="https://www.smashingmagazine.com/2009/08/designing-a-html-5-layout-from-scratch/">Smashing Magazine</a>, thanks!</p>
+        </footer><!-- /#contentinfo -->
+
+</body>
+</html>

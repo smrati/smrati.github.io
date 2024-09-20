@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta name="generator" content="Pelican" />
+        <title>SQL : Aggregating data in SQL</title>
+        <link rel="stylesheet" href="/theme/css/main.css" />
+        <meta name="description" content="PostgreSQL provides a variety of aggregation functions that allow you to compute a single result from multiple input rows. Below are some of the..." />
+</head>
+
+<body id="index" class="home">
+        <header id="banner" class="body">
+                <h1><a href="/">Open Tech</a></h1>
+                <nav><ul>
+                    <li class="active"><a href="/category/blog.html">Blog</a></li>
+                </ul></nav>
+        </header><!-- /#banner -->
+<section id="content" class="body">
+  <article>
+    <header>
+      <h1 class="entry-title">
+        <a href="/sql-aggregating-data-in-sql.html" rel="bookmark"
+           title="Permalink to SQL : Aggregating data in SQL">SQL : Aggregating data in SQL</a></h1>
+    </header>
+
+    <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2024-09-12T00:00:00+05:30">
+                Published: Thu 12 September 2024
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/smrati-kumar-katiyar.html">Smrati Kumar Katiyar</a>
+        </address>
+<p>In <a href="/category/blog.html">Blog</a>.</p>
+<p>tags: <a href="/tag/sql.html">SQL</a> </p>
+</footer><!-- /.post-info -->      <p>PostgreSQL provides a variety of aggregation functions that allow you to compute a single result from multiple input rows. Below are some of the most commonly used aggregation functions:</p>
+<ol>
+<li>
+<p><strong><code>COUNT()</code></strong><br>
+   Counts the number of rows.
+   <code>sql
+   SELECT COUNT(*) FROM users;</code></p>
+</li>
+<li>
+<p><strong><code>SUM()</code></strong><br>
+   Calculates the sum of a numeric column.
+   <code>sql
+   SELECT SUM(salary) FROM employees;</code></p>
+</li>
+<li>
+<p><strong><code>AVG()</code></strong><br>
+   Returns the average (mean) of a numeric column.
+   <code>sql
+   SELECT AVG(salary) FROM employees;</code></p>
+</li>
+<li>
+<p><strong><code>MIN()</code></strong><br>
+   Returns the smallest value of a column.
+   <code>sql
+   SELECT MIN(salary) FROM employees;</code></p>
+</li>
+<li>
+<p><strong><code>MAX()</code></strong><br>
+   Returns the largest value of a column.
+   <code>sql
+   SELECT MAX(salary) FROM employees;</code></p>
+</li>
+<li>
+<p><strong><code>ARRAY_AGG()</code></strong><br>
+   Aggregates values from multiple rows into a single array.
+   <code>sql
+   SELECT ARRAY_AGG(salary) FROM employees;</code></p>
+</li>
+<li>
+<p><strong><code>STRING_AGG()</code></strong><br>
+   Concatenates strings from multiple rows into a single string, with an optional separator.
+   <code>sql
+   SELECT STRING_AGG(name, ', ') FROM users;</code></p>
+</li>
+<li>
+<p><strong><code>BOOL_AND()</code></strong><br>
+   Returns <code>TRUE</code> if all input values are true.
+   <code>sql
+   SELECT BOOL_AND(is_active) FROM users;</code></p>
+</li>
+<li>
+<p><strong><code>BOOL_OR()</code></strong><br>
+   Returns <code>TRUE</code> if at least one input value is true.
+   <code>sql
+   SELECT BOOL_OR(is_active) FROM users;</code></p>
+</li>
+<li>
+<p><strong><code>VARIANCE()</code> / <code>VAR_SAMP()</code></strong><br>
+    Calculates the sample variance of a numeric column.
+    <code>sql
+    SELECT VARIANCE(salary) FROM employees;</code></p>
+</li>
+<li>
+<p><strong><code>STDDEV()</code> / <code>STDDEV_SAMP()</code></strong><br>
+    Calculates the sample standard deviation of a numeric column.
+    <code>sql
+    SELECT STDDEV(salary) FROM employees;</code></p>
+</li>
+<li>
+<p><strong><code>MODE()</code></strong><br>
+    Returns the most frequent value in a column.
+    <code>sql
+    SELECT MODE() WITHIN GROUP (ORDER BY salary) FROM employees;</code></p>
+</li>
+<li>
+<p><strong><code>PERCENTILE_CONT()</code></strong><br>
+    Calculates a continuous percentile value within a group of rows.
+    <code>sql
+    SELECT PERCENTILE_CONT(0.5) WITHIN GROUP (ORDER BY salary) FROM employees;</code></p>
+</li>
+<li>
+<p><strong><code>PERCENTILE_DISC()</code></strong><br>
+    Returns the discrete percentile value within a group.
+    <code>sql
+    SELECT PERCENTILE_DISC(0.5) WITHIN GROUP (ORDER BY salary) FROM employees;</code></p>
+</li>
+</ol>
+<p>These functions are typically used with the <code>GROUP BY</code> clause to group rows before applying the aggregation function.</p>
+<hr>
+<h1>Explain <code>GROUP BY</code></h1>
+<p>In PostgreSQL, the <code>GROUP BY</code> clause is used to aggregate data based on one or more columns. It allows you to group rows that have the same values in specified columns and perform aggregate functions (such as <code>COUNT</code>, <code>SUM</code>, <code>AVG</code>, <code>MIN</code>, <code>MAX</code>) on each group.</p>
+<h3>Basic Syntax</h3>
+<div class="highlight"><pre><span></span><code><span class="k">SELECT</span><span class="w"> </span><span class="n">column1</span><span class="p">,</span><span class="w"> </span><span class="n">column2</span><span class="p">,</span><span class="w"> </span><span class="n">aggregate_function</span><span class="p">(</span><span class="n">column3</span><span class="p">)</span>
+<span class="k">FROM</span><span class="w"> </span><span class="k">table_name</span>
+<span class="k">GROUP</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="n">column1</span><span class="p">,</span><span class="w"> </span><span class="n">column2</span><span class="p">;</span>
+</code></pre></div>
+
+<h3>Key Points</h3>
+<ul>
+<li>You can group by one or more columns.</li>
+<li>Any column not in an aggregate function must be included in the <code>GROUP BY</code> clause.</li>
+<li>Common aggregate functions include <code>COUNT()</code>, <code>SUM()</code>, <code>AVG()</code>, <code>MIN()</code>, <code>MAX()</code>.</li>
+</ul>
+<h3>Example 1: Grouping by a Single Column</h3>
+<p>Suppose you have a table <code>employees</code> with columns <code>department</code>, <code>salary</code>, and you want to find the average salary for each department.</p>
+<div class="highlight"><pre><span></span><code><span class="k">SELECT</span><span class="w"> </span><span class="n">department</span><span class="p">,</span><span class="w"> </span><span class="k">AVG</span><span class="p">(</span><span class="n">salary</span><span class="p">)</span>
+<span class="k">FROM</span><span class="w"> </span><span class="n">employees</span>
+<span class="k">GROUP</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="n">department</span><span class="p">;</span>
+</code></pre></div>
+
+<p>This query will return the average salary for each <code>department</code>.</p>
+<h3>Example 2: Grouping by Multiple Columns</h3>
+<p>If you want to find the total salary by both <code>department</code> and <code>job_title</code>, you can group by both columns:</p>
+<div class="highlight"><pre><span></span><code><span class="k">SELECT</span><span class="w"> </span><span class="n">department</span><span class="p">,</span><span class="w"> </span><span class="n">job_title</span><span class="p">,</span><span class="w"> </span><span class="k">SUM</span><span class="p">(</span><span class="n">salary</span><span class="p">)</span>
+<span class="k">FROM</span><span class="w"> </span><span class="n">employees</span>
+<span class="k">GROUP</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="n">department</span><span class="p">,</span><span class="w"> </span><span class="n">job_title</span><span class="p">;</span>
+</code></pre></div>
+
+<h3>Example 3: Using <code>HAVING</code> with <code>GROUP BY</code></h3>
+<p>The <code>HAVING</code> clause is used to filter groups based on aggregate functions. For example, to show only departments where the average salary is greater than 50,000:</p>
+<div class="highlight"><pre><span></span><code><span class="k">SELECT</span><span class="w"> </span><span class="n">department</span><span class="p">,</span><span class="w"> </span><span class="k">AVG</span><span class="p">(</span><span class="n">salary</span><span class="p">)</span>
+<span class="k">FROM</span><span class="w"> </span><span class="n">employees</span>
+<span class="k">GROUP</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="n">department</span>
+<span class="k">HAVING</span><span class="w"> </span><span class="k">AVG</span><span class="p">(</span><span class="n">salary</span><span class="p">)</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="mi">50000</span><span class="p">;</span>
+</code></pre></div>
+
+<p>This query will return departments where the average salary is more than 50,000.</p>
+<p>Let me know if you need a specific example based on your use case!</p>
+    </div><!-- /.entry-content -->
+
+  </article>
+</section>
+        <section id="extras" class="body">
+                <div class="blogroll">
+                        <h2>links</h2>
+                        <ul>
+                            <li><a href="https://getpelican.com/">Pelican</a></li>
+                            <li><a href="https://www.python.org/">Python.org</a></li>
+                            <li><a href="https://palletsprojects.com/p/jinja/">Jinja2</a></li>
+                            <li><a href="#">You can modify those links in your config file</a></li>
+                        </ul>
+                </div><!-- /.blogroll -->
+                <div class="social">
+                        <h2>social</h2>
+                        <ul>
+
+                            <li><a href="https://www.linkedin.com/in/smrati/">LinkedIN</a></li>
+                            <li><a href="https://x.com/SmratiKatiyar">X (Twitter)</a></li>
+                        </ul>
+                </div><!-- /.social -->
+        </section><!-- /#extras -->
+
+        <footer id="contentinfo" class="body">
+                <address id="about" class="vcard body">
+                Proudly powered by <a rel="nofollow" href="https://getpelican.com/">Pelican</a>, which takes great advantage of <a rel="nofollow" href="https://www.python.org/">Python</a>.
+                </address><!-- /#about -->
+
+                <p>The theme is by <a rel="nofollow" href="https://www.smashingmagazine.com/2009/08/designing-a-html-5-layout-from-scratch/">Smashing Magazine</a>, thanks!</p>
+        </footer><!-- /#contentinfo -->
+
+</body>
+</html>

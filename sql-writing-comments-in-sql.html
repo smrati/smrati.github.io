@@ -4,25 +4,59 @@
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <meta name="generator" content="Pelican" />
-        <title>Open Tech - Categories</title>
+        <title>SQL : Writing comments in SQL</title>
         <link rel="stylesheet" href="/theme/css/main.css" />
+        <meta name="description" content="In PostgreSQL, you can write comments in SQL queries using two different styles: Single-line comments: Use -- to comment out a single line or part..." />
 </head>
 
 <body id="index" class="home">
         <header id="banner" class="body">
                 <h1><a href="/">Open Tech</a></h1>
                 <nav><ul>
-                    <li><a href="/category/blog.html">Blog</a></li>
+                    <li class="active"><a href="/category/blog.html">Blog</a></li>
                 </ul></nav>
         </header><!-- /#banner -->
-
 <section id="content" class="body">
-    <h1>Categories for Open Tech</h1>
-    <ul>
-        <li><a href="/category/blog.html">Blog</a> (14)</li>
-    </ul>
-</section>
+  <article>
+    <header>
+      <h1 class="entry-title">
+        <a href="/sql-writing-comments-in-sql.html" rel="bookmark"
+           title="Permalink to SQL : Writing comments in SQL">SQL : Writing comments in SQL</a></h1>
+    </header>
 
+    <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2024-09-12T00:00:00+05:30">
+                Published: Thu 12 September 2024
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/smrati-kumar-katiyar.html">Smrati Kumar Katiyar</a>
+        </address>
+<p>In <a href="/category/blog.html">Blog</a>.</p>
+<p>tags: <a href="/tag/sql.html">SQL</a> </p>
+</footer><!-- /.post-info -->      <p>In PostgreSQL, you can write comments in SQL queries using two different styles:</p>
+<ol>
+<li>
+<p><strong>Single-line comments:</strong> Use <code>--</code> to comment out a single line or part of a line.
+   <code>sql
+   SELECT * FROM users; -- This selects all users</code></p>
+</li>
+<li>
+<p><strong>Multi-line comments:</strong> Use <code>/* */</code> to comment out multiple lines or a section of your query.
+   <code>sql
+   /*
+   This is a multi-line comment.
+   You can use it for longer explanations.
+   */
+   SELECT * FROM users;</code></p>
+</li>
+</ol>
+<p>Both types of comments will be ignored by PostgreSQL when executing the query.</p>
+    </div><!-- /.entry-content -->
+
+  </article>
+</section>
         <section id="extras" class="body">
                 <div class="blogroll">
                         <h2>links</h2>

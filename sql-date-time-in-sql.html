@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta name="generator" content="Pelican" />
+        <title>SQL : DATE / Time in SQL</title>
+        <link rel="stylesheet" href="/theme/css/main.css" />
+        <meta name="description" content="How to apply datetime filters SELECT invoice_date FROM invoice WHERE invoice_date::DATE < '2021-03-06' AND invoice_date::DATE > '2021-03-01';..." />
+</head>
+
+<body id="index" class="home">
+        <header id="banner" class="body">
+                <h1><a href="/">Open Tech</a></h1>
+                <nav><ul>
+                    <li class="active"><a href="/category/blog.html">Blog</a></li>
+                </ul></nav>
+        </header><!-- /#banner -->
+<section id="content" class="body">
+  <article>
+    <header>
+      <h1 class="entry-title">
+        <a href="/sql-date-time-in-sql.html" rel="bookmark"
+           title="Permalink to SQL : DATE / Time in SQL">SQL : DATE / Time in SQL</a></h1>
+    </header>
+
+    <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2024-09-12T00:00:00+05:30">
+                Published: Thu 12 September 2024
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/smrati-kumar-katiyar.html">Smrati Kumar Katiyar</a>
+        </address>
+<p>In <a href="/category/blog.html">Blog</a>.</p>
+<p>tags: <a href="/tag/sql.html">SQL</a> </p>
+</footer><!-- /.post-info -->      <p>How to apply datetime filters</p>
+<div class="highlight"><pre><span></span><code><span class="k">SELECT</span><span class="w"> </span><span class="n">invoice_date</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">invoice</span><span class="w"> </span><span class="k">WHERE</span><span class="w"> </span><span class="n">invoice_date</span><span class="p">::</span><span class="nb">DATE</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="s1">&#39;2021-03-06&#39;</span><span class="w"> </span><span class="k">AND</span><span class="w"> </span><span class="n">invoice_date</span><span class="p">::</span><span class="nb">DATE</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="s1">&#39;2021-03-01&#39;</span><span class="p">;</span>
+</code></pre></div>
+
+<h3>NOW() and INTERVAL</h3>
+<div class="highlight"><pre><span></span><code><span class="k">SELECT</span><span class="w"> </span><span class="n">invoice_date</span><span class="p">,</span><span class="w"> </span><span class="n">NOW</span><span class="p">()::</span><span class="nb">DATE</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="n">today</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">invoice</span><span class="w"> </span><span class="k">WHERE</span><span class="w"> </span><span class="n">invoice_date</span><span class="p">::</span><span class="nb">DATE</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="s1">&#39;2021-03-06&#39;</span><span class="w"> </span><span class="k">AND</span><span class="w"> </span><span class="n">invoice_date</span><span class="p">::</span><span class="nb">DATE</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="s1">&#39;2021-03-01&#39;</span><span class="p">;</span>
+
+<span class="k">SELECT</span><span class="w"> </span><span class="n">invoice_date</span><span class="p">,</span><span class="w"> </span><span class="n">NOW</span><span class="p">()::</span><span class="nb">DATE</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">invoice_date</span><span class="p">::</span><span class="nb">DATE</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">no_of_days</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">invoice</span>
+
+
+<span class="k">SELECT</span><span class="w"> </span><span class="n">invoice_date</span><span class="p">,</span><span class="w"> </span><span class="n">invoice_date</span><span class="p">::</span><span class="nb">DATE</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="nb">INTERVAL</span><span class="w"> </span><span class="s1">&#39;365 days&#39;</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">renewal_date</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">invoice</span>
+</code></pre></div>
+    </div><!-- /.entry-content -->
+
+  </article>
+</section>
+        <section id="extras" class="body">
+                <div class="blogroll">
+                        <h2>links</h2>
+                        <ul>
+                            <li><a href="https://getpelican.com/">Pelican</a></li>
+                            <li><a href="https://www.python.org/">Python.org</a></li>
+                            <li><a href="https://palletsprojects.com/p/jinja/">Jinja2</a></li>
+                            <li><a href="#">You can modify those links in your config file</a></li>
+                        </ul>
+                </div><!-- /.blogroll -->
+                <div class="social">
+                        <h2>social</h2>
+                        <ul>
+
+                            <li><a href="https://www.linkedin.com/in/smrati/">LinkedIN</a></li>
+                            <li><a href="https://x.com/SmratiKatiyar">X (Twitter)</a></li>
+                        </ul>
+                </div><!-- /.social -->
+        </section><!-- /#extras -->
+
+        <footer id="contentinfo" class="body">
+                <address id="about" class="vcard body">
+                Proudly powered by <a rel="nofollow" href="https://getpelican.com/">Pelican</a>, which takes great advantage of <a rel="nofollow" href="https://www.python.org/">Python</a>.
+                </address><!-- /#about -->
+
+                <p>The theme is by <a rel="nofollow" href="https://www.smashingmagazine.com/2009/08/designing-a-html-5-layout-from-scratch/">Smashing Magazine</a>, thanks!</p>
+        </footer><!-- /#contentinfo -->
+
+</body>
+</html>

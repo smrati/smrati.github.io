@@ -18,7 +18,340 @@
 
             <aside id="featured" class="body">
                 <article>
-                    <h1 class="entry-title"><a href="/sql-basics.html">SQL : Basics</a></h1>
+                    <h1 class="entry-title"><a href="/sql-aggregating-data-in-sql.html">SQL : Aggregating data in SQL</a></h1>
+<footer class="post-info">
+        <abbr class="published" title="2024-09-12T00:00:00+05:30">
+                Published: Thu 12 September 2024
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/smrati-kumar-katiyar.html">Smrati Kumar Katiyar</a>
+        </address>
+<p>In <a href="/category/blog.html">Blog</a>.</p>
+<p>tags: <a href="/tag/sql.html">SQL</a> </p>
+</footer><!-- /.post-info --><p>PostgreSQL provides a variety of aggregation functions that allow you to compute a single result from multiple input rows. Below are some of the most commonly used aggregation functions:</p>
+<ol>
+<li>
+<p><strong><code>COUNT()</code></strong><br>
+   Counts the number of rows.
+   <code>sql
+   SELECT COUNT(*) FROM users;</code></p>
+</li>
+<li>
+<p><strong><code>SUM()</code></strong><br>
+   Calculates the sum of a numeric column.
+   <code>sql
+   SELECT SUM(salary) FROM employees;</code></p>
+</li>
+<li>
+<p><strong><code>AVG()</code></strong><br>
+   Returns the average (mean) of a numeric column.
+   <code>sql
+   SELECT AVG(salary) FROM employees;</code></p>
+</li>
+<li>
+<p><strong><code>MIN()</code></strong><br>
+   Returns the smallest value of a column.
+   <code>sql
+   SELECT MIN(salary) FROM employees;</code></p>
+</li>
+<li>
+<p><strong><code>MAX()</code></strong><br>
+   Returns the largest value of a column.
+   <code>sql
+   SELECT MAX(salary) FROM employees;</code></p>
+</li>
+<li>
+<p><strong><code>ARRAY_AGG()</code></strong><br>
+   Aggregates values from multiple rows into a single array.
+   <code>sql
+   SELECT ARRAY_AGG(salary) FROM employees;</code></p>
+</li>
+<li>
+<p><strong><code>STRING_AGG()</code></strong><br>
+   Concatenates strings from multiple rows into a single string, with an optional separator.
+   <code>sql
+   SELECT STRING_AGG(name, ', ') FROM users;</code></p>
+</li>
+<li>
+<p><strong><code>BOOL_AND()</code></strong><br>
+   Returns <code>TRUE</code> if all input values are true.
+   <code>sql
+   SELECT BOOL_AND(is_active) FROM users;</code></p>
+</li>
+<li>
+<p><strong><code>BOOL_OR()</code></strong><br>
+   Returns <code>TRUE</code> if at least one input value is true.
+   <code>sql
+   SELECT BOOL_OR(is_active) FROM users;</code></p>
+</li>
+<li>
+<p><strong><code>VARIANCE()</code> / <code>VAR_SAMP()</code></strong><br>
+    Calculates the sample variance of a numeric column.
+    <code>sql
+    SELECT VARIANCE(salary) FROM employees;</code></p>
+</li>
+<li>
+<p><strong><code>STDDEV()</code> / <code>STDDEV_SAMP()</code></strong><br>
+    Calculates the sample standard deviation of a numeric column.
+    <code>sql
+    SELECT STDDEV(salary) FROM employees;</code></p>
+</li>
+<li>
+<p><strong><code>MODE()</code></strong><br>
+    Returns the most frequent value in a column.
+    <code>sql
+    SELECT MODE() WITHIN GROUP (ORDER BY salary) FROM employees;</code></p>
+</li>
+<li>
+<p><strong><code>PERCENTILE_CONT()</code></strong><br>
+    Calculates a continuous percentile value within a group of rows.
+    <code>sql
+    SELECT PERCENTILE_CONT(0.5) WITHIN GROUP (ORDER BY salary) FROM employees;</code></p>
+</li>
+<li>
+<p><strong><code>PERCENTILE_DISC()</code></strong><br>
+    Returns the discrete percentile value within a group.
+    <code>sql
+    SELECT PERCENTILE_DISC(0.5) WITHIN GROUP (ORDER BY salary) FROM employees;</code></p>
+</li>
+</ol>
+<p>These functions are typically used with the <code>GROUP BY</code> clause to group rows before applying the aggregation function.</p>
+<hr>
+<h1>Explain <code>GROUP BY</code></h1>
+<p>In PostgreSQL, the <code>GROUP BY</code> clause is used to aggregate data based on one or more columns. It allows you to group rows that have the same values in specified columns and perform aggregate functions (such as <code>COUNT</code>, <code>SUM</code>, <code>AVG</code>, <code>MIN</code>, <code>MAX</code>) on each group.</p>
+<h3>Basic Syntax</h3>
+<div class="highlight"><pre><span></span><code><span class="k">SELECT</span><span class="w"> </span><span class="n">column1</span><span class="p">,</span><span class="w"> </span><span class="n">column2</span><span class="p">,</span><span class="w"> </span><span class="n">aggregate_function</span><span class="p">(</span><span class="n">column3</span><span class="p">)</span>
+<span class="k">FROM</span><span class="w"> </span><span class="k">table_name</span>
+<span class="k">GROUP</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="n">column1</span><span class="p">,</span><span class="w"> </span><span class="n">column2</span><span class="p">;</span>
+</code></pre></div>
+
+<h3>Key Points</h3>
+<ul>
+<li>You can group by one or more columns.</li>
+<li>Any column not in an aggregate function must be included in the <code>GROUP BY</code> clause.</li>
+<li>Common aggregate functions include <code>COUNT()</code>, <code>SUM()</code>, <code>AVG()</code>, <code>MIN()</code>, <code>MAX()</code>.</li>
+</ul>
+<h3>Example 1: Grouping by a Single Column</h3>
+<p>Suppose you have a table <code>employees</code> with columns <code>department</code>, <code>salary</code>, and you want to find the average salary for each department.</p>
+<div class="highlight"><pre><span></span><code><span class="k">SELECT</span><span class="w"> </span><span class="n">department</span><span class="p">,</span><span class="w"> </span><span class="k">AVG</span><span class="p">(</span><span class="n">salary</span><span class="p">)</span>
+<span class="k">FROM</span><span class="w"> </span><span class="n">employees</span>
+<span class="k">GROUP</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="n">department</span><span class="p">;</span>
+</code></pre></div>
+
+<p>This query will return the average salary for each <code>department</code>.</p>
+<h3>Example 2: Grouping by Multiple Columns</h3>
+<p>If you want to find the total salary by both <code>department</code> and <code>job_title</code>, you can group by both columns:</p>
+<div class="highlight"><pre><span></span><code><span class="k">SELECT</span><span class="w"> </span><span class="n">department</span><span class="p">,</span><span class="w"> </span><span class="n">job_title</span><span class="p">,</span><span class="w"> </span><span class="k">SUM</span><span class="p">(</span><span class="n">salary</span><span class="p">)</span>
+<span class="k">FROM</span><span class="w"> </span><span class="n">employees</span>
+<span class="k">GROUP</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="n">department</span><span class="p">,</span><span class="w"> </span><span class="n">job_title</span><span class="p">;</span>
+</code></pre></div>
+
+<h3>Example 3: Using <code>HAVING</code> with <code>GROUP BY</code></h3>
+<p>The <code>HAVING</code> clause is used to filter groups based on aggregate functions. For example, to show only departments where the average salary is greater than 50,000:</p>
+<div class="highlight"><pre><span></span><code><span class="k">SELECT</span><span class="w"> </span><span class="n">department</span><span class="p">,</span><span class="w"> </span><span class="k">AVG</span><span class="p">(</span><span class="n">salary</span><span class="p">)</span>
+<span class="k">FROM</span><span class="w"> </span><span class="n">employees</span>
+<span class="k">GROUP</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="n">department</span>
+<span class="k">HAVING</span><span class="w"> </span><span class="k">AVG</span><span class="p">(</span><span class="n">salary</span><span class="p">)</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="mi">50000</span><span class="p">;</span>
+</code></pre></div>
+
+<p>This query will return departments where the average salary is more than 50,000.</p>
+<p>Let me know if you need a specific example based on your use case!</p>                </article>
+            </aside><!-- /#featured -->
+                <section id="content" class="body">
+                    <h1>Other articles</h1>
+                    <hr />
+                    <ol id="posts-list" class="hfeed">
+
+            <li><article class="hentry">
+                <header>
+                    <h1><a href="/sql-cast-function.html" rel="bookmark"
+                           title="Permalink to SQL : CAST function">SQL : CAST function</a></h1>
+                </header>
+
+                <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2024-09-12T00:00:00+05:30">
+                Published: Thu 12 September 2024
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/smrati-kumar-katiyar.html">Smrati Kumar Katiyar</a>
+        </address>
+<p>In <a href="/category/blog.html">Blog</a>.</p>
+<p>tags: <a href="/tag/sql.html">SQL</a> </p>
+</footer><!-- /.post-info -->                <p>In PostgreSQL, the <code>CAST</code> function is used to explicitly convert a value from one data type to another. It is an alternative to using the shorthand <code>::</code> operator for type conversion.</p>
+<h3>Syntax:</h3>
+<div class="highlight"><pre><span></span><code><span class="k">CAST</span><span class="w"> </span><span class="p">(</span><span class="n">value</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">target_type</span><span class="p">)</span>
+</code></pre></div>
+
+<ul>
+<li><strong><code>value</code></strong>: The value or column you want to convert.</li>
+<li><strong><code>target_type</code></strong>: The target data type you want to convert the value to.</li>
+</ul>
+<h3>Examples:</h3>
+<h4>1. <strong>Converting a String to an Integer</strong></h4>
+<p>If you have a string representation of a number and you want to convert it to an integer, you can use <code>CAST</code>.</p>
+<div class="highlight"><pre><span></span><code><span class="k">SELECT</span><span class="w"> </span><span class="k">CAST</span><span class="p">(</span><span class="s1">&#39;123&#39;</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="nb">INTEGER</span><span class="p">)</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">converted_value</span><span class="p">;</span>
+</code></pre></div>
+
+<p><strong>Output:</strong></p>
+<div class="highlight"><pre><span></span><code> converted_value
+-----------------
+             123
+</code></pre></div>
+
+<h4>2. <strong>Converting a Number to a String</strong></h4>
+<p>You can convert a number to a string using <code>CAST</code>.</p>
+<div class="highlight"><pre><span></span><code><span class="k">SELECT</span><span class="w"> </span><span class="k">CAST</span><span class="p">(</span><span class="mi">456</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="nb">TEXT</span><span class="p">)</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">converted_value</span><span class="p">;</span>
+</code></pre></div>
+
+<p><strong>Output:</strong></p>
+<div class="highlight"><pre><span></span><code> converted_value
+-----------------
+ 456
+</code></pre></div>
+
+<h4>3. <strong>Converting a String to a Numeric</strong></h4>
+<p>If you have a string with a floating-point number, you can convert it to a numeric type.</p>
+<div class="highlight"><pre><span></span><code><span class="k">SELECT</span><span class="w"> </span><span class="k">CAST</span><span class="p">(</span><span class="s1">&#39;123 …</span></code></pre></div>
+                <a class="readmore" href="/sql-cast-function.html">read more</a>
+                </div><!-- /.entry-content -->
+            </article></li>
+
+            <li><article class="hentry">
+                <header>
+                    <h1><a href="/sql-date-time-in-sql.html" rel="bookmark"
+                           title="Permalink to SQL : DATE / Time in SQL">SQL : DATE / Time in SQL</a></h1>
+                </header>
+
+                <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2024-09-12T00:00:00+05:30">
+                Published: Thu 12 September 2024
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/smrati-kumar-katiyar.html">Smrati Kumar Katiyar</a>
+        </address>
+<p>In <a href="/category/blog.html">Blog</a>.</p>
+<p>tags: <a href="/tag/sql.html">SQL</a> </p>
+</footer><!-- /.post-info -->                <p>How to apply datetime filters</p>
+<div class="highlight"><pre><span></span><code><span class="k">SELECT</span><span class="w"> </span><span class="n">invoice_date</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">invoice</span><span class="w"> </span><span class="k">WHERE</span><span class="w"> </span><span class="n">invoice_date</span><span class="p">::</span><span class="nb">DATE</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="s1">&#39;2021-03-06&#39;</span><span class="w"> </span><span class="k">AND</span><span class="w"> </span><span class="n">invoice_date</span><span class="p">::</span><span class="nb">DATE</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="s1">&#39;2021-03-01&#39;</span><span class="p">;</span>
+</code></pre></div>
+
+<h3>NOW() and INTERVAL</h3>
+<div class="highlight"><pre><span></span><code><span class="k">SELECT</span><span class="w"> </span><span class="n">invoice_date</span><span class="p">,</span><span class="w"> </span><span class="n">NOW</span><span class="p">()::</span><span class="nb">DATE</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="n">today</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">invoice</span><span class="w"> </span><span class="k">WHERE</span><span class="w"> </span><span class="n">invoice_date</span><span class="p">::</span><span class="nb">DATE</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="s1">&#39;2021-03-06&#39;</span><span class="w"> </span><span class="k">AND</span><span class="w"> </span><span class="n">invoice_date</span><span class="p">::</span><span class="nb">DATE</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="s1">&#39;2021-03-01&#39;</span><span class="p">;</span>
+
+<span class="k">SELECT</span><span class="w"> </span><span class="n">invoice_date</span><span class="p">,</span><span class="w"> </span><span class="n">NOW</span><span class="p">()::</span><span class="nb">DATE</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">invoice_date</span><span class="p">::</span><span class="nb">DATE</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">no_of_days</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">invoice</span>
+
+
+<span class="k">SELECT</span><span class="w"> </span><span class="n">invoice_date</span><span class="p">,</span><span class="w"> </span><span class="n">invoice_date</span><span class="p">::</span><span class="nb">DATE</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="nb">INTERVAL</span><span class="w"> </span><span class="s1">&#39;365 days&#39;</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">renewal_date</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">invoice</span>
+</code></pre></div>
+                <a class="readmore" href="/sql-date-time-in-sql.html">read more</a>
+                </div><!-- /.entry-content -->
+            </article></li>
+
+            <li><article class="hentry">
+                <header>
+                    <h1><a href="/sql-joins-union-subqueries-cte.html" rel="bookmark"
+                           title="Permalink to SQL : JOINS, Union, Subqueries, CTE">SQL : JOINS, Union, Subqueries, CTE</a></h1>
+                </header>
+
+                <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2024-09-12T00:00:00+05:30">
+                Published: Thu 12 September 2024
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/smrati-kumar-katiyar.html">Smrati Kumar Katiyar</a>
+        </address>
+<p>In <a href="/category/blog.html">Blog</a>.</p>
+<p>tags: <a href="/tag/sql.html">SQL</a> </p>
+</footer><!-- /.post-info -->                <p>In PostgreSQL, joins are used to retrieve data from multiple tables based on a related column. There are several types of joins, including INNER, LEFT, RIGHT, and FULL (OUTER). Here's a breakdown of each with an example.</p>
+<h3>Example Setup:</h3>
+<p>Suppose we have two tables: <code>students</code> and <code>courses</code>.</p>
+<p><strong>students table:</strong>
+| id  | name    | course_id |
+| --- | ------- | --------- |
+| 1   | Alice   | 101       |
+| 2   | Bob     | NULL      |
+| 3   | Charlie | 102       |
+| 4   | David   | 103       |</p>
+<p><strong>courses table:</strong>
+| id  | course_name      |
+| --- | ---------------  |
+| 101 | Math             |
+| 102 | Science          |
+| 104 | History          |</p>
+<h3>1. INNER JOIN:</h3>
+<p>An <code>INNER JOIN</code> returns rows when there is a match in both tables.</p>
+<div class="highlight"><pre><span></span><code><span class="k">SELECT</span><span class="w"> </span><span class="n">students</span><span class="p">.</span><span class="n">name</span><span class="p">,</span><span class="w"> </span><span class="n">courses</span><span class="p">.</span><span class="n">course_name</span>
+<span class="k">FROM</span><span class="w"> </span><span class="n">students</span>
+<span class="k">INNER</span><span class="w"> </span><span class="k">JOIN</span><span class="w"> </span><span class="n">courses</span><span class="w"> </span><span class="k">ON</span><span class="w"> </span><span class="n">students</span><span class="p">.</span><span class="n">course_id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">courses</span><span class="p">.</span><span class="n">id</span><span class="p">;</span>
+</code></pre></div>
+
+<p><strong>Result:</strong>
+| name    | course_name |
+| ------- | ----------- |
+| Alice   | Math        |
+| Charlie | Science     |</p>
+<ul>
+<li><strong>Explanation</strong>: Only students with a matching <code>course_id</code> in the <code>courses</code> table are included in the result.</li>
+</ul>
+<h3>2. LEFT JOIN (or LEFT OUTER JOIN):</h3>
+<p>A <code>LEFT JOIN</code> returns all rows from the left table (students), and the matched rows …</p>
+                <a class="readmore" href="/sql-joins-union-subqueries-cte.html">read more</a>
+                </div><!-- /.entry-content -->
+            </article></li>
+
+            <li><article class="hentry">
+                <header>
+                    <h1><a href="/sql-writing-comments-in-sql.html" rel="bookmark"
+                           title="Permalink to SQL : Writing comments in SQL">SQL : Writing comments in SQL</a></h1>
+                </header>
+
+                <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2024-09-12T00:00:00+05:30">
+                Published: Thu 12 September 2024
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/smrati-kumar-katiyar.html">Smrati Kumar Katiyar</a>
+        </address>
+<p>In <a href="/category/blog.html">Blog</a>.</p>
+<p>tags: <a href="/tag/sql.html">SQL</a> </p>
+</footer><!-- /.post-info -->                <p>In PostgreSQL, you can write comments in SQL queries using two different styles:</p>
+<ol>
+<li>
+<p><strong>Single-line comments:</strong> Use <code>--</code> to comment out a single line or part of a line.
+   <code>sql
+   SELECT * FROM users; -- This selects all users</code></p>
+</li>
+<li>
+<p><strong>Multi-line comments:</strong> Use <code>/* */</code> to comment out multiple lines or a section of your query.
+   <code>sql
+   /*
+   This is a multi-line comment.
+   You can use it for longer explanations.
+   */
+   SELECT * FROM users;</code></p>
+</li>
+</ol>
+<p>Both types of comments will be ignored by PostgreSQL when executing the query.</p>
+                <a class="readmore" href="/sql-writing-comments-in-sql.html">read more</a>
+                </div><!-- /.entry-content -->
+            </article></li>
+
+            <li><article class="hentry">
+                <header>
+                    <h1><a href="/sql-basics.html" rel="bookmark"
+                           title="Permalink to SQL : Basics">SQL : Basics</a></h1>
+                </header>
+
+                <div class="entry-content">
 <footer class="post-info">
         <abbr class="published" title="2024-09-11T00:00:00+05:30">
                 Published: Wed 11 September 2024
@@ -29,280 +362,10 @@
         </address>
 <p>In <a href="/category/blog.html">Blog</a>.</p>
 <p>tags: <a href="/tag/sql.html">SQL</a> </p>
-</footer><!-- /.post-info --><h1>Basics</h1>
-<ul>
-<li>relational databases are made up of tables</li>
-<li>tables are made of rows and columns</li>
-<li>Each table in relational databases also have primary key, primary key can be used to uniquely identify each and every row in a database table</li>
-<li>we can always have only one primary key column per table , you can't have multiple columns as primary key in a SQL table</li>
-<li>In SQL columns are also called <code>attributes</code> and rows <code>records</code></li>
-<li>In database we usually have multiple tables and related with each other through relationships known as <code>foreign keys</code></li>
-<li>Tables may have additional constraints as well , like some column or collection of columns are unique (Example you have a user table and there is a email column , it will be a good idea to make this column unique since having multiple rows in database table with same email will be a data design problem going forward)</li>
-<li>Indexing: it is an important feature in database tables, it basically using hash maps under the hood, so when you query data instead of scanning whole table , indexes allow accessing the data by focusing searhc on a group of data hence it make querying faster, indexing is usually done on columns which are more often used for filtering the data</li>
-<li>Tables in relationnal databases may have </li>
-<li>One to one mapping - One row in a table is mapped to another row in other table</li>
-<li>One to many mapping - One row in a table is mapped to multiple rows in another table</li>
-<li>Many to many mapping - Many rows in a table is mapped to multiple rows in another table</li>
-</ul>
-<hr>
-<h1>Data types in SQL</h1>
-<p>Just like many other programming language, it will be a good practice to define data types of our columns in a SQL table<br>
-Declaring data type help in more efficient operations and storage strategy for your data and hence querying/creating data becomes more optimized</p>
-<h2>Common datatypes</h2>
-<h3>Numerical</h3>
-<ul>
-<li>Integer : smallint, bigint etc.</li>
-<li>Numeric: decimal</li>
-<li>real: double precision</li>
-<li>serial: small/big serial, autoincrement</li>
-</ul>
-<h3>Text</h3>
-<ul>
-<li>char(n)</li>
-<li>varchar(n)</li>
-</ul>
-<h3>datetime</h3>
-<ul>
-<li>timestamp</li>
-<li>date</li>
-<li>time</li>
-</ul>
-<h3>others</h3>
-<ul>
-<li>boolean</li>
-</ul>
-<h1>Postgres specific datatypes</h1>
-<ul>
-<li>json</li>
-<li>array</li>
-<li>uuid<br>
-etc.</li>
-</ul>
-<h2>What does database schema mean?</h2>
-<p>Think of schema as collective information about all the tables , their structures, constraints, relationships etc.</p>
-<hr>
-<h3>How to run a postgres instance as a docker container?</h3>
-<div class="highlight"><pre><span></span><code>docker run --name my_pg_inst -p 5432:5432 -e POSTGRES_PASSWORD=admin123 -e POSTGRES_USER=admin_test_db -d postgres:15.4
-</code></pre></div>
-
-<p>This command will create custom user password port mapping and a default database same as username assigned above</p>
-<p>Confirm your db instance has come up properly
-<code>docker container ls -a</code><br>
-Output:  </p>
-<div class="highlight"><pre><span></span><code><span class="n">CONTAINER</span><span class="w"> </span><span class="n">ID</span><span class="w">   </span><span class="n">IMAGE</span><span class="w">           </span><span class="n">COMMAND</span><span class="w">                  </span><span class="n">CREATED</span><span class="w">          </span><span class="n">STATUS</span><span class="w">                   </span><span class="n">PORTS</span><span class="w">                                       </span><span class="n">NAMES</span>
-<span class="n">b956e23ad3af</span><span class="w">   </span><span class="n">postgres</span><span class="o">:</span><span class="mf">15.4</span><span class="w">   </span><span class="s">&quot;docker-entrypoint.s…&quot;</span><span class="w">   </span><span class="mi">23</span><span class="w"> </span><span class="n">seconds</span><span class="w"> </span><span class="n">ago</span><span class="w">   </span><span class="n">Up</span><span class="w"> </span><span class="mi">21</span><span class="w"> </span><span class="n">seconds</span><span class="w">            </span><span class="mf">0.0.0.0</span><span class="o">:</span><span class="mi">5432</span><span class="o">-&gt;</span><span class="mi">5432</span><span class="o">/</span><span class="n">tcp</span><span class="p">,</span><span class="w"> </span><span class="o">:::</span><span class="mi">5432</span><span class="o">-&gt;</span><span class="mi">5432</span><span class="o">/</span><span class="n">tcp</span><span class="w">   </span><span class="n">my_pg_inst</span>
-</code></pre></div>
-
-<h3>If you are running postgres as a docker container how you can access it using command line ?</h3>
-<p>To access a PostgreSQL database running in a Docker container from the command line, follow these steps:</p>
-<ol>
-<li>
-<p><strong>Identify the container name or ID</strong>:
-   List your running Docker containers to find the one running PostgreSQL:
-   <code>bash
-   docker ps</code></p>
-</li>
-<li>
-<p><strong>Run <code>psql</code> inside the container</strong>:
-   If your container has <code>psql</code> installed, you can directly execute the command inside the container:
-   <code>bash
-   docker exec -it &lt;container_name_or_id&gt; psql -U &lt;username&gt; -d &lt;database&gt;</code></p>
-</li>
-</ol>
-<p>Replace <code>&lt;container_name_or_id&gt;</code> with the actual container name or ID, <code>&lt;username&gt;</code> with your PostgreSQL username (commonly <code>postgres</code>), and <code>&lt;database&gt;</code> with the database name.</p>
-<ol>
-<li><strong>Access via host machine</strong>:
-   If you want to access PostgreSQL from your host machine and the container exposes the PostgreSQL port (<code>5432</code> by default), use the following:
-   <code>bash
-   psql -h localhost -p &lt;port&gt; -U &lt;username&gt; -d &lt;database&gt;</code>
-   Ensure the port is correctly mapped in your Docker container (<code>docker run -p 5432:5432</code>).</li>
-</ol>
-<p>If needed, you can check the mapped ports using <code>docker ps</code>.</p>
-<h3>How to list all databases?</h3>
-<p>To list all databases in PostgreSQL, you can run the following command after accessing the PostgreSQL instance via <code>psql</code>:</p>
-<ol>
-<li>
-<p><strong>Access the PostgreSQL instance</strong>:
-   After connecting to the database as described earlier, enter the interactive <code>psql</code> prompt.</p>
-</li>
-<li>
-<p><strong>List all databases</strong>:
-   Once you're inside the <code>psql</code> prompt, run:
-   <code>sql
-   \l</code>
-   This will display all available databases.</p>
-</li>
-</ol>
-<p>Alternatively, you can use the following SQL query to list the databases:</p>
-<div class="highlight"><pre><span></span><code><span class="k">SELECT</span><span class="w"> </span><span class="n">datname</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">pg_database</span><span class="p">;</span>
-</code></pre></div>
-
-<h3>how to list all tables?</h3>
-<p>To list all tables in a specific PostgreSQL database, follow these steps:</p>
-<ol>
-<li>
-<p><strong>Connect to the database</strong>:
-   Access the desired database using <code>psql</code>:
-   <code>bash
-   psql -U &lt;username&gt; -d &lt;database&gt;</code></p>
-</li>
-<li>
-<p><strong>List all tables</strong>:
-   Once inside the <code>psql</code> prompt, you can list all tables using:
-   <code>sql
-   \dt</code></p>
-</li>
-</ol>
-<p>This will show a list of tables in the current database, along with the schema, name, type, and owner.</p>
-<p>Alternatively, you can use an SQL query to get a list of tables:</p>
-<div class="highlight"><pre><span></span><code><span class="k">SELECT</span><span class="w"> </span><span class="k">table_name</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">information_schema</span><span class="p">.</span><span class="n">tables</span><span class="w"> </span><span class="k">WHERE</span><span class="w"> </span><span class="n">table_schema</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;public&#39;</span><span class="p">;</span>
-</code></pre></div>
-
-<p>This query lists all tables in the <code>public</code> schema (you can change the schema name if needed).</p>
-<h3>how to quit psql terminal/ exit loggedin session?</h3>
-<p>exit the current session:</p>
-<div class="highlight"><pre><span></span><code>\q
-</code></pre></div>
-
-<hr>
-<h1>Creating and removing the database</h1>
-<h3>How to create a new database?</h3>
-<div class="highlight"><pre><span></span><code>create database lms;
-</code></pre></div>
-
-<p>Don't forget to end statement with semicolon</p>
-<h3>How to remove database?</h3>
-<div class="highlight"><pre><span></span><code>DROP DATABASE lms;
-</code></pre></div>
-
-<hr>
-<h3>Create Schemas</h3>
-<div class="highlight"><pre><span></span><code>CREATE SCHEMA lms_schema;
-</code></pre></div>
-
-<p>if due to any reason you want to drop some schema, use following command</p>
-<div class="highlight"><pre><span></span><code>DROP SCHEMA lms_schema;
-</code></pre></div>
-
-<h3>Create table</h3>
-<div class="highlight"><pre><span></span><code><span class="n">CREATE</span><span class="w"> </span><span class="n">TABLE</span><span class="w"> </span><span class="n">course</span><span class="w"> </span><span class="p">(</span>
-<span class="w">    </span><span class="n">id</span><span class="w"> </span><span class="n">SERIAL</span><span class="w"> </span><span class="n">PRIMARY</span><span class="w"> </span><span class="n">KEY</span><span class="p">,</span>
-<span class="w">    </span><span class="n">title</span><span class="w"> </span><span class="n">varchar</span><span class="p">(</span><span class="mi">100</span><span class="p">),</span>
-<span class="w">    </span><span class="n">description</span><span class="w"> </span><span class="n">TEXT</span>
-<span class="p">);</span>
-</code></pre></div>
-
-<p>to drop table use command </p>
-<div class="highlight"><pre><span></span><code>DROP TABLE course;
-</code></pre></div>
-
-<p>Once you have tables created inside your schema , simply doing a <code>DROP SCHEMA schema_name</code> won't work, you have to drop tables as well first then only you can drop schema or you can use <code>CASCADE</code> command</p>
-<div class="highlight"><pre><span></span><code>DROP SCHEMA lms_schema CASCADE
-</code></pre></div>
-
-<h3>How to create foreign key relationships?</h3>
-<p>Let say you have following tables:</p>
-<div class="highlight"><pre><span></span><code><span class="n">CREATE</span><span class="w"> </span><span class="n">TABLE</span><span class="w"> </span><span class="n">course</span><span class="w"> </span><span class="p">(</span>
-<span class="w">    </span><span class="n">id</span><span class="w"> </span><span class="n">SERIAL</span><span class="w"> </span><span class="n">PRIMARY</span><span class="w"> </span><span class="n">KEY</span><span class="p">,</span>
-<span class="w">    </span><span class="n">title</span><span class="w"> </span><span class="n">varchar</span><span class="p">(</span><span class="mi">100</span><span class="p">),</span>
-<span class="w">    </span><span class="n">description</span><span class="w"> </span><span class="n">TEXT</span>
-<span class="p">);</span>
-</code></pre></div>
-
-<div class="highlight"><pre><span></span><code><span class="n">CREATE</span><span class="w"> </span><span class="n">TABLE</span><span class="w"> </span><span class="n">student</span><span class="w"> </span><span class="p">(</span>
-<span class="w">    </span><span class="n">id</span><span class="w"> </span><span class="n">SERIAL</span><span class="w"> </span><span class="n">PRIMARY</span><span class="w"> </span><span class="n">KEY</span><span class="p">,</span>
-<span class="w">    </span><span class="n">name</span><span class="w"> </span><span class="n">varchar</span><span class="p">(</span><span class="mi">100</span><span class="p">),</span>
-<span class="w">    </span><span class="n">email</span><span class="w"> </span><span class="n">varchar</span><span class="p">(</span><span class="mi">100</span><span class="p">),</span>
-<span class="w">    </span><span class="n">age</span><span class="w"> </span><span class="n">INT</span>
-<span class="p">);</span>
-</code></pre></div>
-
-<p>Now to create a many to many foreign relationship between course and student , we can do it like this</p>
-<div class="highlight"><pre><span></span><code>CREATE TABLE student_course_map (
-    id SERIAL PRIMARY KEY ,
-    course_id INT,
-    student_id INT,
-    FOREIGN KEY (course_id) REFERENCES course (id),
-    FOREIGN KEY (student_id) REFERENCES student (id)
-);
-</code></pre></div>
-
-<h3>Alter table and add a column</h3>
-<div class="highlight"><pre><span></span><code>ALTER TABLE course
-ADD COLUMN duration INT;
-</code></pre></div>
-
-<h3>Alter table and drop a column</h3>
-<div class="highlight"><pre><span></span><code>ALTER TABLE course
-DROP COLUMN duration;
-</code></pre></div>
-
-<h3>Alter data type in a given column</h3>
-<div class="highlight"><pre><span></span><code>ALTER TABLE course
-ALTER COLUMN duration SET DATA TYPE VARCHAR(50);
-</code></pre></div>
-
-<h3>How to change the column name</h3>
-<div class="highlight"><pre><span></span><code>ALTER TABLE course
-RENAME COLUMN duration TO course_duration;
-</code></pre></div>
-
-<h3>How to create enumerated data type ?</h3>
-<div class="highlight"><pre><span></span><code>CREATE TYPE course_level AS ENUM (&#39;beginner&#39;, &#39;intermediate&#39;, &#39;advanced&#39;);
-</code></pre></div>
-
-<div class="highlight"><pre><span></span><code>ALTER TABLE course
-ADD COLUMN level course_level;
-</code></pre></div>
-
-<hr>
-<h1>Inserting data into tables</h1>
-<p>Single row insert</p>
-<div class="highlight"><pre><span></span><code>INSERT INTO course (title, description, course_duration, level)
-VALUES (&#39;Python Programming&#39;, &#39;An introductory course on Python programming&#39;, 30, &#39;beginner&#39;);
-</code></pre></div>
-
-<p>Multi row insert</p>
-<div class="highlight"><pre><span></span><code>INSERT INTO course (title, description, course_duration, level)
-VALUES 
-    (&#39;Data Science with Python&#39;, &#39;A course on data science fundamentals using Python&#39;, 40, &#39;intermediate&#39;),
-    (&#39;Advanced Machine Learning&#39;, &#39;An advanced course on machine learning techniques&#39;, 50, &#39;advanced&#39;),
-    (&#39;Database Systems&#39;, &#39;A comprehensive guide to database systems and SQL&#39;, 25, &#39;beginner&#39;);
-</code></pre></div>
-
-<p>We are going to use a open database available on github in further tutorial
-<a href="https://github.com/lerocha/chinook-database/blob/master/ChinookDatabase/DataSources/Chinook_PostgreSql.sql">DB LINK</a></p>
-<p>Restore above database into your postgres instance</p>
-<hr>
-<h1>Reading data</h1>
-<h3>read all rows</h3>
-<div class="highlight"><pre><span></span><code><span class="k">SELECT</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">album</span><span class="p">;</span>
-</code></pre></div>
-
-<p><code>*</code> in above sql statement mean select all columns in above table</p>
-<p>if you only want to show certain columns in your output, here is the sql query for that</p>
-<div class="highlight"><pre><span></span><code><span class="k">SELECT</span><span class="w"> </span><span class="n">title</span><span class="p">,</span><span class="w"> </span><span class="n">album_id</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">album</span><span class="p">;</span>
-</code></pre></div>
-
-<p>Limit number of rows to be returned, let say we only want to return 10 rows from the result</p>
-<div class="highlight"><pre><span></span><code><span class="k">SELECT</span><span class="w"> </span><span class="n">title</span><span class="p">,</span><span class="w"> </span><span class="n">album_id</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">album</span><span class="w"> </span><span class="k">limit</span><span class="w"> </span><span class="mi">10</span><span class="p">;</span>
-</code></pre></div>
-
-<p>returning all columns or all rows have computation and read cost associated with it, so while you are playing with your queries, building them it will be good to use limit query</p>
-<h3>Create table from the rows which are response to another select query</h3>
-<div class="highlight"><pre><span></span><code><span class="k">CREATE</span><span class="w"> </span><span class="k">TABLE</span><span class="w"> </span><span class="n">album_temp</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="p">(</span><span class="k">SELECT</span><span class="w"> </span><span class="n">title</span><span class="p">,</span><span class="w"> </span><span class="n">album_id</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">album</span><span class="w"> </span><span class="k">limit</span><span class="w"> </span><span class="mi">10</span><span class="p">);</span>
-</code></pre></div>
-
-<h3>How to create aliases for column and table names</h3>
-<div class="highlight"><pre><span></span><code>SELECT al.title AS t, al.album_id AS id FROM album AS al;
-</code></pre></div>
-
-<p>Building aliases like this when you are working with multiple tables in same quesry and both tables have common names in it</p>                </article>
-            </aside><!-- /#featured -->
-                <section id="content" class="body">
-                    <h1>Other articles</h1>
-                    <hr />
-                    <ol id="posts-list" class="hfeed">
+</footer><!-- /.post-info -->                <p>SQL Basics for Data Scientists</p>
+                <a class="readmore" href="/sql-basics.html">read more</a>
+                </div><!-- /.entry-content -->
+            </article></li>
 
             <li><article class="hentry">
                 <header>
@@ -465,161 +528,14 @@ VALUES
                 <a class="readmore" href="/how-to-persist-virtual-environment-in-a-google-colab-notebook.html">read more</a>
                 </div><!-- /.entry-content -->
             </article></li>
-
-            <li><article class="hentry">
-                <header>
-                    <h1><a href="/using-pytorch-to-compute-gradient.html" rel="bookmark"
-                           title="Permalink to Using Pytorch to compute gradient">Using Pytorch to compute gradient</a></h1>
-                </header>
-
-                <div class="entry-content">
-<footer class="post-info">
-        <abbr class="published" title="2024-08-29T00:00:00+05:30">
-                Published: Thu 29 August 2024
-        </abbr>
-
-        <address class="vcard author">
-                By                         <a class="url fn" href="/author/smrati-kumar-katiyar.html">Smrati Kumar Katiyar</a>
-        </address>
-<p>In <a href="/category/blog.html">Blog</a>.</p>
-<p>tags: <a href="/tag/pytorch.html">pytorch</a> </p>
-</footer><!-- /.post-info -->                <!-- status: draft -->
-
-<h1>Computing gradient using pytorch</h1>
-<p>Computing gradient is one of the most fundamental operation in deep learning. It is used in back propagation step while we are updating weights of network</p>
-<p>Next is a simple example of how pytorch do gradient computaion </p>
-<div class="math">$$
-y = 3x^2 + 2x + 1
-$$</div>
-<p>Compute gradient for <code>x=2</code></p>
-<div class="highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">torch</span>
-<span class="n">x</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">([[</span><span class="mf">2.</span><span class="p">]],</span> <span class="n">requires_grad</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-<span class="n">y</span> <span class="o">=</span> <span class="mi">3</span><span class="o">*</span><span class="p">(</span><span class="n">x</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span> <span class="o">+</span> <span class="mi">2</span><span class="o">*</span><span class="n">x</span> <span class="o">+</span><span class="mi">1</span>
-<span class="n">y</span><span class="o">.</span><span class="n">backward</span><span class="p">()</span>
-<span class="n">x</span><span class="o">.</span><span class="n">grad</span>
-</code></pre></div>
-
-<p>Output: <code>tensor([[14.]])</code></p>
-<script type="text/javascript">if (!document.getElementById('mathjaxscript_pelican_#%@#$@#')) {
-    var align = "center",
-        indent = "0em",
-        linebreak = "false";
-
-    if (false) {
-        align = (screen.width < 768) ? "left" : align;
-        indent = (screen.width < 768) ? "0em" : indent;
-        linebreak = (screen.width < 768) ? 'true' : linebreak;
-    }
-
-    var mathjaxscript = document.createElement('script');
-    mathjaxscript.id = 'mathjaxscript_pelican_#%@#$@#';
-    mathjaxscript.type = 'text/javascript';
-    mathjaxscript.src = 'https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.3/latest.js?config=TeX-AMS-MML_HTMLorMML';
-
-    var configscript = document.createElement('script');
-    configscript.type = 'text/x-mathjax-config';
-    configscript[(window.opera ? "innerHTML" : "text")] =
-        "MathJax.Hub.Config({" +
-        "    config …</script>
-                <a class="readmore" href="/using-pytorch-to-compute-gradient.html">read more</a>
-                </div><!-- /.entry-content -->
-            </article></li>
-
-            <li><article class="hentry">
-                <header>
-                    <h1><a href="/how-to-use-ollama-python-library-to-give-context-before-query.html" rel="bookmark"
-                           title="Permalink to How to use Ollama python library to give context before query">How to use Ollama python library to give context before query</a></h1>
-                </header>
-
-                <div class="entry-content">
-<footer class="post-info">
-        <abbr class="published" title="2024-08-26T00:00:00+05:30">
-                Published: Mon 26 August 2024
-        </abbr>
-
-        <address class="vcard author">
-                By                         <a class="url fn" href="/author/smrati-kumar-katiyar.html">Smrati Kumar Katiyar</a>
-        </address>
-<p>In <a href="/category/blog.html">Blog</a>.</p>
-<p>tags: <a href="/tag/ollama.html">Ollama</a> <a href="/tag/llm.html">LLM</a> <a href="/tag/python.html">Python</a> </p>
-</footer><!-- /.post-info -->                <h1>Sending context to LLM before it generate response</h1>
-<div class="highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">ollama</span>
-
-<span class="c1"># Define the context and question</span>
-<span class="n">context</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
-<span class="s2">Indian shooting legend Abhinav Bindra believes that despite the country having a population of 1.4 billion people, the “playing population” of India remains significantly less.</span>
-
-<span class="s2">Bindra was speaking in the aftermath of India’s 2024 Paris Olympics campaign, where the nation won just six medals (one silver and five bronze), despite much being expected from a majority of the athletes.</span>
-
-<span class="s2">And on another six occasions in the Paris Games, Indian athletes endured fourth-place finishes. Had those fourth-place finishes been converted into medals, India’s medals tally might very well have gone into double digits.</span>
-
-<span class="s2">&quot;&quot;&quot;</span>
-<span class="n">question</span> <span class="o">=</span> <span class="s2">&quot;How many medals india won in olympic 2024? use the given context only to answer my question&quot;</span>
-
-<span class="c1"># Structure the messages</span>
-<span class="n">messages</span> <span class="o">=</span> <span class="p">[</span>
-    <span class="p">{</span><span class="s2">&quot;role&quot;</span><span class="p">:</span> <span class="s2">&quot;system&quot;</span><span class="p">,</span> <span class="s2">&quot;content&quot;</span><span class="p">:</span> <span class="n">context</span><span class="p">},</span>
-    <span class="p">{</span><span class="s2">&quot;role&quot;</span><span class="p">:</span> <span class="s2">&quot;user&quot;</span><span class="p">,</span> <span class="s2">&quot;content&quot;</span><span class="p">:</span> <span class="n">question</span><span class="p">}</span>
-<span class="p">]</span>
-
-<span class="c1"># Make the API call</span>
-<span class="n">response</span> <span class="o">=</span> <span class="n">ollama</span><span class="o">.</span><span class="n">chat</span><span class="p">(</span><span class="n">model</span><span class="o">=</span><span class="s2">&quot;llama3 …</span></code></pre></div>
-                <a class="readmore" href="/how-to-use-ollama-python-library-to-give-context-before-query.html">read more</a>
-                </div><!-- /.entry-content -->
-            </article></li>
-
-            <li><article class="hentry">
-                <header>
-                    <h1><a href="/using-chroma-db-as-a-search-engine.html" rel="bookmark"
-                           title="Permalink to Using Chroma DB as a search engine">Using Chroma DB as a search engine</a></h1>
-                </header>
-
-                <div class="entry-content">
-<footer class="post-info">
-        <abbr class="published" title="2024-08-26T00:00:00+05:30">
-                Published: Mon 26 August 2024
-        </abbr>
-
-        <address class="vcard author">
-                By                         <a class="url fn" href="/author/smrati-kumar-katiyar.html">Smrati Kumar Katiyar</a>
-        </address>
-<p>In <a href="/category/blog.html">Blog</a>.</p>
-<p>tags: <a href="/tag/vector-database.html">Vector Database</a> <a href="/tag/llm.html">LLM</a> <a href="/tag/nlp.html">NLP</a> </p>
-</footer><!-- /.post-info -->                <h1>ChromaDB an out of the box semantic search engine</h1>
-<p>I always wanted some solution on my laptop where i can communicate to my laptop like a human, like taking to an assitant in natural language and getting things done.<br>
-With the advent of LLMs or transformers in general we have got access to AI agents which can make us 2-10X more productive.</p>
-<p>I am interested in building small and smart solutions for my personal laptop which make me x% more productive, in the same direction i am going to work on a tool which son't require a graphic card to run but still respond to my text queries in acceptable time frame.</p>
-<p>How i am going to use this tool
-- searching some text in PDFs available on my laptop
-- searching for new items in the rss feeds already synced to my laptop
-- searching code snippets 
-- n other ways i am …</p>
-                <a class="readmore" href="/using-chroma-db-as-a-search-engine.html">read more</a>
-                </div><!-- /.entry-content -->
-            </article></li>
-
-            <li><article class="hentry">
-                <header>
-                    <h1><a href="/text-classification-using-spacy-end-to-end-custom-model-training-and-inferencing.html" rel="bookmark"
-                           title="Permalink to Text Classification using spaCy (End to End custom model training and inferencing)">Text Classification using spaCy (End to End custom model training and inferencing)</a></h1>
-                </header>
-
-                <div class="entry-content">
-<footer class="post-info">
-        <abbr class="published" title="2024-08-21T00:00:00+05:30">
-                Published: Wed 21 August 2024
-        </abbr>
-
-        <address class="vcard author">
-                By                         <a class="url fn" href="/author/smrati-kumar-katiyar.html">Smrati Kumar Katiyar</a>
-        </address>
-<p>In <a href="/category/blog.html">Blog</a>.</p>
-<p>tags: <a href="/tag/spacy.html">spaCy</a> <a href="/tag/nlp.html">NLP</a> </p>
-</footer><!-- /.post-info -->                <p>Predict labels for a given text</p>
-                <a class="readmore" href="/text-classification-using-spacy-end-to-end-custom-model-training-and-inferencing.html">read more</a>
-                </div><!-- /.entry-content -->
-            </article></li>
                 </ol><!-- /#posts-list -->
+<nav>
+  <ul>
+    <li>Page 1 / 2</li>
+        <li><a href="/author/smrati-kumar-katiyar2.html">&rang;</a></li>
+        <li><a href="/author/smrati-kumar-katiyar2.html">&Rang;</a></li>
+  </ul>
+</nav>
                 </section><!-- /#content -->
         <section id="extras" class="body">
                 <div class="blogroll">
