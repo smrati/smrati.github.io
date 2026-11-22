@@ -1,0 +1,34 @@
+---
+title: Engineering Notes
+description: Technical knowledge base covering software engineering, AI, and distributed systems.
+template: splash
+hero:
+  tagline: Notes on software engineering, machine learning, LLMs, and cloud-native systems.
+  actions:
+    - text: Gradient Descent
+      link: /ml/gradient-descent/
+      icon: right-arrow
+    - text: Browse on GitHub
+      link: https://github.com/smrati/smrati.github.io
+      icon: external
+      variant: minimal
+---
+
+import { Card, CardGrid } from '@astrojs/starlight/components';
+
+## Topics
+
+<CardGrid>
+	<Card title="Python Engineering" icon="seti:python">
+		Language internals, async patterns, and practical tooling.
+	</Card>
+	<Card title="Machine Learning" icon="rocket">
+		Optimization, classical ML, and deep learning fundamentals.
+	</Card>
+	<Card title="LLMs & Agents" icon="approve-check">
+		Transformers, RAG, vector databases, and agentic systems.
+	</Card>
+	<Card title="Systems & Cloud" icon="setting">
+		Kubernetes, distributed systems, and system design notes.
+	</Card>
+</CardGrid>
