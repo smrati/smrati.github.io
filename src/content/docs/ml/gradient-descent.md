@@ -1,7 +1,9 @@
 ---
 title: Gradient Descent
 description: Understanding gradient descent mathematically.
+date: 2026-11-22
 ---
+
 
 # Gradient Descent & Backpropagation: A Beginner-Friendly Walkthrough
 
