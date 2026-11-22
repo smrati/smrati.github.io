@@ -32,12 +32,19 @@ export default defineConfig({
 					label: 'GitHub',
 					href: 'https://github.com/smrati/smrati.github.io',
 				},
+				{
+					icon: 'linkedin',
+					label: 'LinkedIn',
+					href: 'https://www.linkedin.com/in/smrati/',
+				},
 			],
 			sidebar: [
+				{ label: 'All articles', link: '/articles/' },
 				{
 					label: 'Python Engineering',
 					items: [{ autogenerate: { directory: 'python' } }],
 				},
+
 				{
 					label: 'Machine Learning',
 					items: [{ autogenerate: { directory: 'ml' } }],

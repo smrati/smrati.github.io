@@ -1,0 +1,89 @@
+---
+import { getCollection } from 'astro:content';
+
+const articles = (
+	await getCollection(
+		'docs',
+		({ id, data }) =>
+			Boolean(data.date) &&
+			id !== 'index' &&
+			id !== 'articles' &&
+			!data.draft &&
+			!data.sidebar.hidden,
+	)
+).sort((a, b) => (b.data.date?.valueOf() ?? 0) - (a.data.date?.valueOf() ?? 0));
+
+function formatDate(date: Date) {
+	return date.toLocaleDateString('en-US', {
+		year: 'numeric',
+		month: 'short',
+		day: 'numeric',
+		timeZone: 'UTC',
+	});
+}
+---
+
+{
+	articles.length === 0 ? (
+		<p>No articles yet. Add a <code>date</code> field to an article’s frontmatter to list it here.</p>
+	) : (
+		<ul class="article-index">
+			{
+				articles.map((article) => (
+					<li>
+						<a href={`/${article.id}/`}>
+							<span class="article-index__title">{article.data.title}</span>
+						</a>
+						{article.data.date && (
+							<time datetime={article.data.date.toISOString()}>
+								{formatDate(article.data.date)}
+							</time>
+						)}
+						{article.data.description && <p>{article.data.description}</p>}
+					</li>
+				))
+			}
+		</ul>
+	)
+}
+
+<style>
+	.article-index {
+		list-style: none;
+		padding: 0;
+		margin: 1.5rem 0 0;
+		display: grid;
+		gap: 1.25rem;
+	}
+
+	.article-index li {
+		padding-bottom: 1.25rem;
+		border-bottom: 1px solid var(--sl-color-hairline);
+	}
+
+	.article-index li:last-child {
+		border-bottom: none;
+		padding-bottom: 0;
+	}
+
+	.article-index a {
+		text-decoration: none;
+	}
+
+	.article-index__title {
+		font-size: var(--sl-text-lg);
+		font-weight: 600;
+	}
+
+	.article-index time {
+		display: block;
+		margin-top: 0.25rem;
+		color: var(--sl-color-gray-3);
+		font-size: var(--sl-text-sm);
+	}
+
+	.article-index p {
+		margin: 0.35rem 0 0;
+		color: var(--sl-color-gray-2);
+	}
+</style>
