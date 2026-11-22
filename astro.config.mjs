@@ -1,6 +1,7 @@
 // @ts-check
 import { defineConfig } from 'astro/config';
 import starlight from '@astrojs/starlight';
+import mermaid from 'astro-mermaid';
 import { unified } from '@astrojs/markdown-remark';
 import remarkMath from 'remark-math';
 import rehypeKatex from 'rehype-katex';
@@ -20,6 +21,7 @@ export default defineConfig({
 		},
 	},
 	integrations: [
+		mermaid(),
 		starlight({
 			title: 'Engineering Notes',
 			description: 'Exploring software engineering, AI and distributed systems',

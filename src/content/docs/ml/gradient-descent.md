@@ -49,7 +49,19 @@ def gradient_descent(x, y, learning_rate=0.01, epochs=1000):
     return theta
 ```
 
-## 3. Complexity
+## 3. Algorithm Flow
+
+```mermaid
+flowchart TD
+  init[Initialize theta] --> predict[Compute predictions]
+  predict --> grad[Compute gradient]
+  grad --> update[Update theta]
+  update --> check{Converged?}
+  check -->|No| predict
+  check -->|Yes| done[Return theta]
+```
+
+## 4. Complexity
 
 The algorithm's complexity for one
 parameter update is:
@@ -60,3 +72,4 @@ $$
 
 where m is the number of samples and n
 is the number of parameters.
+
