@@ -19,7 +19,7 @@ kubectl -n practice wait --for=condition=Available deploy/web --timeout=120s
 kubectl -n practice get deploy,rs,pods -l app=web
 ```
 
-YAML (`practice/10-deployment.yaml`):
+YAML (`practice/kubernetes/10-deployment.yaml`):
 
 ```yaml
 apiVersion: apps/v1
@@ -48,7 +48,7 @@ spec:
 ```
 
 ```powershell
-kubectl apply -f practice\10-deployment.yaml
+kubectl apply -f practice/kubernetes/10-deployment.yaml
 kubectl -n practice wait --for=condition=Available deploy/web --timeout=120s
 kubectl -n practice get deploy,rs,pods -l app=web
 ```
@@ -100,7 +100,7 @@ Pods come back via the ReplicaSet the Deployment manages.
 
 ```powershell
 kubectl -n practice delete deploy web
-# or: kubectl delete -f practice\10-deployment.yaml
+# or: kubectl delete -f practice/kubernetes/10-deployment.yaml
 ```
 
 Leave the Deployment running if you continue to [Services](/kubernetes/07-services/).

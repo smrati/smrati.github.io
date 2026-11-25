@@ -17,7 +17,7 @@ Imperative:
 kubectl create namespace practice
 ```
 
-YAML (`practice/00-namespace.yaml` in the lab repo):
+YAML (`practice/kubernetes/00-namespace.yaml` in the lab repo):
 
 ```yaml
 apiVersion: v1
@@ -27,7 +27,7 @@ metadata:
 ```
 
 ```powershell
-kubectl apply -f practice\00-namespace.yaml
+kubectl apply -f practice/kubernetes/00-namespace.yaml
 ```
 
 ## Why namespaces exist

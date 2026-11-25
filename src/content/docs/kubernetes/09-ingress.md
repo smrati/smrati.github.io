@@ -46,7 +46,7 @@ port-forward first.
 
 ## HTTP
 
-Lab file: `practice/30-ingress.yaml`.
+Lab file: `practice/kubernetes/30-ingress.yaml`.
 
 ```yaml
 apiVersion: networking.k8s.io/v1
@@ -73,7 +73,7 @@ spec:
 already resolves to `127.0.0.1`.
 
 ```powershell
-kubectl apply -f practice\30-ingress.yaml
+kubectl apply -f practice/kubernetes/30-ingress.yaml
 kubectl -n practice get ingress
 kubectl -n practice describe ingress web
 curl.exe http://web.lab.localtest.me
@@ -95,13 +95,13 @@ curl.exe http://127.0.0.1 -H "Host: web.lab.localtest.me"
 **Ingress TLS** means HTTPS at the Ingress: the controller terminates TLS with a
 certificate, then forwards HTTP to the Service.
 
-Lab file: `practice/31-ingress-tls.yaml` — same rules plus:
+Lab file: `practice/kubernetes/31-ingress-tls.yaml` — same rules plus:
 
 - `spec.tls` → host + Secret name (`web-tls`)
 - annotation `cert-manager.io/cluster-issuer: lab-ca` so cert-manager fills that Secret
 
 ```powershell
-kubectl apply -f practice\31-ingress-tls.yaml
+kubectl apply -f practice/kubernetes/31-ingress-tls.yaml
 kubectl -n practice wait certificate/web-tls --for=condition=Ready --timeout=120s
 curl.exe -sk https://web.lab.localtest.me
 ```
