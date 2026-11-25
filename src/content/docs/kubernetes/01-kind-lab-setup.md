@@ -67,7 +67,7 @@ Use **rootful** Docker: rootless Docker and Podman cannot publish ports 80/443 w
 
 ## 2. Clone and start
 
-Cloning the **kubernetes-labs** repository is how you get `scripts/lab.sh`, `scripts/lab.ps1`, and the `practice/` manifests. Use your kubernetes-labs Git URL in place of `<repo-url>` once the remote exists.
+Cloning the **kubernetes-labs** repository is how you get `scripts/lab.sh`, `scripts/lab.ps1`, and the `practice/kubernetes/` (and `practice/helm/`) manifests. Use your kubernetes-labs Git URL in place of `<repo-url>` once the remote exists.
 
 ```bash
 git clone <repo-url> kubernetes-labs && cd kubernetes-labs

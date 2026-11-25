@@ -30,7 +30,7 @@ Pod → ReplicaSet → Deployment → Service → port-forward / Ingress
 | 8 | [Port-forward](/kubernetes/08-port-forward/) |
 | 9 | [Ingress](/kubernetes/09-ingress/) |
 
-Manifests used in the later exercises live in the lab repo under `practice/`
+Manifests used in the later exercises live in the lab repo under `practice/kubernetes/`
 (`00-namespace.yaml`, `05-replicaset.yaml`, `10-deployment.yaml`, `20-service.yaml`,
 `30-ingress.yaml`, `31-ingress-tls.yaml`).
 

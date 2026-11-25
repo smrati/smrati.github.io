@@ -66,6 +66,10 @@ export default defineConfig({
 					items: [{ autogenerate: { directory: 'kubernetes' } }],
 				},
 				{
+					label: 'Helm',
+					items: [{ autogenerate: { directory: 'helm' } }],
+				},
+				{
 					label: 'System Design',
 					items: [{ autogenerate: { directory: 'system-design' } }],
 				},

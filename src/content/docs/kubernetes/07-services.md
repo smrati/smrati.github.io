@@ -26,7 +26,7 @@ kubectl -n practice expose deploy/web --name=web --port=80 --target-port=9898
 | `--port=80` | Port clients use on the Service |
 | `--target-port=9898` | Container port |
 
-YAML (`practice/20-service.yaml`):
+YAML (`practice/kubernetes/20-service.yaml`):
 
 ```yaml
 apiVersion: v1
@@ -47,7 +47,7 @@ spec:
 ```
 
 ```powershell
-kubectl apply -f practice\20-service.yaml
+kubectl apply -f practice/kubernetes/20-service.yaml
 kubectl -n practice get svc,endpoints,pods -l app=web -o wide
 kubectl -n practice describe svc web
 ```

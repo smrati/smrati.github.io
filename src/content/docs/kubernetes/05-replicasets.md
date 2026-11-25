@@ -15,7 +15,7 @@ Assumes lab **RUNNING**, `practice` namespace, and image `localhost:5001/podinfo
 
 ## YAML
 
-Lab file: `practice/05-replicaset.yaml`. It uses labels `app=web-rs` so it does not
+Lab file: `practice/kubernetes/05-replicaset.yaml`. It uses labels `app=web-rs` so it does not
 clash with Deployment `web` (`app=web`) later.
 
 ```yaml
@@ -42,7 +42,7 @@ spec:
 ```
 
 ```powershell
-kubectl apply -f practice\05-replicaset.yaml
+kubectl apply -f practice/kubernetes/05-replicaset.yaml
 kubectl -n practice get rs,pods -l app=web-rs -o wide
 ```
 
@@ -72,7 +72,7 @@ Owner column should show `ReplicaSet` (a bare Pod has no owner).
 
 ```powershell
 kubectl -n practice delete rs web-rs
-# or: kubectl delete -f practice\05-replicaset.yaml
+# or: kubectl delete -f practice/kubernetes/05-replicaset.yaml
 ```
 
 Deleting the ReplicaSet deletes its Pods too.
